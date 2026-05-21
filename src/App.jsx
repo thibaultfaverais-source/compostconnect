@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { db } from './firebase.js';
 import {
-  collection, doc, getDocs, setDoc, writeBatch
+  collection, doc, getDocs, setDoc, writeBatch, getDoc, deleteDoc
 } from 'firebase/firestore';
+import SiteMap from './components/SiteMap.jsx';
+import { SiteCharts, AdminCharts } from './components/Charts.jsx';
+import EditSiteModal from './components/EditSiteModal.jsx';
 
 
 const ADMIN_CODE = "ADMIN";
@@ -53,6 +56,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Mars 2023 – Avril 2026",
     "capacityL": 500,
+    "lat": 47.2761,
+    "lng": 1.4258,
     "referents": [
       {
         "role": "Référent technique",
@@ -76,8 +81,10 @@ const DEFAULT_SITES = [
     "foyers": 10,
     "typeSite": "Foyers",
     "cantine": null,
-    "periode": "Sept. 2024 – Avril 2025",
+    "periode": "Nov. 2023 – Avril 2025",
     "capacityL": 400,
+    "lat": 47.2028,
+    "lng": 1.3628,
     "referents": [
       {
         "role": "Référent technique",
@@ -103,6 +110,8 @@ const DEFAULT_SITES = [
     "cantine": "80 repas/jour",
     "periode": "Sept. 2023 – Avril 2026",
     "capacityL": 500,
+    "lat": 47.3089,
+    "lng": 1.4736,
     "referents": [
       {
         "role": "Référent technique & cantinier",
@@ -128,6 +137,8 @@ const DEFAULT_SITES = [
     "cantine": "60 repas/jour",
     "periode": "Sept. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2194,
+    "lng": 1.5028,
     "referents": [
       {
         "role": "Référent technique",
@@ -153,6 +164,8 @@ const DEFAULT_SITES = [
     "cantine": "135 repas/jour",
     "periode": "Juil. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.3378,
+    "lng": 1.5411,
     "referents": [
       {
         "role": "Référent technique",
@@ -178,6 +191,8 @@ const DEFAULT_SITES = [
     "cantine": "60 repas/jour",
     "periode": "Sept. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2519,
+    "lng": 1.3472,
     "referents": [
       {
         "role": "Référent technique",
@@ -193,10 +208,12 @@ const DEFAULT_SITES = [
     "address": "Entrée de l'école, 41700 Couddes",
     "code": "COUDDE",
     "foyers": 20,
-    "typeSite": "Foyers + Cantine",
+    "typeSite": "Foyers",
     "cantine": "Non concerné",
     "periode": "Juil. 2024 – Juin 2025",
     "capacityL": 500,
+    "lat": 47.2622,
+    "lng": 1.4925,
     "referents": [
       {
         "role": "Référent technique",
@@ -212,10 +229,12 @@ const DEFAULT_SITES = [
     "address": "Rue des Châtaigniers, 41400 Montrichard",
     "code": "MONTRI",
     "foyers": 16,
-    "typeSite": "Foyers",
+    "typeSite": "Foyers + Cantine",
     "cantine": "175 repas/jour",
     "periode": "Juil. 2024 – Mars 2026",
     "capacityL": 500,
+    "lat": 47.3419,
+    "lng": 1.1944,
     "referents": [
       {
         "role": "Référent technique",
@@ -237,10 +256,12 @@ const DEFAULT_SITES = [
     "address": "Parking de l'école, 41110 Mareuil-sur-Cher",
     "code": "MAREU",
     "foyers": 12,
-    "typeSite": "Foyers + Cantine",
+    "typeSite": "Foyers",
     "cantine": null,
     "periode": "Juin 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2769,
+    "lng": 1.4372,
     "referents": [
       {
         "role": "Référent technique",
@@ -266,6 +287,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Sept. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2469,
+    "lng": 1.4708,
     "referents": [
       {
         "role": "Référent technique",
@@ -284,14 +307,23 @@ const DEFAULT_SITES = [
   {
     "id": "s11",
     "name": "Fougères-sur-Bièvre",
-    "address": "Commune de Fougères-sur-Bièvre, 41120",
+    "address": "Proximité école, 41120 Fougères-sur-Bièvre",
     "code": "FOUGE",
     "foyers": 0,
     "typeSite": "En cours",
     "cantine": null,
     "periode": "2025 – 2026",
     "capacityL": 400,
-    "referents": []
+    "lat": 47.4108,
+    "lng": 1.2819,
+    "referents": [
+      {
+        "role": "Référent (contact terrain)",
+        "nom": "Willy",
+        "tel": "",
+        "email": ""
+      }
+    ]
   },
   {
     "id": "s12",
@@ -303,6 +335,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Juil. 2024 – Mars 2026",
     "capacityL": 400,
+    "lat": 47.2664,
+    "lng": 1.4347,
     "referents": [
       {
         "role": "Référent technique",
@@ -328,6 +362,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Juil. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2731,
+    "lng": 1.5478,
     "referents": [
       {
         "role": "Référent technique",
@@ -351,9 +387,18 @@ const DEFAULT_SITES = [
     "foyers": 0,
     "typeSite": "En cours",
     "cantine": null,
-    "periode": "Juin 2025 – En cours",
+    "periode": "2025 – En cours",
     "capacityL": 400,
-    "referents": []
+    "lat": 47.2989,
+    "lng": 1.4797,
+    "referents": [
+      {
+        "role": "Référente (contact terrain)",
+        "nom": "Gwen",
+        "tel": "",
+        "email": ""
+      }
+    ]
   },
   {
     "id": "s15",
@@ -363,8 +408,10 @@ const DEFAULT_SITES = [
     "foyers": 0,
     "typeSite": "Extra",
     "cantine": null,
-    "periode": "2026",
+    "periode": "2025 – 2026",
     "capacityL": 400,
+    "lat": 47.3511,
+    "lng": 1.2219,
     "referents": []
   },
   {
@@ -377,6 +424,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Juin 2025 – Avril 2026",
     "capacityL": 400,
+    "lat": 47.4136,
+    "lng": 1.4358,
     "referents": [
       {
         "role": "Référente technique",
@@ -402,6 +451,8 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Oct. 2024 – Juin 2025",
     "capacityL": 400,
+    "lat": 47.2706,
+    "lng": 1.5878,
     "referents": [
       {
         "role": "Référent technique",
@@ -422,11 +473,13 @@ const DEFAULT_SITES = [
     "name": "Angé",
     "address": "Angé, 41400",
     "code": "ANGE",
-    "foyers": 0,
+    "foyers": 10,
     "typeSite": "Foyers",
     "cantine": null,
-    "periode": "2024 – 2025",
+    "periode": "Sept. 2024 – 2025",
     "capacityL": 400,
+    "lat": 47.3194,
+    "lng": 1.2153,
     "referents": []
   },
   {
@@ -437,9 +490,18 @@ const DEFAULT_SITES = [
     "foyers": 0,
     "typeSite": "En cours",
     "cantine": null,
-    "periode": "2025 – 2026",
+    "periode": "2025 – En cours",
     "capacityL": 400,
-    "referents": []
+    "lat": 47.3428,
+    "lng": 1.1878,
+    "referents": [
+      {
+        "role": "Référent (contact terrain)",
+        "nom": "Christophe",
+        "tel": "",
+        "email": ""
+      }
+    ]
   },
   {
     "id": "s20",
@@ -449,9 +511,18 @@ const DEFAULT_SITES = [
     "foyers": 0,
     "typeSite": "En cours",
     "cantine": null,
-    "periode": "2025 – 2026",
+    "periode": "2025 – En cours",
     "capacityL": 400,
-    "referents": []
+    "lat": 47.3947,
+    "lng": 1.3194,
+    "referents": [
+      {
+        "role": "Référent (contact terrain)",
+        "nom": "Willy",
+        "tel": "",
+        "email": ""
+      }
+    ]
   },
   {
     "id": "s21",
@@ -463,7 +534,23 @@ const DEFAULT_SITES = [
     "cantine": null,
     "periode": "Sept. 2024 – Avril 2026",
     "capacityL": 400,
+    "lat": 47.2844,
+    "lng": 1.5531,
     "referents": []
+  },
+  {
+    "id": "s22",
+    "name": "Saint-Aignan",
+    "address": "Saint-Aignan, 41110",
+    "code": "STAIG",
+    "foyers": 0,
+    "typeSite": "En cours",
+    "cantine": null,
+    "periode": "2025 – 2026",
+    "capacityL": 400,
+    "referents": [],
+    "lat": 47.2667,
+    "lng": 1.375
   }
 ];
 
@@ -1874,6 +1961,174 @@ const DEMO_ENTRIES = [
     "tempsMin": null,
     "commentaire": "Retrait 130 L compost mûr",
     "createdAt": "2026-04-01T10:00:00"
+  },
+  {
+    "id": "e116",
+    "siteId": "s18",
+    "date": "2024-09-13",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Inauguration officielle",
+    "createdAt": "2024-09-13T10:00:00"
+  },
+  {
+    "id": "e117",
+    "siteId": "s18",
+    "date": "2025-04-24",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "2ème visite de suivi",
+    "createdAt": "2025-04-24T10:00:00"
+  },
+  {
+    "id": "e118",
+    "siteId": "s18",
+    "date": "2025-09-27",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Bilan de site",
+    "createdAt": "2025-09-27T10:00:00"
+  },
+  {
+    "id": "e119",
+    "siteId": "s18",
+    "date": "2025-04-24",
+    "actionType": "transfert",
+    "volumeL": 695,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Transfert estimé (452 kg / 0.65)",
+    "createdAt": "2025-04-24T10:00:00"
+  },
+  {
+    "id": "e120",
+    "siteId": "s18",
+    "date": "2025-09-27",
+    "actionType": "recolte",
+    "volumeL": 166,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Récolte 166 L compost mûr",
+    "createdAt": "2025-09-27T10:00:00"
+  },
+  {
+    "id": "e121",
+    "siteId": "s15",
+    "date": "2025-06-18",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Réunion publique",
+    "createdAt": "2025-06-18T10:00:00"
+  },
+  {
+    "id": "e122",
+    "siteId": "s15",
+    "date": "2025-09-11",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Mise en place et inauguration officielle",
+    "createdAt": "2025-09-11T10:00:00"
+  },
+  {
+    "id": "e123",
+    "siteId": "s15",
+    "date": "2025-10-16",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "1ère visite de suivi",
+    "createdAt": "2025-10-16T10:00:00"
+  },
+  {
+    "id": "e124",
+    "siteId": "s15",
+    "date": "2026-03-31",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "2ème visite de suivi",
+    "createdAt": "2026-03-31T10:00:00"
+  },
+  {
+    "id": "e125",
+    "siteId": "s15",
+    "date": "2026-03-31",
+    "actionType": "transfert",
+    "volumeL": 955,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Transfert estimé (621 kg / 0.65)",
+    "createdAt": "2026-03-31T10:00:00"
+  },
+  {
+    "id": "e126",
+    "siteId": "s22",
+    "date": "2025-06-24",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Réunion publique",
+    "createdAt": "2025-06-24T10:00:00"
+  },
+  {
+    "id": "e127",
+    "siteId": "s22",
+    "date": "2025-09-24",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "Inauguration officielle",
+    "createdAt": "2025-09-24T10:00:00"
+  },
+  {
+    "id": "e128",
+    "siteId": "s22",
+    "date": "2025-10-16",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "1ère visite de suivi",
+    "createdAt": "2025-10-16T10:00:00"
+  },
+  {
+    "id": "e129",
+    "siteId": "s22",
+    "date": "2026-04-01",
+    "actionType": "visite",
+    "volumeL": null,
+    "observations": [],
+    "temperature": null,
+    "tempsMin": null,
+    "commentaire": "2ème visite de suivi",
+    "createdAt": "2026-04-01T10:00:00"
   }
 ];
 
@@ -2092,7 +2347,7 @@ function StatsParAnnee({ entries }) {
   );
 }
 
-function AdminSiteDetail({ site, entries, onBack, onLogout, onAddEntry }) {
+function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   return (
@@ -2103,7 +2358,10 @@ function AdminSiteDetail({ site, entries, onBack, onLogout, onAddEntry }) {
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: C.text }}>{site.name}</h1>
           <p style={{ color: C.muted, fontSize: 13, marginTop: 2 }}>{site.address} · Code : <code style={{ background: C.greenPale, color: C.green, padding: "1px 6px", borderRadius: 4 }}>{site.code}</code></p>
         </div>
-        <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={() => onEditSite(site)} style={{ background: "transparent", border: `1px solid ${C.green}`, color: C.green, padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontWeight: 600 }}>✏️ Modifier</button>
+          <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
+        </div>
       </div>
       {/* Site info */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
@@ -2136,7 +2394,9 @@ function AdminSiteDetail({ site, entries, onBack, onLogout, onAddEntry }) {
         <StatBox label="Compost valorisé" value={getLValorises(entries)} unit="L" color="#7A6B2D" />
         <StatBox label="Bacs OMR évités" value={getBacsOMR(getKgDetournes(entries))} unit="bacs" color="#5C2D7A" />
       </div>
+      <SiteMap sites={[site]} entries={allEntries} highlightSiteId={site.id} height={260} />
       <StatsParAnnee entries={entries} />
+      <SiteCharts entries={entries} />
       <button className="btn-green" onClick={onAddEntry} style={{ width: "100%", padding: 14, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer", marginBottom: 28 }}>
         ✏️ Ajouter une saisie pour ce site
       </button>
@@ -2147,9 +2407,9 @@ function AdminSiteDetail({ site, entries, onBack, onLogout, onAddEntry }) {
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite }) {
   const [detail, setDetail] = useState(null);
-  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} />;
+  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} />;
 
   const monthE = thisMonth(entries);
   const inactiveSites = sites.filter(s => { const d = daysSince(entries.filter(e => e.siteId === s.id)); return d === null || d > 30; });
@@ -2187,6 +2447,8 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite })
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Tous sites confondus</p>
         <StatsParAnnee entries={entries} />
       </div>
+      <SiteMap sites={sites} entries={entries} height={380} />
+      <AdminCharts sites={sites} entries={entries} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text }}>Sites de compostage</h2>
         <button className="btn-green" onClick={onAddSite} style={{ background: C.green, color: "#fff", border: "none", borderRadius: 10, padding: "10px 20px", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>+ Nouveau site</button>
@@ -2330,7 +2592,9 @@ function SiteScreen({ site, entries, onAddEntry, onLogout }) {
         ✏️ Nouvelle saisie
       </button>
 
+      <SiteMap sites={[site]} entries={entries} highlightSiteId={site.id} height={240} />
       <StatsParAnnee entries={entries} />
+      <SiteCharts entries={entries} />
 
       <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: C.text, marginBottom: 16 }}>Historique</h2>
       <EntryList entries={sorted} />
@@ -2525,27 +2789,38 @@ export default function App() {
   const [showAddSite, setShowAddSite] = useState(false);
   const [adminEntrySite, setAdminEntrySite] = useState(null);
 
+  const DATA_VERSION = 'v5';
+
   useEffect(() => {
     (async () => {
       try {
-        const [sitesSnap, entriesSnap] = await Promise.all([
-          getDocs(collection(db, 'sites')),
-          getDocs(collection(db, 'entries')),
-        ]);
-        const loadedSites = sitesSnap.docs.map(d => d.data());
-        const loadedEntries = entriesSnap.docs.map(d => d.data());
+        // Check data version — re-seed if outdated
+        const versionRef = doc(db, 'config', 'version');
+        const versionSnap = await getDoc(versionRef);
+        const needsReseed = !versionSnap.exists() || versionSnap.data().v !== DATA_VERSION;
 
-        // Seed initial data if Firestore is empty
-        if (loadedSites.length === 0) {
+        if (needsReseed) {
+          // Clear old data and re-seed with updated dataset
+          const [oldSites, oldEntries] = await Promise.all([
+            getDocs(collection(db, 'sites')),
+            getDocs(collection(db, 'entries')),
+          ]);
           const batch = writeBatch(db);
+          oldSites.docs.forEach(d => batch.delete(d.ref));
+          oldEntries.docs.forEach(d => batch.delete(d.ref));
           DEFAULT_SITES.forEach(s => batch.set(doc(db, 'sites', s.id), s));
           DEMO_ENTRIES.forEach(e => batch.set(doc(db, 'entries', e.id), e));
+          batch.set(versionRef, { v: DATA_VERSION });
           await batch.commit();
           setSites(DEFAULT_SITES);
           setEntries(DEMO_ENTRIES);
         } else {
-          setSites(loadedSites.sort((a, b) => a.name.localeCompare(b.name)));
-          setEntries(loadedEntries.sort((a, b) => b.date.localeCompare(a.date)));
+          const [sitesSnap, entriesSnap] = await Promise.all([
+            getDocs(collection(db, 'sites')),
+            getDocs(collection(db, 'entries')),
+          ]);
+          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
+          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
       } catch (err) {
         console.error('Firestore error:', err);
@@ -2576,6 +2851,11 @@ export default function App() {
     setShowEntry(false); setAdminEntrySite(null);
   };
 
+  const handleEditSite = (updated) => {
+    setSites(prev => prev.map(s => s.id === updated.id ? updated : s));
+    setEditSite(null);
+  };
+
   const addSite = async (siteData) => {
     const newSite = { ...siteData, id: `s${Date.now()}` };
     try {
@@ -2598,11 +2878,12 @@ export default function App() {
       <GlobalStyles />
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} />}
+        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
+        {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} />}
       </div>
     </>
   );
