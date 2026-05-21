@@ -2788,6 +2788,7 @@ export default function App() {
   const [showEntry, setShowEntry] = useState(false);
   const [showAddSite, setShowAddSite] = useState(false);
   const [adminEntrySite, setAdminEntrySite] = useState(null);
+  const [editSite, setEditSite] = useState(null);
 
   const DATA_VERSION = 'v5';
 
