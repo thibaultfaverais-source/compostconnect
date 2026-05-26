@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const KG_PER_LITRE = 0.65
 
 function getKg(entries) {
@@ -232,6 +234,3 @@ export function AnnualReportButton({ territory, sites, entries }) {
     </div>
   )
 }
-
-// Need useState import
-import { useState } from 'react'

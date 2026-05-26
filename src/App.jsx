@@ -2936,7 +2936,11 @@ export default function App() {
   const handleLogin = () => {
     const c = loginCode.trim().toUpperCase();
     if (!c) return;
-    if (c === adminCode) { setScreen("admin"); setLoginError(""); setLoginCode(""); }
+    if (c === SUPER_ADMIN_CODE) {
+      setIsSuperAdmin(true); setScreen("superadmin"); setLoginError(""); setLoginCode("");
+    } else if (c === adminCode) {
+      setScreen("admin"); setLoginError(""); setLoginCode("");
+    }
     else {
       const site = sites.find(s => s.code === c);
       if (site) { setCurrentSite(site); setScreen("site"); setLoginError(""); setLoginCode(""); }
