@@ -9,6 +9,7 @@ import EditSiteModal from './components/EditSiteModal.jsx';
 import NotificationBell from './components/Notifications.jsx';
 import AdminSettingsModal from './components/AdminSettings.jsx';
 import ReferentProfile from './components/ReferentProfile.jsx';
+import LogoIcon, { LogoFull } from './components/Logo.jsx';
 
 
 const ADMIN_CODE = "ADMIN";
@@ -2278,8 +2279,12 @@ function LoginScreen({ code, setCode, onLogin, error }) {
       <div style={{ position: "fixed", bottom: -100, left: -100, width: 350, height: 350, borderRadius: "50%", background: "rgba(122,79,45,0.07)", pointerEvents: "none" }} />
       <div style={{ width: "100%", maxWidth: 420, background: C.card, borderRadius: 24, padding: "48px 40px", border: `1px solid ${C.border}`, boxShadow: "0 8px 48px rgba(44,90,39,0.10)" }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div style={{ fontSize: 52, marginBottom: 14 }}>🌿</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 700, color: C.text, marginBottom: 8 }}>CompostConnect</h1>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+            <LogoIcon size={80} />
+          </div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 30, fontWeight: 700, color: C.text, marginBottom: 8 }}>
+            Compost<em>Connect</em>
+          </h1>
           <p style={{ color: C.muted, fontSize: 14 }}>Suivi des composteurs partagés</p>
         </div>
         <Field label="Code d'accès">
@@ -2287,8 +2292,30 @@ function LoginScreen({ code, setCode, onLogin, error }) {
           {error && <p style={{ color: C.danger, fontSize: 13, marginTop: 8 }}>{error}</p>}
         </Field>
         <button className="btn-green" onClick={onLogin} style={{ width: "100%", padding: 15, background: C.green, color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: "pointer" }}>Accéder →</button>
-        <p style={{ textAlign: "center", fontSize: 12, color: C.muted, marginTop: 28, lineHeight: 1.8 }}>Référents · utilisez le code de votre site<br />Coordinateurs · utilisez le code <strong>ADMIN</strong></p>
+        <p style={{ textAlign: "center", fontSize: 12, color: C.muted, marginTop: 28 }}>Entrez le code de votre site pour accéder à votre espace.</p>
       </div>
+    </div>
+  );
+}
+
+// ─── Site Code Changer ───────────────────────────────────────────────────────
+
+function SiteCodeChanger({ siteId, currentCode, onChangeSiteCode }) {
+  const [editing, setEditing] = useState(false);
+  const [val, setVal] = useState('');
+  if (!editing) return (
+    <button onClick={() => setEditing(true)} style={{ marginLeft: 'auto', background: 'transparent', border: `1px solid #E0D5C5`, color: '#7A8470', padding: '4px 12px', borderRadius: 7, cursor: 'pointer', fontSize: 12, fontFamily: "'DM Sans', sans-serif" }}>
+      Modifier
+    </button>
+  );
+  return (
+    <div style={{ marginLeft: 'auto', display: 'flex', gap: 6, alignItems: 'center' }}>
+      <input value={val} onChange={e => setVal(e.target.value.toUpperCase())} placeholder={currentCode} maxLength={10}
+        style={{ padding: '5px 10px', border: '1.5px solid #E0D5C5', borderRadius: 7, fontSize: 13, fontFamily: "'DM Sans',sans-serif", letterSpacing: '.08em', fontWeight: 600, width: 110, outline: 'none' }} />
+      <button onClick={() => { onChangeSiteCode(siteId, val); setEditing(false); setVal(''); }}
+        style={{ background: '#2D5A27', color: '#fff', border: 'none', borderRadius: 7, padding: '5px 12px', cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans',sans-serif", fontWeight: 600 }}>OK</button>
+      <button onClick={() => { setEditing(false); setVal(''); }}
+        style={{ background: 'transparent', border: 'none', color: '#7A8470', cursor: 'pointer', fontSize: 18, lineHeight: 1 }}>✕</button>
     </div>
   );
 }
@@ -2350,7 +2377,7 @@ function StatsParAnnee({ entries }) {
   );
 }
 
-function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite }) {
+function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onChangeSiteCode }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   return (
@@ -2372,6 +2399,13 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
         {site.foyers > 0 && <Badge label={`${site.foyers} foyers`} color={C.muted} bg="#F0EFEA" />}
         {site.cantine && site.cantine !== "Non concerné" && <Badge label={site.cantine} color="#2D4F7A" bg="#E3EEFA" />}
         {site.periode && <span style={{ fontSize: 12, color: C.muted, alignSelf: "center" }}>📅 {site.periode}</span>}
+      </div>
+
+      {/* Site code display */}
+      <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: '12px 20px', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span style={{ fontSize: 13, color: C.muted }}>🔑 Code d'accès référent :</span>
+        <code style={{ background: C.greenPale, color: C.green, padding: '3px 10px', borderRadius: 6, fontWeight: 700, fontSize: 15 }}>{site.code}</code>
+        <SiteCodeChanger siteId={site.id} currentCode={site.code} onChangeSiteCode={onChangeSiteCode} />
       </div>
 
       {/* Referents */}
@@ -2410,9 +2444,9 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode }) {
   const [detail, setDetail] = useState(null);
-  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} />;
+  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} />;
 
   const monthE = thisMonth(entries);
   const inactiveSites = sites.filter(s => { const d = daysSince(entries.filter(e => e.siteId === s.id)); return d === null || d > 30; });
@@ -2421,8 +2455,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
         <div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, fontWeight: 700, color: C.text }}>🌿 CompostConnect</h1>
-          <p style={{ color: C.muted, marginTop: 4, fontSize: 14 }}>Vue d'ensemble — Coordinateur</p>
+          <LogoFull size={44} dark />
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <NotificationBell notifications={notifications} onMarkRead={onMarkRead} onMarkAllRead={onMarkAllRead} />
@@ -2803,6 +2836,7 @@ export default function App() {
   const [adminSettings, setAdminSettings] = useState({ adminEmail: 'thibault.faverais@perso.be', emailAlerts: true, alertTypes: ['odeur','moucherons','trop_sec','trop_humide'] });
   const [showSettings, setShowSettings] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [adminCode, setAdminCode] = useState('ADMIN');
 
   const DATA_VERSION = 'v5';
 
@@ -2837,11 +2871,15 @@ export default function App() {
           setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
           setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
-        // Load notifications and admin settings
-        const [notifSnap, settingsSnap] = await Promise.all([
+        // Load notifications, admin settings and admin code
+        const [notifSnap, settingsSnap, codesSnap] = await Promise.all([
           getDocs(collection(db, 'notifications')),
           getDoc(doc(db, 'config', 'admin')),
+          getDoc(doc(db, 'config', 'codes')),
         ]);
+        if (codesSnap.exists() && codesSnap.data().adminCode) {
+          setAdminCode(codesSnap.data().adminCode);
+        }
         const notifs = notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
         setNotifications(notifs);
         if (settingsSnap.exists()) setAdminSettings(settingsSnap.data());
@@ -2857,7 +2895,7 @@ export default function App() {
   const handleLogin = () => {
     const c = loginCode.trim().toUpperCase();
     if (!c) return;
-    if (c === ADMIN_CODE) { setScreen("admin"); setLoginError(""); setLoginCode(""); }
+    if (c === adminCode) { setScreen("admin"); setLoginError(""); setLoginCode(""); }
     else {
       const site = sites.find(s => s.code === c);
       if (site) { setCurrentSite(site); setScreen("site"); setLoginError(""); setLoginCode(""); }
@@ -2926,6 +2964,20 @@ export default function App() {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
+  const changeSiteCode = async (siteId, newCode) => {
+    const code = newCode.trim().toUpperCase();
+    if (code.length < 3) { alert('Code trop court (min. 3 caractères)'); return; }
+    if (sites.some(s => s.id !== siteId && s.code === code)) { alert('Ce code est déjà utilisé par un autre site.'); return; }
+    if (code === adminCode) { alert('Ce code est réservé à l'administrateur.'); return; }
+    const site = sites.find(s => s.id === siteId);
+    if (!site) return;
+    const updated = { ...site, code };
+    try {
+      await setDoc(doc(db, 'sites', siteId), updated);
+      setSites(prev => prev.map(s => s.id === siteId ? updated : s));
+    } catch (e) { alert('Erreur lors de la modification.'); }
+  };
+
   const handleSiteUpdate = (updated) => {
     setSites(prev => prev.map(s => s.id === updated.id ? updated : s));
     if (currentSite?.id === updated.id) setCurrentSite(updated);
@@ -2959,7 +3011,7 @@ export default function App() {
       <GlobalStyles />
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} />}
+        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}

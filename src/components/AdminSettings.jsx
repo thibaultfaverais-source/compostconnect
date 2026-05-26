@@ -26,6 +26,8 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
     emailAlerts: true,
     alertTypes: ['odeur', 'moucherons', 'trop_sec', 'trop_humide'],
   })
+  const [newAdminCode, setNewAdminCode] = useState('')
+  const [showCodeField, setShowCodeField] = useState(false)
   const [saving, setSaving] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
@@ -52,7 +54,12 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
     setSaving(true)
     try {
       await setDoc(doc(db, 'config', 'admin'), settings)
-      onSettingsLoaded(settings)
+      if (newAdminCode.trim().length >= 4) {
+        await setDoc(doc(db, 'config', 'codes'), { adminCode: newAdminCode.trim().toUpperCase() })
+        onSettingsLoaded({ ...settings, newAdminCode: newAdminCode.trim().toUpperCase() })
+      } else {
+        onSettingsLoaded(settings)
+      }
       onClose()
     } catch (e) { alert('Erreur sauvegarde') }
     setSaving(false)
@@ -124,6 +131,28 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
             </div>
           </div>
         )}
+
+        {/* Admin code */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showCodeField ? 10 : 0 }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: C.text, margin: 0 }}>🔑 Code d'accès administrateur</p>
+            <button onClick={() => setShowCodeField(s => !s)} style={{ background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 7, padding: '5px 12px', fontSize: 12, color: C.muted, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}>
+              {showCodeField ? 'Annuler' : 'Modifier'}
+            </button>
+          </div>
+          {showCodeField && (
+            <div style={{ marginTop: 10 }}>
+              <p style={{ fontSize: 12, color: C.muted, marginBottom: 8 }}>Nouveau code (min. 4 caractères) — partagez-le uniquement avec les coordinateurs.</p>
+              <input
+                value={newAdminCode}
+                onChange={e => setNewAdminCode(e.target.value.toUpperCase())}
+                placeholder="Ex : BTF2026"
+                maxLength={20}
+                style={{ ...inputStyle, letterSpacing: '.1em', fontWeight: 600 }}
+              />
+            </div>
+          )}
+        </div>
 
         <div style={{ display: 'flex', gap: 12 }}>
           <button onClick={onClose} style={{ flex: 1, padding: 13, background: 'transparent', border: `1.5px solid ${C.border}`, borderRadius: 12, cursor: 'pointer', fontSize: 14, color: C.muted, fontFamily: "'DM Sans', sans-serif" }}>Annuler</button>
