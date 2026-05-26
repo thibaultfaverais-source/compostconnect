@@ -89,12 +89,14 @@ function AddEventModal({ sites, onSave, onClose, defaultSiteId = null }) {
           <input value={form.title} onChange={e => set('title', e.target.value)} placeholder="Ex : Café compost mensuel" style={inputStyle} />
         </Field>
 
-        <Field label="Site concerné">
-          <select value={form.siteId} onChange={e => set('siteId', e.target.value)} style={inputStyle}>
-            <option value="">Tous les sites</option>
-            {sites.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
-        </Field>
+        {!defaultSiteId && (
+          <Field label="Site concerné">
+            <select value={form.siteId} onChange={e => set('siteId', e.target.value)} style={inputStyle}>
+              <option value="">Tous les sites</option>
+              {sites.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+          </Field>
+        )}
 
         <Field label="Description (optionnel)">
           <textarea value={form.description} onChange={e => set('description', e.target.value)} placeholder="Informations complémentaires…" rows={2} style={{ ...inputStyle, resize: 'vertical' }} />
@@ -136,7 +138,7 @@ export function EventsList({ events, sites, isAdmin, siteId = null, onDelete }) 
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
                 <p style={{ fontWeight: 600, fontSize: 14, color: C.text, margin: 0 }}>{ev.title}</p>
-                {isAdmin && onDelete && (
+                {onDelete && (
                   <button onClick={() => onDelete(ev.id)} style={{ background: 'transparent', border: 'none', color: C.muted, cursor: 'pointer', fontSize: 16, lineHeight: 1, flexShrink: 0 }}>✕</button>
                 )}
               </div>
@@ -158,11 +160,9 @@ export default function EventsSection({ events, sites, isAdmin, siteId, onAddEve
     <div style={{ marginBottom: 32 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: C.text }}>📅 Prochains événements</h2>
-        {isAdmin && (
-          <button onClick={() => setShowAdd(true)} style={{ background: C.green, color: '#fff', border: 'none', borderRadius: 9, padding: '8px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
-            + Événement
-          </button>
-        )}
+        <button onClick={() => setShowAdd(true)} style={{ background: C.green, color: '#fff', border: 'none', borderRadius: 9, padding: '8px 16px', cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: "'DM Sans', sans-serif" }}>
+          + Événement
+        </button>
       </div>
       <EventsList events={events} sites={sites} isAdmin={isAdmin} siteId={siteId} onDelete={onDeleteEvent} />
       {showAdd && <AddEventModal sites={sites} defaultSiteId={siteId} onSave={ev => { onAddEvent(ev); setShowAdd(false) }} onClose={() => setShowAdd(false)} />}

@@ -2593,7 +2593,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
-function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp }) {
+function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
@@ -2651,7 +2651,7 @@ function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile, events
         <ExportButton label="📥 Excel" onClick={() => exportSite(site, entries)} small />
       </div>
 
-      <EventsSection events={events} sites={sites} isAdmin={false} siteId={site.id} />
+      <EventsSection events={events} sites={sites} isAdmin={true} siteId={site.id} onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
 
       <SiteMap sites={[site]} entries={entries} highlightSiteId={site.id} height={240} />
       <StatsParAnnee entries={entries} />
@@ -3044,7 +3044,7 @@ export default function App() {
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} />}
         {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} />}
-        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} />}
+        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
