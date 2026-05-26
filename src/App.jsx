@@ -2848,6 +2848,8 @@ function AddSiteModal({ sites, onSave, onClose }) {
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 
+const SUPER_ADMIN_CODE = 'SUPERADMIN2026';
+
 export default function App() {
   const [screen, setScreen] = useState("login");
   const [loginCode, setLoginCode] = useState("");
@@ -2872,9 +2874,8 @@ export default function App() {
   const [territories, setTerritories] = useState([]);
   const [currentTerritory, setCurrentTerritory] = useState(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-  const SUPER_ADMIN_CODE = 'SUPERADMIN2026';
 
-  const DATA_VERSION = 'v5';
+  const DATA_VERSION = 'v6';
 
   useEffect(() => {
     (async () => {
@@ -2908,16 +2909,15 @@ export default function App() {
           setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
         // Load notifications, admin settings and admin code
-        const [notifSnap, settingsSnap, codesSnap, eventsSnap] = await Promise.all([
+        const [notifSnap, settingsSnap, codesSnap, eventsSnap, territoriesSnap] = await Promise.all([
           getDocs(collection(db, 'notifications')),
           getDoc(doc(db, 'config', 'admin')),
           getDoc(doc(db, 'config', 'codes')),
           getDocs(collection(db, 'events')),
           getDocs(collection(db, 'territories')),
         ]);
-        const tevsSnap = await getDocs(collection(db, 'territories'));
         setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
-        setTerritories(tevsSnap.docs.map(d => d.data()));
+        setTerritories(territoriesSnap.docs.map(d => d.data()));
         if (codesSnap.exists() && codesSnap.data().adminCode) {
           setAdminCode(codesSnap.data().adminCode);
         }
@@ -3068,7 +3068,7 @@ export default function App() {
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} />}
+        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} onOpenSettings={() => setShowSettings(true)} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}
