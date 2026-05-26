@@ -14,6 +14,10 @@ import EventsSection from './components/Events.jsx';
 import { exportGlobal, exportSite, ExportButton } from './components/ExportExcel.jsx';
 import HelpGuide from './components/HelpGuide.jsx';
 import LegalPage from './components/Legal.jsx';
+import { ICalButton } from './components/ICalExport.jsx';
+import { AnnualReportButton } from './components/AnnualReport.jsx';
+import PublicDashboard from './components/PublicDashboard.jsx';
+import SuperAdminView from './components/SuperAdmin.jsx';
 
 
 const ADMIN_CODE = "ADMIN";
@@ -2276,7 +2280,7 @@ function EntryList({ entries }) {
 
 // ─── Login ────────────────────────────────────────────────────────────────────
 
-function LoginScreen({ code, setCode, onLogin, error, onLegal }) {
+function LoginScreen({ code, setCode, onLogin, error, onLegal, onPublic }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(155deg, #E8D8BE 0%, #F4EBD9 55%, #EEE4CF 100%)", padding: 24 }}>
       <div style={{ position: "fixed", top: -120, right: -120, width: 450, height: 450, borderRadius: "50%", background: "rgba(45,90,39,0.05)", pointerEvents: "none" }} />
@@ -2300,6 +2304,10 @@ function LoginScreen({ code, setCode, onLogin, error, onLegal }) {
         <p style={{ textAlign: "center", marginTop: 16 }}>
           <button onClick={onLegal} style={{ background: "transparent", border: "none", fontSize: 11, color: C.muted, cursor: "pointer", textDecoration: "underline", fontFamily: "'DM Sans', sans-serif" }}>
             Mentions légales & CGU
+          </button>
+          <span style={{ color: C.muted, margin: "0 6px" }}>·</span>
+          <button onClick={onPublic} style={{ background: "transparent", border: "none", fontSize: 11, color: C.green, cursor: "pointer", textDecoration: "underline", fontFamily: "'DM Sans', sans-serif" }}>
+            📊 Statistiques publiques
           </button>
         </p>
       </div>
@@ -2468,6 +2476,8 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <NotificationBell notifications={notifications} onMarkRead={onMarkRead} onMarkAllRead={onMarkAllRead} />
+          <ICalButton events={events} sites={sites} small />
+          <AnnualReportButton territory={currentTerritory} sites={sites} entries={entries} />
           <ExportButton label="📥 Excel" onClick={() => exportGlobal(sites, entries)} small />
           <button onClick={onOpenHelp} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>❓</button>
           <button onClick={onOpenSettings} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>⚙️</button>
@@ -2858,6 +2868,11 @@ export default function App() {
   const [events, setEvents] = useState([]);
   const [showHelp, setShowHelp] = useState(false);
   const [showLegal, setShowLegal] = useState(false);
+  const [showPublic, setShowPublic] = useState(false);
+  const [territories, setTerritories] = useState([]);
+  const [currentTerritory, setCurrentTerritory] = useState(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const SUPER_ADMIN_CODE = 'SUPERADMIN2026';
 
   const DATA_VERSION = 'v5';
 
@@ -2898,8 +2913,11 @@ export default function App() {
           getDoc(doc(db, 'config', 'admin')),
           getDoc(doc(db, 'config', 'codes')),
           getDocs(collection(db, 'events')),
+          getDocs(collection(db, 'territories')),
         ]);
+        const tevsSnap = await getDocs(collection(db, 'territories'));
         setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
+        setTerritories(tevsSnap.docs.map(d => d.data()));
         if (codesSnap.exists() && codesSnap.data().adminCode) {
           setAdminCode(codesSnap.data().adminCode);
         }
@@ -2987,6 +3005,8 @@ export default function App() {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
+  const addTerritory = (t) => setTerritories(prev => [...prev, t]);
+
   const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => a.date.localeCompare(b.date)));
 
   const deleteEvent = async (evId) => {
@@ -3042,7 +3062,8 @@ export default function App() {
     <>
       <GlobalStyles />
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
-        {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} />}
+        {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
+        {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} />}
         {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
@@ -3052,6 +3073,7 @@ export default function App() {
         {showSettings && <AdminSettingsModal onClose={() => setShowSettings(false)} onSettingsLoaded={setAdminSettings} />}
         {showProfile && currentSite && <ReferentProfile site={currentSite} onSave={handleSiteUpdate} onClose={() => setShowProfile(false)} />}
         {showHelp && <HelpGuide isAdmin={screen === 'admin'} onClose={() => setShowHelp(false)} />}
+        {showPublic && <PublicDashboard onClose={() => setShowPublic(false)} />}
         {showLegal && <LegalPage onClose={() => setShowLegal(false)} />}
       </div>
     </>
