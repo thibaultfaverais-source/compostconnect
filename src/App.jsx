@@ -6,6 +6,9 @@ import {
 import SiteMap from './components/SiteMap.jsx';
 import { SiteCharts, AdminCharts } from './components/Charts.jsx';
 import EditSiteModal from './components/EditSiteModal.jsx';
+import NotificationBell from './components/Notifications.jsx';
+import AdminSettingsModal from './components/AdminSettings.jsx';
+import ReferentProfile from './components/ReferentProfile.jsx';
 
 
 const ADMIN_CODE = "ADMIN";
@@ -2407,7 +2410,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings }) {
   const [detail, setDetail] = useState(null);
   if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} />;
 
@@ -2421,7 +2424,11 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 34, fontWeight: 700, color: C.text }}>🌿 CompostConnect</h1>
           <p style={{ color: C.muted, marginTop: 4, fontSize: 14 }}>Vue d'ensemble — Coordinateur</p>
         </div>
-        <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 18px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <NotificationBell notifications={notifications} onMarkRead={onMarkRead} onMarkAllRead={onMarkAllRead} />
+          <button onClick={onOpenSettings} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>⚙️</button>
+          <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 18px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
+        </div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14, marginBottom: 36 }}>
@@ -2541,7 +2548,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
-function SiteScreen({ site, entries, onAddEntry, onLogout }) {
+function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
@@ -2560,7 +2567,10 @@ function SiteScreen({ site, entries, onAddEntry, onLogout }) {
             <p style={{ fontSize: 13, opacity: 0.75 }}>📍 {site.address}</p>
             {site.referents?.[0] && <p style={{ fontSize: 13, opacity: 0.75, marginTop: 3 }}>👤 {site.referents[0].nom}{site.referents?.[1] ? ` · ${site.referents[1].nom}` : ''}</p>}
           </div>
-          <button onClick={onLogout} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>Déconnexion</button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={onOpenProfile} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>👤 Mes infos</button>
+            <button onClick={onLogout} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>Déconnexion</button>
+          </div>
         </div>
         <div style={{ display: "flex", gap: 32, marginTop: 24, flexWrap: "wrap" }}>
           <div>
@@ -2789,6 +2799,10 @@ export default function App() {
   const [showAddSite, setShowAddSite] = useState(false);
   const [adminEntrySite, setAdminEntrySite] = useState(null);
   const [editSite, setEditSite] = useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const [adminSettings, setAdminSettings] = useState({ adminEmail: 'thibault.faverais@perso.be', emailAlerts: true, alertTypes: ['odeur','moucherons','trop_sec','trop_humide'] });
+  const [showSettings, setShowSettings] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const DATA_VERSION = 'v5';
 
@@ -2823,6 +2837,14 @@ export default function App() {
           setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
           setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
+        // Load notifications and admin settings
+        const [notifSnap, settingsSnap] = await Promise.all([
+          getDocs(collection(db, 'notifications')),
+          getDoc(doc(db, 'config', 'admin')),
+        ]);
+        const notifs = notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+        setNotifications(notifs);
+        if (settingsSnap.exists()) setAdminSettings(settingsSnap.data());
       } catch (err) {
         console.error('Firestore error:', err);
         setSites(DEFAULT_SITES);
@@ -2848,8 +2870,66 @@ export default function App() {
     try {
       await setDoc(doc(db, 'entries', newEntry.id), newEntry);
       setEntries(prev => [newEntry, ...prev]);
+
+      // Create notification + send email if problems reported
+      const problemObs = (newEntry.observations || []).filter(o => ['odeur','moucherons','trop_sec','trop_humide'].includes(o));
+      if (problemObs.length > 0) {
+        const site = sites.find(s => s.id === newEntry.siteId);
+        const notif = {
+          id: `n${Date.now()}`,
+          siteId: newEntry.siteId,
+          siteName: site?.name || '?',
+          observations: problemObs,
+          date: newEntry.date,
+          commentaire: newEntry.commentaire || '',
+          read: false,
+          createdAt: newEntry.createdAt,
+        };
+        await setDoc(doc(db, 'notifications', notif.id), notif);
+        setNotifications(prev => [notif, ...prev]);
+
+        // Send email alert
+        const alertTypes = adminSettings.alertTypes || [];
+        const shouldEmail = adminSettings.emailAlerts && problemObs.some(o => alertTypes.includes(o));
+        if (shouldEmail) {
+          try {
+            await fetch('/api/send-alert', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                siteName: site?.name || '?',
+                siteAddress: site?.address || '',
+                referentName: site?.referents?.[0]?.nom || '',
+                observations: problemObs,
+                date: newEntry.date,
+                commentaire: newEntry.commentaire || '',
+                adminEmail: adminSettings.adminEmail,
+              }),
+            });
+          } catch (e) { console.error('Email error:', e); }
+        }
+      }
     } catch (err) { console.error('Save entry error:', err); }
     setShowEntry(false); setAdminEntrySite(null);
+  };
+
+  const markRead = async (id) => {
+    try {
+      await setDoc(doc(db, 'notifications', id), { read: true }, { merge: true });
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    } catch (e) {}
+  };
+
+  const markAllRead = async () => {
+    const unread = notifications.filter(n => !n.read);
+    await Promise.all(unread.map(n => setDoc(doc(db, 'notifications', n.id), { read: true }, { merge: true })));
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const handleSiteUpdate = (updated) => {
+    setSites(prev => prev.map(s => s.id === updated.id ? updated : s));
+    if (currentSite?.id === updated.id) setCurrentSite(updated);
+    setShowProfile(false);
   };
 
   const handleEditSite = (updated) => {
@@ -2879,12 +2959,14 @@ export default function App() {
       <GlobalStyles />
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} />}
-        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} />}
+        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} />}
+        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
         {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} />}
+        {showSettings && <AdminSettingsModal onClose={() => setShowSettings(false)} onSettingsLoaded={setAdminSettings} />}
+        {showProfile && currentSite && <ReferentProfile site={currentSite} onSave={handleSiteUpdate} onClose={() => setShowProfile(false)} />}
       </div>
     </>
   );
