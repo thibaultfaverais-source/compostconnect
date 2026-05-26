@@ -10,6 +10,10 @@ import NotificationBell from './components/Notifications.jsx';
 import AdminSettingsModal from './components/AdminSettings.jsx';
 import ReferentProfile from './components/ReferentProfile.jsx';
 import LogoIcon, { LogoFull } from './components/Logo.jsx';
+import EventsSection from './components/Events.jsx';
+import { exportGlobal, exportSite, ExportButton } from './components/ExportExcel.jsx';
+import HelpGuide from './components/HelpGuide.jsx';
+import LegalPage from './components/Legal.jsx';
 
 
 const ADMIN_CODE = "ADMIN";
@@ -2272,7 +2276,7 @@ function EntryList({ entries }) {
 
 // ─── Login ────────────────────────────────────────────────────────────────────
 
-function LoginScreen({ code, setCode, onLogin, error }) {
+function LoginScreen({ code, setCode, onLogin, error, onLegal }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(155deg, #E8D8BE 0%, #F4EBD9 55%, #EEE4CF 100%)", padding: 24 }}>
       <div style={{ position: "fixed", top: -120, right: -120, width: 450, height: 450, borderRadius: "50%", background: "rgba(45,90,39,0.05)", pointerEvents: "none" }} />
@@ -2293,6 +2297,11 @@ function LoginScreen({ code, setCode, onLogin, error }) {
         </Field>
         <button className="btn-green" onClick={onLogin} style={{ width: "100%", padding: 15, background: C.green, color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: "pointer" }}>Accéder →</button>
         <p style={{ textAlign: "center", fontSize: 12, color: C.muted, marginTop: 28 }}>Entrez le code de votre site pour accéder à votre espace.</p>
+        <p style={{ textAlign: "center", marginTop: 16 }}>
+          <button onClick={onLegal} style={{ background: "transparent", border: "none", fontSize: 11, color: C.muted, cursor: "pointer", textDecoration: "underline", fontFamily: "'DM Sans', sans-serif" }}>
+            Mentions légales & CGU
+          </button>
+        </p>
       </div>
     </div>
   );
@@ -2444,7 +2453,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp }) {
   const [detail, setDetail] = useState(null);
   if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} />;
 
@@ -2459,6 +2468,8 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <NotificationBell notifications={notifications} onMarkRead={onMarkRead} onMarkAllRead={onMarkAllRead} />
+          <ExportButton label="📥 Excel" onClick={() => exportGlobal(sites, entries)} small />
+          <button onClick={onOpenHelp} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>❓</button>
           <button onClick={onOpenSettings} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>⚙️</button>
           <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 18px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
         </div>
@@ -2482,6 +2493,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
         </div>
       )}
 
+      <EventsSection events={events} sites={sites} isAdmin onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
       <div style={{ marginBottom: 8 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text, marginBottom: 4 }}>Bilan global</h2>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Tous sites confondus</p>
@@ -2581,7 +2593,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
-function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile }) {
+function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
@@ -2600,8 +2612,9 @@ function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile }) {
             <p style={{ fontSize: 13, opacity: 0.75 }}>📍 {site.address}</p>
             {site.referents?.[0] && <p style={{ fontSize: 13, opacity: 0.75, marginTop: 3 }}>👤 {site.referents[0].nom}{site.referents?.[1] ? ` · ${site.referents[1].nom}` : ''}</p>}
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button onClick={onOpenProfile} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>👤 Mes infos</button>
+            <button onClick={onOpenHelp} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>❓</button>
             <button onClick={onLogout} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", padding: "8px 14px", borderRadius: 8, cursor: "pointer", fontSize: 12 }}>Déconnexion</button>
           </div>
         </div>
@@ -2631,9 +2644,14 @@ function SiteScreen({ site, entries, onAddEntry, onLogout, onOpenProfile }) {
         </div>
       ); })()}
 
-      <button className="btn-green" onClick={onAddEntry} style={{ width: "100%", padding: 16, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 16, fontWeight: 600, cursor: "pointer", marginBottom: 28 }}>
-        ✏️ Nouvelle saisie
-      </button>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 28 }}>
+        <button className="btn-green" onClick={onAddEntry} style={{ flex: 1, padding: 14, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer" }}>
+          ✏️ Nouvelle saisie
+        </button>
+        <ExportButton label="📥 Excel" onClick={() => exportSite(site, entries)} small />
+      </div>
+
+      <EventsSection events={events} sites={sites} isAdmin={false} siteId={site.id} />
 
       <SiteMap sites={[site]} entries={entries} highlightSiteId={site.id} height={240} />
       <StatsParAnnee entries={entries} />
@@ -2837,6 +2855,9 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [adminCode, setAdminCode] = useState('ADMIN');
+  const [events, setEvents] = useState([]);
+  const [showHelp, setShowHelp] = useState(false);
+  const [showLegal, setShowLegal] = useState(false);
 
   const DATA_VERSION = 'v5';
 
@@ -2872,11 +2893,13 @@ export default function App() {
           setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
         // Load notifications, admin settings and admin code
-        const [notifSnap, settingsSnap, codesSnap] = await Promise.all([
+        const [notifSnap, settingsSnap, codesSnap, eventsSnap] = await Promise.all([
           getDocs(collection(db, 'notifications')),
           getDoc(doc(db, 'config', 'admin')),
           getDoc(doc(db, 'config', 'codes')),
+          getDocs(collection(db, 'events')),
         ]);
+        setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
         if (codesSnap.exists() && codesSnap.data().adminCode) {
           setAdminCode(codesSnap.data().adminCode);
         }
@@ -2964,6 +2987,15 @@ export default function App() {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
+  const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => a.date.localeCompare(b.date)));
+
+  const deleteEvent = async (evId) => {
+    try {
+      await deleteDoc(doc(db, 'events', evId));
+      setEvents(prev => prev.filter(e => e.id !== evId));
+    } catch (e) {}
+  };
+
   const changeSiteCode = async (siteId, newCode) => {
     const code = newCode.trim().toUpperCase();
     if (code.length < 3) { alert('Code trop court (min. 3 caractères)'); return; }
@@ -3010,15 +3042,17 @@ export default function App() {
     <>
       <GlobalStyles />
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
-        {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} />}
-        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} />}
+        {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} />}
+        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} />}
+        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}
         {adminEntrySite && <AddEntryModal siteId={adminEntrySite.id} siteName={adminEntrySite.name} isAdmin onSave={addEntry} onClose={() => setAdminEntrySite(null)} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
         {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} />}
         {showSettings && <AdminSettingsModal onClose={() => setShowSettings(false)} onSettingsLoaded={setAdminSettings} />}
         {showProfile && currentSite && <ReferentProfile site={currentSite} onSave={handleSiteUpdate} onClose={() => setShowProfile(false)} />}
+        {showHelp && <HelpGuide isAdmin={screen === 'admin'} onClose={() => setShowHelp(false)} />}
+        {showLegal && <LegalPage onClose={() => setShowLegal(false)} />}
       </div>
     </>
   );
