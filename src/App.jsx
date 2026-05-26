@@ -2968,7 +2968,7 @@ export default function App() {
     const code = newCode.trim().toUpperCase();
     if (code.length < 3) { alert('Code trop court (min. 3 caractères)'); return; }
     if (sites.some(s => s.id !== siteId && s.code === code)) { alert('Ce code est déjà utilisé par un autre site.'); return; }
-    if (code === adminCode) { alert('Ce code est réservé à l'administrateur.'); return; }
+    if (code === adminCode) { alert("Ce code est réservé à l'administrateur."); return; }
     const site = sites.find(s => s.id === siteId);
     if (!site) return;
     const updated = { ...site, code };
