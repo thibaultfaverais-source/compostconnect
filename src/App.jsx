@@ -2940,7 +2940,7 @@ export default function App() {
             id: 'smieeom', name: 'SMIEEOM Val de Cher',
             adminCode: loadedAdminCode,
             adminEmail: settingsSnap.exists() ? (settingsSnap.data().adminEmail || '') : '',
-            color: '#2D5A27', description: 'Val de Cher — territoire d'origine',
+            color: '#2D5A27', description: "Val de Cher — territoire d'origine",
             createdAt: new Date().toISOString(),
           };
           await setDoc(doc(db, 'territories', 'smieeom'), defaultTerritory);
