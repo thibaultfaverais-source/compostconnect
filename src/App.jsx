@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from './firebase.js';
 import {
   collection, doc, getDocs, setDoc, writeBatch, getDoc, deleteDoc
@@ -2846,6 +2846,30 @@ function AddSiteModal({ sites, onSave, onClose }) {
   );
 }
 
+// ─── Error Boundary ──────────────────────────────────────────────────────────
+
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { error: null }; }
+  static getDerivedStateFromError(error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ padding: 32, fontFamily: "'DM Sans', sans-serif", maxWidth: 600, margin: "60px auto" }}>
+          <h2 style={{ color: '#BE4B48', marginBottom: 12 }}>⚠️ Erreur d'affichage</h2>
+          <p style={{ color: '#4A5A48', marginBottom: 16 }}>Un problème technique est survenu. Message :</p>
+          <pre style={{ background: '#F4EBD9', padding: 16, borderRadius: 8, fontSize: 12, whiteSpace: 'pre-wrap', color: '#1C2B19' }}>
+            {this.state.error.message}
+          </pre>
+          <button onClick={() => window.location.reload()} style={{ marginTop: 20, padding: '10px 20px', background: '#2D5A27', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", fontSize: 14 }}>
+            Recharger la page
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 
 const SUPER_ADMIN_CODE = 'SUPERADMIN2026';
@@ -2880,50 +2904,51 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        // Check data version — re-seed if outdated
-        const versionRef = doc(db, 'config', 'version');
-        const versionSnap = await getDoc(versionRef);
-        const needsReseed = !versionSnap.exists() || versionSnap.data().v !== DATA_VERSION;
-
-        if (needsReseed) {
-          // Clear old data and re-seed with updated dataset
-          const [oldSites, oldEntries] = await Promise.all([
-            getDocs(collection(db, 'sites')),
-            getDocs(collection(db, 'entries')),
-          ]);
-          const batch = writeBatch(db);
-          oldSites.docs.forEach(d => batch.delete(d.ref));
-          oldEntries.docs.forEach(d => batch.delete(d.ref));
-          DEFAULT_SITES.forEach(s => batch.set(doc(db, 'sites', s.id), s));
-          DEMO_ENTRIES.forEach(e => batch.set(doc(db, 'entries', e.id), e));
-          batch.set(versionRef, { v: DATA_VERSION });
-          await batch.commit();
-          setSites(DEFAULT_SITES);
-          setEntries(DEMO_ENTRIES);
-        } else {
-          const [sitesSnap, entriesSnap] = await Promise.all([
-            getDocs(collection(db, 'sites')),
-            getDocs(collection(db, 'entries')),
-          ]);
-          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
-          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
-        }
-        // Load notifications, admin settings and admin code
-        const [notifSnap, settingsSnap, codesSnap, eventsSnap, territoriesSnap] = await Promise.all([
+        const [
+          sitesSnap, entriesSnap, notifSnap, settingsSnap,
+          codesSnap, eventsSnap, territoriesSnap
+        ] = await Promise.all([
+          getDocs(collection(db, 'sites')),
+          getDocs(collection(db, 'entries')),
           getDocs(collection(db, 'notifications')),
           getDoc(doc(db, 'config', 'admin')),
           getDoc(doc(db, 'config', 'codes')),
           getDocs(collection(db, 'events')),
           getDocs(collection(db, 'territories')),
         ]);
-        setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
-        setTerritories(territoriesSnap.docs.map(d => d.data()));
-        if (codesSnap.exists() && codesSnap.data().adminCode) {
-          setAdminCode(codesSnap.data().adminCode);
+
+        if (sitesSnap.docs.length === 0) {
+          const batch = writeBatch(db);
+          DEFAULT_SITES.forEach(s => batch.set(doc(db, 'sites', s.id), s));
+          DEMO_ENTRIES.forEach(e => batch.set(doc(db, 'entries', e.id), e));
+          await batch.commit();
+          setSites(DEFAULT_SITES);
+          setEntries(DEMO_ENTRIES);
+        } else {
+          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
+          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
         }
-        const notifs = notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-        setNotifications(notifs);
+
+        const loadedAdminCode = codesSnap.exists() && codesSnap.data().adminCode ? codesSnap.data().adminCode : 'ADMIN';
+        setAdminCode(loadedAdminCode);
+        setNotifications(notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
         if (settingsSnap.exists()) setAdminSettings(settingsSnap.data());
+        setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
+
+        if (territoriesSnap.docs.length === 0) {
+          const defaultTerritory = {
+            id: 'smieeom', name: 'SMIEEOM Val de Cher',
+            adminCode: loadedAdminCode,
+            adminEmail: settingsSnap.exists() ? (settingsSnap.data().adminEmail || '') : '',
+            color: '#2D5A27', description: 'Val de Cher — territoire d'origine',
+            createdAt: new Date().toISOString(),
+          };
+          await setDoc(doc(db, 'territories', 'smieeom'), defaultTerritory);
+          setTerritories([defaultTerritory]);
+        } else {
+          setTerritories(territoriesSnap.docs.map(d => d.data()));
+        }
+
       } catch (err) {
         console.error('Firestore error:', err);
         setSites(DEFAULT_SITES);
@@ -3065,6 +3090,7 @@ export default function App() {
   return (
     <>
       <GlobalStyles />
+      <ErrorBoundary>
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} />}
@@ -3080,6 +3106,7 @@ export default function App() {
         {showPublic && <PublicDashboard onClose={() => setShowPublic(false)} />}
         {showLegal && <LegalPage onClose={() => setShowLegal(false)} />}
       </div>
+      </ErrorBoundary>
     </>
   );
 }

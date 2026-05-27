@@ -144,7 +144,7 @@ export default function SuperAdminView({ territories, allSites, allEntries, onEn
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 18 }}>
           {territories.map(t => {
-            const tSites = allSites.filter(s => s.territoryId === t.id || !s.territoryId)
+            const tSites = allSites.filter(s => s.territoryId === t.id || (!s.territoryId && t.id === 'smieeom'))
             const tEntries = allEntries.filter(e => {
               const site = allSites.find(s => s.id === e.siteId)
               return site?.territoryId === t.id || (!site?.territoryId && t.id === 'smieeom')
