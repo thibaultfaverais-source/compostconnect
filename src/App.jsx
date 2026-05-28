@@ -253,6 +253,8 @@ const getStatsByYear = (entries) => {
 function GlobalStyles() {
   return (
     <style>{`
+    .leaflet-container { isolation: isolate; }
+    .leaflet-top, .leaflet-bottom { z-index: 2 !important; }
       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body { background: #F4EBD9; }
@@ -376,7 +378,7 @@ function LoginScreen({ code, setCode, onLogin, error, onLegal, onPublic }) {
           <p style={{ color: C.muted, fontSize: 14 }}>Suivi des composteurs partagés</p>
         </div>
         <Field label="Code d'accès">
-          <input type="text" value={code} onChange={e => setCode(e.target.value.toUpperCase())} onKeyDown={e => e.key === "Enter" && onLogin()} placeholder="Ex : LILAS, ADMIN…" style={{ ...inputStyle, letterSpacing: "0.12em", fontWeight: 600, fontSize: 16, border: `2px solid ${error ? C.danger : C.border}` }} />
+          <input type="password" name="password" autoComplete="current-password" value={code} onChange={e => setCode(e.target.value.toUpperCase())} onKeyDown={e => e.key === "Enter" && onLogin()} placeholder="Code d'accès" style={{ ...inputStyle, letterSpacing: "0.12em", fontWeight: 600, fontSize: 16, border: `2px solid ${error ? C.danger : C.border}` }} />
           {error && <p style={{ color: C.danger, fontSize: 13, marginTop: 8 }}>{error}</p>}
         </Field>
         <button className="btn-green" onClick={onLogin} style={{ width: "100%", padding: 15, background: C.green, color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: "pointer" }}>Accéder →</button>
@@ -549,7 +551,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 14, marginBottom: 32 }}>
         <StatBox label="Biodéchets détournés" value={(site.biodechets_kg || 0).toLocaleString("fr-FR")} unit="kg" sub="total officiel" />
-        <StatBox label="Détournés ce mois" value={getKgDetournes(monthE).toFixed(1)} unit="kg" color={C.brown} />
+        <StatBox label="Détournés en {new Date().getFullYear()}" value={getKgDetournes(entries.filter(e => e.date?.startsWith(String(new Date().getFullYear())))).toFixed(0)} unit="kg" color={C.brown} sub={"année " + new Date().getFullYear()} />
         <StatBox label="Compost valorisé" value={(site.compost_L || 0).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel" />
         <StatBox label="Bacs OMR évités" value={getBacsOMR(site.biodechets_kg || 0)} unit="bacs" color="#5C2D7A" />
       </div>
@@ -592,7 +594,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14, marginBottom: 36 }}>
         <StatBox label="Biodéchets détournés" value={(sites.reduce((s2, s) => s2 + (s.biodechets_kg || 0), 0)).toLocaleString("fr-FR")} unit="kg" sub="total officiel Excel" />
-        <StatBox label="Détournés ce mois" value={getKgDetournes(monthE).toFixed(1)} unit="kg" color={C.brown} />
+        <StatBox label={"Détournés en " + new Date().getFullYear()} value={getKgDetournes(entries.filter(e => e.date?.startsWith(String(new Date().getFullYear())))).toFixed(0)} unit="kg" color={C.brown} sub={"année " + new Date().getFullYear()} />
         <StatBox label="Compost valorisé" value={(sites.reduce((s2, s) => s2 + (s.compost_L || 0), 0)).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel Excel" />
         <StatBox label="Sites actifs" value={sites.length} color="#2D4F7A" />
         <StatBox label="Interventions" value={entries.length} color="#5C2D7A" />
@@ -1059,6 +1061,21 @@ export default function App() {
         setSites(DEFAULT_SITES);
         setEntries(DEMO_ENTRIES);
       }
+      // Restore session from localStorage
+      try {
+        const saved = localStorage.getItem("cc_session");
+        if (saved) {
+          const sess = JSON.parse(saved);
+          if (sess.type === "superadmin") {
+            setIsSuperAdmin(true); setScreen("superadmin");
+          } else if (sess.type === "admin") {
+            setScreen("admin");
+          } else if (sess.type === "site" && sess.siteId) {
+            const savedSite = sitesSnap.docs.find(d => d.id === sess.siteId);
+            if (savedSite) { setCurrentSite(savedSite.data()); setScreen("site"); }
+          }
+        }
+      } catch(e) {}
       setLoading(false);
     })();
   }, []);
@@ -1067,13 +1084,13 @@ export default function App() {
     const c = loginCode.trim().toUpperCase();
     if (!c) return;
     if (c === SUPER_ADMIN_CODE) {
-      setIsSuperAdmin(true); setScreen("superadmin"); setLoginError(""); setLoginCode("");
+      setIsSuperAdmin(true); setScreen("superadmin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "superadmin", code: c })); } catch(e) {}
     } else if (c === adminCode) {
-      setScreen("admin"); setLoginError(""); setLoginCode("");
+      setScreen("admin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "admin", code: c })); } catch(e) {}
     }
     else {
       const site = sites.find(s => s.code === c);
-      if (site) { setCurrentSite(site); setScreen("site"); setLoginError(""); setLoginCode(""); }
+      if (site) { setCurrentSite(site); setScreen("site"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "site", code: c, siteId: site.id })); } catch(e) {} }
       else setLoginError("Code invalide. Vérifiez votre code d'accès.");
     }
   };
@@ -1205,7 +1222,7 @@ export default function App() {
     setShowAddSite(false);
   };
 
-  const logout = () => { setScreen("login"); setCurrentSite(null); };
+  const logout = () => { setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setCurrentTerritory(null); try { localStorage.removeItem("cc_session"); } catch(e) {} };
 
   if (loading) return (
     <div style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.muted }}>
