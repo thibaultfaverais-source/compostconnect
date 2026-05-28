@@ -548,10 +548,10 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
       )}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 14, marginBottom: 32 }}>
-        <StatBox label="Biodéchets détournés" value={(sites.reduce((s, site) => s + (site.biodechets_kg || 0), 0)).toLocaleString("fr-FR")} unit="kg" sub="total officiel Excel" />
+        <StatBox label="Biodéchets détournés" value={(site.biodechets_kg || 0).toLocaleString("fr-FR")} unit="kg" sub="total officiel" />
         <StatBox label="Détournés ce mois" value={getKgDetournes(monthE).toFixed(1)} unit="kg" color={C.brown} />
-        <StatBox label="Compost valorisé" value={(sites.reduce((s, site) => s + (site.compost_L || 0), 0)).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel Excel" />
-        <StatBox label="Bacs OMR évités" value={getBacsOMR(sites.reduce((s, site) => s + (site.biodechets_kg || 0), 0))} unit="bacs" color="#5C2D7A" />
+        <StatBox label="Compost valorisé" value={(site.compost_L || 0).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel" />
+        <StatBox label="Bacs OMR évités" value={getBacsOMR(site.biodechets_kg || 0)} unit="bacs" color="#5C2D7A" />
       </div>
       <SiteMap sites={[site]} entries={allEntries} highlightSiteId={site.id} height={260} />
       <StatsParAnnee entries={entries} />
@@ -591,9 +591,9 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14, marginBottom: 36 }}>
-        <StatBox label="Biodéchets détournés" value={getKgDetournes(entries).toFixed(0)} unit="kg" sub="total cumulé" />
+        <StatBox label="Biodéchets détournés" value={(sites.reduce((s2, s) => s2 + (s.biodechets_kg || 0), 0)).toLocaleString("fr-FR")} unit="kg" sub="total officiel Excel" />
         <StatBox label="Détournés ce mois" value={getKgDetournes(monthE).toFixed(1)} unit="kg" color={C.brown} />
-        <StatBox label="Compost valorisé" value={getLValorises(entries)} unit="L" color="#7A6B2D" sub="total récolté" />
+        <StatBox label="Compost valorisé" value={(sites.reduce((s2, s) => s2 + (s.compost_L || 0), 0)).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel Excel" />
         <StatBox label="Sites actifs" value={sites.length} color="#2D4F7A" />
         <StatBox label="Interventions" value={entries.length} color="#5C2D7A" />
       </div>
