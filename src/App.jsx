@@ -58,2090 +58,170 @@ const TYPE_BADGES = {
 
 const getBacsOMR = (kgDetournes) => Math.round(kgDetournes / 29.87);
 const DEFAULT_SITES = [
-  {
-    "id": "s1",
-    "name": "Seigy",
-    "address": "Place de la mairie, 41110 Seigy",
-    "code": "SEIGY",
-    "foyers": 23,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Mars 2023 – Avril 2026",
-    "capacityL": 500,
-    "lat": 47.2761,
-    "lng": 1.4258,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Patrick ROVIRA",
-        "tel": "02 54 75 12 31",
-        "email": "mairie@seigy.com"
-      },
-      {
-        "role": "Référent citoyen / élu",
-        "nom": "Jean-Luc ESNAULT",
-        "tel": "06 43 36 74 25",
-        "email": "adjoint3esnault@orange.fr"
-      }
-    ]
-  },
-  {
-    "id": "s2",
-    "name": "Thenay",
-    "address": "Salle des fêtes, 41400 Thenay",
-    "code": "THENAY",
-    "foyers": 10,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Nov. 2023 – Avril 2025",
-    "capacityL": 400,
-    "lat": 47.2028,
-    "lng": 1.3628,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Guilherme GAUTIER",
-        "tel": "02 54 32 52 07",
-        "email": "mairie.thenay@controis-en-sologne.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Danielle PRUD'HOMME",
-        "tel": "06 07 62 13 41",
-        "email": "gogotnam@wanadoo.fr"
-      }
-    ]
-  },
-  {
-    "id": "s3",
-    "name": "Sassay",
-    "address": "Communauté de communes, 41110 Sassay",
-    "code": "SASSAY",
-    "foyers": 15,
-    "typeSite": "Foyers + Cantine",
-    "cantine": "80 repas/jour",
-    "periode": "Sept. 2023 – Avril 2026",
-    "capacityL": 500,
-    "lat": 47.3089,
-    "lng": 1.4736,
-    "referents": [
-      {
-        "role": "Référent technique & cantinier",
-        "nom": "Geoffroy LARCHER",
-        "tel": "06 22 18 97 74",
-        "email": "sassay2@wanadoo.fr"
-      },
-      {
-        "role": "Référent citoyen & élu",
-        "nom": "Gérald GASCHET",
-        "tel": "06 62 29 31 06",
-        "email": "gerald.gaschet949@orange.fr"
-      }
-    ]
-  },
-  {
-    "id": "s4",
-    "name": "Meusnes",
-    "address": "À côté de la salle des fêtes, 41130 Meusnes",
-    "code": "MEUSNE",
-    "foyers": 14,
-    "typeSite": "Foyers + Cantine",
-    "cantine": "60 repas/jour",
-    "periode": "Sept. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2194,
-    "lng": 1.5028,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Théo BOISTARD",
-        "tel": "06 38 71 69 28",
-        "email": "services-techniques@meusnes.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Gérard ANIN",
-        "tel": "06 07 25 45 29",
-        "email": "gerard.anin@orange.fr"
-      }
-    ]
-  },
-  {
-    "id": "s5",
-    "name": "Soings-en-Sologne",
-    "address": "Face à la cantine de l'école, 41230 Soings-en-Sologne",
-    "code": "SOINGS",
-    "foyers": 8,
-    "typeSite": "Foyers + Cantine",
-    "cantine": "135 repas/jour",
-    "periode": "Juil. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.3378,
-    "lng": 1.5411,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Sylvain FRANKE",
-        "tel": "06 99 90 01 61",
-        "email": "frankesylvain00@gmail.com"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Regine BLONDEL",
-        "tel": "07 70 08 57 56",
-        "email": "regine.blondel60@gmail.com"
-      }
-    ]
-  },
-  {
-    "id": "s6",
-    "name": "Feings",
-    "address": "École, 41120 Feings",
-    "code": "FEINGS",
-    "foyers": 11,
-    "typeSite": "Foyers + Cantine",
-    "cantine": "60 repas/jour",
-    "periode": "Sept. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2519,
-    "lng": 1.3472,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Thierry BOUCHERON",
-        "tel": "06 10 19 61 89",
-        "email": "yannickrenardcontrois41@gmail.com"
-      }
-    ]
-  },
-  {
-    "id": "s7",
-    "name": "Couddes",
-    "address": "Entrée de l'école, 41700 Couddes",
-    "code": "COUDDE",
-    "foyers": 20,
-    "typeSite": "Foyers",
-    "cantine": "Non concerné",
-    "periode": "Juil. 2024 – Juin 2025",
-    "capacityL": 500,
-    "lat": 47.2622,
-    "lng": 1.4925,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Jérôme LAPLAIGE",
-        "tel": "06 30 16 54 34",
-        "email": "agent.technique@mairiedecouddes.fr"
-      }
-    ]
-  },
-  {
-    "id": "s8",
-    "name": "Montrichard",
-    "address": "Rue des Châtaigniers, 41400 Montrichard",
-    "code": "MONTRI",
-    "foyers": 16,
-    "typeSite": "Foyers + Cantine",
-    "cantine": "175 repas/jour",
-    "periode": "Juil. 2024 – Mars 2026",
-    "capacityL": 500,
-    "lat": 47.3419,
-    "lng": 1.1944,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Christophe HAUDEBERT",
-        "tel": "06 88 50 05 08",
-        "email": "espacesverts@montrichardvaldecher.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Christophe GUDIN",
-        "tel": "06 07 55 65 48",
-        "email": "c.gudin@montrichardvaldecher.fr"
-      }
-    ]
-  },
-  {
-    "id": "s9",
-    "name": "Mareuil-sur-Cher",
-    "address": "Parking de l'école, 41110 Mareuil-sur-Cher",
-    "code": "MAREU",
-    "foyers": 12,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Juin 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2769,
-    "lng": 1.4372,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Guy MAXENCE",
-        "tel": "06 81 42 45 74",
-        "email": "mairie@mareuilsurcher.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Jean Louis PETRUS",
-        "tel": "06 81 83 96 36",
-        "email": "mairie@mareuilsurcher.fr"
-      }
-    ]
-  },
-  {
-    "id": "s10",
-    "name": "Choussy",
-    "address": "Chemin du Paradis, 41700 Choussy",
-    "code": "CHOUSS",
-    "foyers": 12,
-    "typeSite": "Foyers + Cantine",
-    "cantine": null,
-    "periode": "Sept. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2469,
-    "lng": 1.4708,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Philippe MAZEAU",
-        "tel": "06 62 32 71 31",
-        "email": "mazeau.ph@gmail.com"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Denis RIOLAND",
-        "tel": "06 70 31 25 01",
-        "email": "c.bourdon814@orange.fr"
-      }
-    ]
-  },
-  {
-    "id": "s11",
-    "name": "Fougères-sur-Bièvre",
-    "address": "Proximité école, 41120 Fougères-sur-Bièvre",
-    "code": "FOUGE",
-    "foyers": 0,
-    "typeSite": "En cours",
-    "cantine": null,
-    "periode": "2025 – 2026",
-    "capacityL": 400,
-    "lat": 47.4108,
-    "lng": 1.2819,
-    "referents": [
-      {
-        "role": "Référent (contact terrain)",
-        "nom": "Willy",
-        "tel": "",
-        "email": ""
-      }
-    ]
-  },
-  {
-    "id": "s12",
-    "name": "Pouillé",
-    "address": "Derrière la salle polyvalente, 41110 Pouillé",
-    "code": "POUILL",
-    "foyers": 11,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Juil. 2024 – Mars 2026",
-    "capacityL": 400,
-    "lat": 47.2664,
-    "lng": 1.4347,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Pascal DEVINEAU",
-        "tel": "06 66 66 28 82",
-        "email": "devineau.pascal@orange.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Yann LE POLLOTEC",
-        "tel": "06 60 95 25 80",
-        "email": "yann.lepollotec@gmail.com"
-      }
-    ]
-  },
-  {
-    "id": "s13",
-    "name": "Selles-sur-Cher",
-    "address": "Levée du Parc, 41130 Selles-sur-Cher",
-    "code": "SELLES",
-    "foyers": 10,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Juil. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2731,
-    "lng": 1.5478,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Frédéric LECLERC",
-        "tel": "07 57 49 50 85",
-        "email": "dst@selles-sur-cher.fr"
-      },
-      {
-        "role": "Référent citoyen",
-        "nom": "Muriel BOISSONNET",
-        "tel": "06 76 06 93 25",
-        "email": "murielboissonnet@yahoo.fr"
-      }
-    ]
-  },
-  {
-    "id": "s14",
-    "name": "Chémery",
-    "address": "Commune de Chémery, 41700",
-    "code": "CHEMER",
-    "foyers": 0,
-    "typeSite": "En cours",
-    "cantine": null,
-    "periode": "2025 – En cours",
-    "capacityL": 400,
-    "lat": 47.2989,
-    "lng": 1.4797,
-    "referents": [
-      {
-        "role": "Référente (contact terrain)",
-        "nom": "Gwen",
-        "tel": "",
-        "email": ""
-      }
-    ]
-  },
-  {
-    "id": "s15",
-    "name": "Monthou-sur-Cher",
-    "address": "Monthou-sur-Cher, 41400",
-    "code": "MONTHO",
-    "foyers": 0,
-    "typeSite": "Extra",
-    "cantine": null,
-    "periode": "2025 – 2026",
-    "capacityL": 400,
-    "lat": 47.3511,
-    "lng": 1.2219,
-    "referents": []
-  },
-  {
-    "id": "s16",
-    "name": "Contres",
-    "address": "1 rue de la Fossé Mardeaux, 41700 Le Controis-en-Sologne",
-    "code": "CONTRE",
-    "foyers": 0,
-    "typeSite": "Entreprises",
-    "cantine": null,
-    "periode": "Juin 2025 – Avril 2026",
-    "capacityL": 400,
-    "lat": 47.4136,
-    "lng": 1.4358,
-    "referents": [
-      {
-        "role": "Référente technique",
-        "nom": "Laetitia CAUX",
-        "tel": "06 07 18 45 48",
-        "email": "lcaux@val2c.fr"
-      },
-      {
-        "role": "Référente citoyenne",
-        "nom": "Marcelline CHARPENTIER",
-        "tel": "06 33 54 73 44",
-        "email": "mcharpentier@val2c.fr"
-      }
-    ]
-  },
-  {
-    "id": "s17",
-    "name": "Noyers-sur-Cher",
-    "address": "Centre-bourg, 41140 Noyers-sur-Cher",
-    "code": "NOYERS",
-    "foyers": 10,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Oct. 2024 – Juin 2025",
-    "capacityL": 400,
-    "lat": 47.2706,
-    "lng": 1.5878,
-    "referents": [
-      {
-        "role": "Référent technique",
-        "nom": "Christophe DEVELLE",
-        "tel": "06 78 54 15 40",
-        "email": "christophe-develle@bbox.fr"
-      },
-      {
-        "role": "Référente citoyenne",
-        "nom": "Mélissa DUHAZE",
-        "tel": "07 81 77 65 87",
-        "email": "mel-akim2012@hotmail.fr"
-      }
-    ]
-  },
-  {
-    "id": "s18",
-    "name": "Angé",
-    "address": "Angé, 41400",
-    "code": "ANGE",
-    "foyers": 10,
-    "typeSite": "Foyers",
-    "cantine": null,
-    "periode": "Sept. 2024 – 2025",
-    "capacityL": 400,
-    "lat": 47.3194,
-    "lng": 1.2153,
-    "referents": []
-  },
-  {
-    "id": "s19",
-    "name": "Chissay-en-Touraine",
-    "address": "Commune de Chissay-en-Touraine, 41400",
-    "code": "CHISSA",
-    "foyers": 0,
-    "typeSite": "En cours",
-    "cantine": null,
-    "periode": "2025 – En cours",
-    "capacityL": 400,
-    "lat": 47.3428,
-    "lng": 1.1878,
-    "referents": [
-      {
-        "role": "Référent (contact terrain)",
-        "nom": "Christophe",
-        "tel": "",
-        "email": ""
-      }
-    ]
-  },
-  {
-    "id": "s20",
-    "name": "Ouchamps",
-    "address": "Commune d'Ouchamps, 41120",
-    "code": "OUCHA",
-    "foyers": 0,
-    "typeSite": "En cours",
-    "cantine": null,
-    "periode": "2025 – En cours",
-    "capacityL": 400,
-    "lat": 47.3947,
-    "lng": 1.3194,
-    "referents": [
-      {
-        "role": "Référent (contact terrain)",
-        "nom": "Willy",
-        "tel": "",
-        "email": ""
-      }
-    ]
-  },
-  {
-    "id": "s21",
-    "name": "Thésée",
-    "address": "École communale, 41140 Thésée",
-    "code": "THESEE",
-    "foyers": 10,
-    "typeSite": "Foyers + Cantine",
-    "cantine": null,
-    "periode": "Sept. 2024 – Avril 2026",
-    "capacityL": 400,
-    "lat": 47.2844,
-    "lng": 1.5531,
-    "referents": []
-  },
-  {
-    "id": "s22",
-    "name": "Saint-Aignan",
-    "address": "Saint-Aignan, 41110",
-    "code": "STAIG",
-    "foyers": 0,
-    "typeSite": "En cours",
-    "cantine": null,
-    "periode": "2025 – 2026",
-    "capacityL": 400,
-    "referents": [],
-    "lat": 47.2667,
-    "lng": 1.375
-  }
+  {id: "s18", name: "Angé", address: "", code: "ANGE", foyers: 0, typeSite: "Foyers", cantine: "Non concerné", periode: "2024 – 2025", capacityL: 400, referents: [], biodechets_kg: 452, compost_L: 166, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3194, lng: 1.2153},
+  {id: "s19", name: "Chissay-en-Touraine", address: "Commune de Chissay-en-Touraine, 41400", code: "CHISSA", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 395, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3428, lng: 1.1878},
+  {id: "s10", name: "Choussy", address: "Chemin du Paradis, 41700 Choussy", code: "CHOUSS", foyers: 12, typeSite: "Foyers + Cantine", cantine: "Non concerné", periode: "Septembre 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Philippe MAZEAU", tel: "06 62 32 71 31", email: "mazeau.ph@gmail.com"}, {role: "Référent citoyen", nom: "Denis RIOLAND", tel: "06 70 31 25 01", email: "c.bourdon814@orange.fr"}], biodechets_kg: 721, compost_L: 322, pointsForts: ["Bonne situation géographique, très pertinente.", "Référent bénévole engagé avec une excellente compréhension du processus – a porté le site.", "Cantinière ayant compris exactement ce qu'il fallait faire.", "Site bien placé à côté de l'école – tout s'est très bien passé."], pointsAmelioration: ["Organiser des événements pour continuer l'animation autour du composteur.", "Pousser à convaincre certains habitants qui ne veulent pas composter dans leur jardin.", "Maintenir un carnet de suivi pour être conforme réglementairement.", "Valoriser le travail et l'engagement du référent bénévole.", "Continuer la pédagogie autour du composteur."], conclusion: "Le site de Choussy a détourné ~721 kg de biodéchets et produit 322 L de compost mûr. Le café compost, auquel une classe entière a participé, a constitué un moment fort d'éducation à l'environnement. Cette dimension intergénérationnelle donne au projet une portée qui va au-delà du simple geste de tri. À 10 ans, le potentiel de détournement dépasse 7 tonnes.", lat: 47.2469, lng: 1.4708},
+  {id: "s14", name: "Chémery", address: "Commune de Chémery, 41700", code: "CHEMER", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 639, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.2989, lng: 1.4797},
+  {id: "s16", name: "Contres", address: "1 rue de la Fossé Mardeaux, 41700 Le Controis-en-Sologne", code: "CONTRE", foyers: 0, typeSite: "Entreprises", cantine: "Non concerné", periode: "Juin 2025 – Avril 2026", capacityL: 400, referents: [{role: "Référente bénévole (Animatrice Plan Climat – Val2C)", nom: "Laetitia CAUX", tel: "06 07 18 45 48", email: "lcaux@val2c.fr"}, {role: "Référente bénévole", nom: "Marcelline CHARPENTIER", tel: "06 33 54 73 44", email: "mcharpentier@val2c.fr"}], biodechets_kg: 558, compost_L: 249, pointsForts: ["Implication exceptionnelle de Laetitia Caux : contrôle hebdomadaire (T° et brassage), animations créatives, communication active. La référente la plus dynamique du programme en termes d'animation.", "Site unique du programme : village d'entreprises, public professionnel. Vocation pédagogique autant que pratique.", "Atelier tamisage innovant lors du dernier accompagnement : terreau à semis haute qualité, intégralement récupéré par les participants.", "Transfert participatif réussi : repas partagé + ateliers = format convivial adapté au milieu professionnel.", "Excellente qualité de compost malgré les volumes modestes : pédofaune très riche, aucune odeur ni nuisance.", "Installation soignée et accueillante (chemin en calcaire aménagé par les référentes).", "Proximité des bureaux de la communauté de communes : effet vitrine pour les agents et élus."], pointsAmelioration: ["Rafraîchir et réapprovisionner le stock de broyat pour maintenir l'équilibre du compost.", "Remplacer le brasseur de compost volé (commande Émeraude Création ou fourche à manche rétréci).", "Encourager les usagers à venir équipés lors des transferts (gants, chaussures) pour ne pas faire reposer l'effort uniquement sur les deux référentes.", "Envisager l'ouverture du site à d'autres structures locales pour augmenter le gisement – le retrait des cadenas est à la discrétion des référentes.", "Surveiller la qualité du matériel bois (vis, charnières) et anticiper les remplacements.", "Sensibiliser davantage sur le dosage broyat/biodéchets et l'interdiction du pain (rongeurs)."], conclusion: "Le site de Contres a détourné ~557 kg de biodéchets et produit 249 L de compost mûr d'excellente qualité, tamisé en terreau à semis lors du dernier accompagnement. Ce site unique en village d'entreprises prouve que le compostage de proximité fonctionne aussi en milieu professionnel. L'implication de Laetitia Caux est la plus remarquable du programme en termes d'animation. Malgré quelques aléas (vol du brasseur, charnières cassées), le site est sur une belle dynamique et dispose de tous les atouts pour continuer à bien fonctionner en autonomie.", lat: 47.4136, lng: 1.4358},
+  {id: "s7", name: "Couddes", address: "Entrée de l'école, 41700 Couddes", code: "COUDDE", foyers: 20, typeSite: "Foyers + Cantine", cantine: "Non concerné", periode: "Juillet 2024 – Juin 2025", capacityL: 500, referents: [{role: "Référent technique", nom: "Jérôme LAPLAIGE", tel: "06 30 16 54 34", email: "agent.technique@mairiedecouddes.fr"}, {role: "Référent citoyen", nom: "Olivier CHOTARD", tel: "", email: "Olivierchocho@gmail.com"}], biodechets_kg: 1031, compost_L: 910, pointsForts: ["Référent technique d'une précision remarquable – composteur dépassant 50 °C (exceptionnel).", "Compost récolté par les élèves pour un projet de plantations en carrés potagers par les parents.", "Cantine remplissant le composteur à une vitesse record – maximum de biodéchets détournés.", "Merci aux élus d'avoir signé et accueilli ce composteur."], pointsAmelioration: ["Profiter des fêtes du village ou de l'école pour sensibiliser – l'initiative doit venir de la commune, pas des seuls référents.", "Travailler sur le gaspillage alimentaire en amont (accompagnement possible du SMIEEOM).", "Formaliser le carnet de suivi physique.", "Le site ne doit pas reposer uniquement sur deux référents."], conclusion: "Le site de Couddes a détourné ~1 031 kg de biodéchets et produit 576 L de compost mûr, valorisé directement dans les plantations scolaires. C'est l'un des sites les plus aboutis du programme : le partenariat foyers-cantine scolaire crée une boucle vertueuse où le déchet devient ressource pédagogique. Un retrait supplémentaire de 334 L post-accompagnement confirme la maturité du site. À 10 ans, le potentiel dépasse 10 tonnes.", lat: 47.2622, lng: 1.4925},
+  {id: "s6", name: "Feings", address: "École, 41120 Feings", code: "FEINGS", foyers: 11, typeSite: "Foyers + Cantine", cantine: "60 repas/jour", periode: "Septembre 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Thierry BOUCHERON", tel: "06 10 19 61 89", email: "yannickrenardcontrois41@gmail.com"}], biodechets_kg: 1081, compost_L: 518, pointsForts: ["Les deux référents ont parfaitement fait leur travail – site qui fonctionne très bien.", "Référente bénévole exemplaire en communication.", "Référent technique travaillant avec précision et rigueur.", "Problème de moucherons massif très bien rattrapé grâce au travail des référents.", "Bonne quantité de biodéchets générés, confirmant l'utilité du site."], pointsAmelioration: ["Le composteur ne doit pas être géré uniquement par les agents communaux – c'est le bien de tous.", "Profiter d'événements pour organiser des cafés compost / apéros compost (en cours de négociation lors du dernier événement).", "Quelques déboires avec la cantine (distance) – à surveiller.", "Continuer à générer de l'attention autour du composteur."], conclusion: "Le site de Feings a détourné ~1 081 kg de biodéchets et produit 518 L de compost mûr. Un épisode de moucherons en décembre 2024, rapidement résolu par un apport de broyat et un brassage renforcé, illustre la capacité du site à surmonter les aléas techniques. Les volumes générés placent Feings parmi les meilleurs sites du programme. À 10 ans, le potentiel dépasse 10 tonnes de biodéchets détournés.", lat: 47.2519, lng: 1.3472},
+  {id: "s11", name: "Fougères-sur-Bièvre", address: "Commune de Fougères-sur-Bièvre, 41120", code: "FOUGE", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 680, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.4108, lng: 1.2819},
+  {id: "s9", name: "Mareuil-sur-Cher", address: "Parking de l'école, 41110 Mareuil-sur-Cher", code: "MAREU", foyers: 12, typeSite: "Foyers + Cantine", cantine: "Non concerné", periode: "Juin 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Guy MAXENCE", tel: "06 81 42 45 74", email: "mairie@mareuilsurcher.fr"}, {role: "Référent citoyen", nom: "Jean Louis PETRUS", tel: "06 81 83 96 36", email: "mairie@mareuilsurcher.fr"}], biodechets_kg: 781, compost_L: 518, pointsForts: ["Inventivité du référent technique : transformation d'un sommier en tamis géant – astuce relayée à toutes les communes.", "Référent élu bénévole toujours présent contre vents et marées.", "Dernière récolte avec les enfants de l'école : passionnés et passionnants, goûter offert par la commune.", "Volume important de biodéchets détournés grâce à la cantine."], pointsAmelioration: ["Manque d'appui des élus – dommage car le site fonctionne bien.", "Il faut valoriser le travail fait et le nombre de biodéchets détournés.", "Au moins un élu doit continuer à animer le composteur avec ou sans l'école.", "Maintenir le site propre et attrayant pour ne pas servir de refuge aux rongeurs.", "L'accompagnement de 3 visites sur ~1 an prépare à l'autonomie – il faut être vigilant."], conclusion: "Le site de Mareuil-sur-Cher a détourné ~781 kg de biodéchets et produit 518 L de compost mûr. Après des déséquilibres carbone/azote en début de parcours, les ajustements apportés ont permis d'atteindre un fonctionnement satisfaisant. Le café compost a été l'occasion de fédérer les participants et de rappeler les bonnes pratiques. À 10 ans, le potentiel de détournement dépasse 7 tonnes si l'élan est maintenu.", lat: 47.2769, lng: 1.4372},
+  {id: "s4", name: "Meusnes", address: "À côté de la salle des fêtes, 41130 Meusnes", code: "MEUSNE", foyers: 14, typeSite: "Foyers + Cantine", cantine: "60 repas/jour", periode: "Septembre 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Théo BOISTARD", tel: "06 38 71 69 28", email: "services-techniques@meusnes.fr"}, {role: "Référent citoyen", nom: "Gérard ANIN", tel: "06 07 25 45 29", email: "gerard.anin@orange.fr"}], biodechets_kg: 1197, compost_L: 432, pointsForts: ["Implication colossale du référent bénévole – moteur du site.", "Le composteur a mieux marché qu'espéré malgré les difficultés.", "Présence du Maire au café compost final – unique parmi tous les sites.", "Excellente qualité de compost confirmée malgré les problèmes initiaux.", "Le référent bénévole a pris sur lui en ramenant du compost chez lui pour libérer de la place."], pointsAmelioration: ["Tout est porté par un référent – le soutenir au maximum via la commune.", "Proposer l'installation d'un bac supplémentaire vu les volumes.", "Continuer l'apport en broyat.", "Travailler sur le gaspillage alimentaire en amont."], conclusion: "Avec ~1 197 kg de biodéchets détournés, Meusnes affiche les volumes les plus élevés du programme. Le compost mûr récolté (432 L) est d'excellente qualité. La présence du Maire au café compost et l'implication constante du référent bénévole témoignent d'un ancrage institutionnel et citoyen fort. Malgré des ajustements nécessaires sur le brassage, ce site démontre tout le potentiel du compostage partagé en milieu rural. À 10 ans, le potentiel dépasse 12 tonnes.", lat: 47.2194, lng: 1.5028},
+  {id: "s15", name: "Monthou-sur-Cher", address: "", code: "MONTHO", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "2026", capacityL: 400, referents: [], biodechets_kg: 621, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3511, lng: 1.2219},
+  {id: "s8", name: "Montrichard", address: "Rue des Châtaigniers, 41400 Montrichard Val de Cher", code: "MONTRI", foyers: 16, typeSite: "Foyers", cantine: "175 repas/jour", periode: "Juillet 2024 – Mars 2026", capacityL: 500, referents: [{role: "Référent technique", nom: "Christophe HAUDEBERT", tel: "06 88 50 05 08", email: "espacesverts@montrichardvaldecher.fr"}, {role: "Référent citoyen", nom: "Christophe GUDIN", tel: "06 07 55 65 48", email: "c.gudin@montrichardvaldecher.fr"}], biodechets_kg: 962, compost_L: 581, pointsForts: ["Premier site en habitat collectif du programme – modèle de référence.", "Monsieur Gudin : rendez-vous réguliers tous les vendredis avec le référent technique, appels pour questions.", "Deuxième événement avec lots à gagner et vraie animation – modèle pour tout le territoire.", "Qualité présente malgré les volumes limités.", "Astuce anti-dégradation : panneau « vidéo surveillance » dissuasif.", "Compost récupéré et réutilisé par les habitants et la commune (parterres fleuris)."], pointsAmelioration: ["Continuer le travail de relais au sein du service technique – pousser la formation des agents.", "Formation reconnue par l'État disponible à Orléans (Cycloposteurs) ou Tours (Université de Tours).", "Consolider et valoriser un(e) référent(e) bénévole pour convaincre les résidents.", "La gardienne d'immeuble avait noté que les poubelles ne puaient plus – argument à utiliser."], conclusion: "Le site de la résidence des Châtaigniers à Montrichard a détourné ~925 kg de biodéchets et produit 581 L de compost mûr. La température de 31°C relevée lors d'une visite confirme une activité biologique soutenue. Ce site prouve que le compostage partagé est viable en habitat collectif urbain, à condition d'un accompagnement adapté et d'une référente impliquée. À 10 ans, le potentiel dépasse 9 tonnes.", lat: 47.3419, lng: 1.1944},
+  {id: "s17", name: "Noyers-sur-Cher", address: "Centre-bourg, 41140 Noyers-sur-Cher", code: "NOYERS", foyers: 10, typeSite: "Foyers", cantine: "Non concerné", periode: "Octobre 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Christophe DEVELLE", tel: "06 78 54 15 40", email: "christophe-develle@bbox.fr"}, {role: "Référente citoyenne", nom: "Mélissa DUHAZE", tel: "07 81 77 65 87", email: "mel-akim2012@hotmail.fr"}], biodechets_kg: 508, compost_L: 340, pointsForts: ["Bon nombre de foyers inscrits (14) – participation encourageante.", "Nouvelle référente citoyenne motivée et réactive.", "Volume de biodéchets significatif dès le premier transfert (497 L → ~338 kg).", "Matériel rapidement remplacé après la tempête – réactivité de la commune."], pointsAmelioration: ["Remettre en place la signalétique obligatoire (panneaux d'information).", "Assurer un approvisionnement régulier en broyat pour maintenir l'équilibre C/N.", "Surveiller l'humidité du mélange – le mélange était trop sec au premier transfert.", "Organiser un café compost pour fédérer les participants et consolider la dynamique.", "Formaliser la formation de la nouvelle référente citoyenne."], conclusion: "Le site de Noyers-sur-Cher a détourné ~338 kg de biodéchets (497 L transférés) lors de son premier transfert, sans récolte de compost mûr à ce stade. Malgré un parcours jalonné d'aléas – signalétique manquante, broyat insuffisant, mélange trop sec, tempête ayant endommagé le matériel –, le site dispose d'atouts réels : 14 foyers engagés et une nouvelle référente motivée. L'accompagnement a permis de poser les bases ; c'est désormais à la commune et aux référents de faire vivre le projet.", lat: 47.2706, lng: 1.5878},
+  {id: "s20", name: "Ouchamps", address: "Commune d'Ouchamps, 41120", code: "OUCHA", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 377, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3947, lng: 1.3194},
+  {id: "s12", name: "Pouillé", address: "Derrière la salle polyvalente, 41110 Pouillé", code: "POUILL", foyers: 11, typeSite: "Foyers", cantine: "Non concerné", periode: "Juillet 2024 – Mars 2026", capacityL: 400, referents: [{role: "Référent technique", nom: "Pascal DEVINEAU", tel: "06 66 66 28 82", email: "devineau.pascal@orange.fr"}, {role: "Référent citoyen", nom: "Yann LE POLLOTEC", tel: "06 60 95 25 80", email: "yann.lepollotec@gmail.com"}], biodechets_kg: 654, compost_L: 333, pointsForts: ["Référent technique très pointu et précis dans son travail – site toujours bien tenu.", "Référent bénévole efficace en communication – bonne dynamique de binôme.", "Noyau solide à Pouillé qui garantit de beaux jours au site.", "Le référent technique a aussi contribué à améliorer le compostage de l'école.", "Deux cafés compost avec jeu réussis et pertinents."], pointsAmelioration: ["Continuer à créer de l'animation autour des composteurs.", "Recruter de nouveaux foyers.", "Mettre en place le carnet de suivi physique de manière systématique."], conclusion: "Avec 655 kg de biodéchets détournés et 333 L de compost mûr récoltés, le site de Pouillé démontre qu'un petit noyau de foyers bien encadré peut obtenir des résultats concrets. Le binôme de référents – l'un technique et précis, l'autre communicant et dynamique – constitue un socle solide. Le référent technique a même contribué à améliorer le compostage de l'école voisine. Si la commune parvient à recruter de nouveaux foyers, le potentiel à 10 ans dépasse 6,5 tonnes.", lat: 47.2664, lng: 1.4347},
+  {id: "s22", name: "Saint-Aignan", address: "10 rue Victor Hugo, 41110 Saint-Aignan – Service jeunesse", code: "STAIG", foyers: 0, typeSite: "Foyers + Cantine", cantine: "Service jeunesse", periode: "Mai 2025 – en cours", capacityL: 3400, referents: [{role: "Référent technique (formé)", nom: "Alain DESVIGNES", tel: "+33 6 08 77 91 88", email: "dst@ville-staaignan.fr"}, {role: "Référent formé (jeunesse)", nom: "Amaury LAURENT", tel: "+33 6 40 63 87 33", email: "amauryollivier@icloud.com"}, {role: "Référent formé (jeunesse)", nom: "Baptiste DE FREITAS", tel: "+33 6 04 05 57 71", email: "enfance-jeunesse@ville-staignan.fr"}, {role: "Contact mairie", nom: "Audrey HÉRAULT", tel: "02 54 93 27 35", email: "services.techniques41@ville-staignan.fr"}], biodechets_kg: 560, compost_L: 0, pointsForts: ["Implication remarquable d'Amaury Laurent : participation enfants + brassage régulier + suivi app", "Alain Desvignes assure la gestion technique + rechargement broyat structurant", "Très peu de plastique – mélange équilibré en humidité", "Animation pédagogique réussie avec ~20 enfants le 01/04/2026", "Couverture médiatique La Nouvelle République", "Projet potager pédagogique envisagé avec le compost mûr"], pointsAmelioration: [], conclusion: "Site en progression constante avec une implication exemplaire des référents. 67 actions Véricompost dont 18 dépôts et 6 brassages. Le brassage chaque mercredi par Amaury Laurent garantit une qualité en hausse (T° >20°C). Première récolte prévue à l'automne 2026 pour le potager pédagogique.", lat: 47.2667, lng: 1.3722},
+  {id: "s3", name: "Sassay", address: "Communauté de communes, 41110 Sassay", code: "SASSAY", foyers: 15, typeSite: "Foyers + Cantine", cantine: "80 repas/jour", periode: "Septembre 2023 – Avril 2026 (Cycloposteurs + Bio Tri Foule)", capacityL: 500, referents: [{role: "Référent technique & cantinier", nom: "Geoffroy LARCHER", tel: "06 22 18 97 74", email: "sassay2@wanadoo.fr"}, {role: "Référent citoyen & élu", nom: "Gérald GASCHET", tel: "06 62 29 31 06", email: "gerald.gaschet949@orange.fr"}], biodechets_kg: 1389, compost_L: 1303, pointsForts: ["Partenariat foyer-cantine EXCEPTIONNELLEMENT réussi – Geoffroy (cantinier technique) + Gérald (citoyen-élu) forment un binôme où chaque force s'exprime pleinement.", "Brassage régulier 'musclé' par le cantinier lui-même : implication opérationnelle directe, pas déléguée – très rare et très efficace.", "Décomposition ultra-rapide malgré température modérée : preuve de pédofaune excellente et d'équilibre C/N optimal.", "Zéro problème sanitaire (odeur, moucherons) : site parfaitement géré.", "Visibilité maximale : parking école, vitrine communale – rôle de modèle reproductible.", "Animation pédagogique exceptionnelle : TOUTE l'école sensibilisée, compréhension des flux de la fourche à l'assiette au compost – ancrage transgénérationnel.", "Continuité seamless Cycloposteurs → Bio Tri Foule : aucune rupture, mérite des référents reconnu.", "Volumes record du programme : 1 493 kg biodéchets, 829 L compost – site leader SMIEEOM."], pointsAmelioration: ["Broyat initial très avancé en décomposition – planifier remplacement avec calendrier.", "Documenter systématiquement le brassage hebdomadaire dans carnet de suivi (obligation légale actuellement à formaliser).", "Ancrer par écrit dans les fonctions du cantinier le rôle de gestionnaire du composteur (relais post-accompagnement)."], conclusion: "Le site de Sassay a détourné ~1 394 kg de biodéchets et produit 1 303 L de compost mûr d'excellente qualité (accompagnement Cycloposteurs + Bio Tri Foule 2023-2026). C'est le site le plus performant et le plus complet du programme SMIEEOM. Le binôme Geoffroy LARCHER (cantinier-technique) et Gérald GASCHET (citoyen-élu) a créé une alchimie remarquable : implication opérationnelle directe, communication efficace, animation pédagogique intergénérationnelle. Ce modèle foyer-cantine avec engagement cantinier systématique est unique et reproductible. À 10 ans, Sassay pourrait détourner plus de 15 tonnes de biodéchets et inspirer d'autres communes.", lat: 47.3089, lng: 1.4736},
+  {id: "s1", name: "Seigy", address: "Place de la mairie, 41110 Seigy", code: "SEIGY", foyers: 23, typeSite: "Foyers", cantine: "Non concerné", periode: "Mars 2023 (Cycloposteurs) – Avril 2026 (Bio Tri Foule)", capacityL: 500, referents: [{role: "Référent technique (formé – parti à la retraite)", nom: "Patrick ROVIRA", tel: "02 54 75 12 31", email: "mairie@seigy.com"}, {role: "Référent citoyen / élu (formé – a cessé son implication)", nom: "Jean-Luc ESNAULT", tel: "06 43 36 74 25", email: "adjoint3esnault@orange.fr"}], biodechets_kg: 1491, compost_L: 1407, pointsForts: ["Excellente qualité de compost – site techniquement parfait avec une biodiversité riche.", "Volumes impressionnants : ~1 490 kg de biodéchets détournés et 1 407 L de compost mûr sur 3 cycles.", "Initiative remarquable de Patrick Rovira : remplacement des tiges plastique par du métal après l'incident voiture, pose de dalles béton, relevés de température réguliers.", "23 foyers inscrits – bonne participation communale sans cantine.", "Réussite pédagogique : animation de 30 minutes avec une classe de CM2 sur le tri des biodéchets, le retour à la terre et le cycle de vie des végétaux.", "Mobilisation communale forte : goûter offert par la mairie, présence de deux élus lors du dernier accompagnement.", "Distribution du compost mûr prévue via mail aux administrés – valorisation locale directe.", "Approvisionnement en broyat assuré grâce au broyeur prêté par le SMIEEOM – solution pérenne."], pointsAmelioration: ["Urgence absolue : identifier et former deux nouveaux référents. Patrick Rovira (agent technique formé) est parti à la retraite et Jean-Luc Esnault (élu/bénévole formé) a cessé son implication pour des raisons personnelles qui lui sont propres et entendables. Sans référent formé, le site est en non-conformité réglementaire.", "Mettre en place un carnet de suivi sur site : température, entretien, brassages, apports de broyat – obligation légale en cas de contrôle.", "S'assurer que le pourtour des composteurs reste bien dégagé pour prévenir l'installation de nuisibles.", "Surveiller l'humidité du compost mature et procéder aux réhumidifications nécessaires.", "Formaliser la communication : diffuser le chiffre des 1 490 kg détournés auprès des habitants pour valoriser le projet et motiver de nouvelles inscriptions."], conclusion: "Le site de Seigy a détourné ~1 490 kg de biodéchets et produit 1 407 L de compost mûr d'excellente qualité sur 3 cycles de transfert (2023-2026). C'est l'un des sites les plus performants du programme avec 23 foyers inscrits. L'implication de Patrick Rovira et Jean-Luc Esnault a été exemplaire, mais leur départ (retraite et arrêt volontaire) crée une urgence : le site n'a plus aucun référent formé. L'animation CM2 et la distribution prévue du compost ancrent le projet localement. Le verdict est clair : réussite technique et pédagogique, mais fragilité administrative. Le passage en autonomie nécessite impérativement la formation de deux nouveaux référents et la mise en place d'un carnet de suivi.", lat: 47.2761, lng: 1.4258},
+  {id: "s13", name: "Selles-sur-Cher", address: "Levée du Parc, 41130 Selles-sur-Cher", code: "SELLES", foyers: 10, typeSite: "Foyers", cantine: "Non concerné", periode: "Juillet 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Frédéric LECLERC", tel: "07 57 49 50 85", email: "dst@selles-sur-cher.fr"}, {role: "Référent citoyen", nom: "Muriel BOISSONNET", tel: "06 76 06 93 25", email: "murielboissonnet@yahoo.fr"}], biodechets_kg: 648, compost_L: 345, pointsForts: ["Plus grand nombre de foyers inscrits du programme (19).", "Communication faite de manière exceptionnelle.", "Soutien important des élus.", "Visite des écoles avec un vrai succès.", "Emplacement stratégique et bien pensé.", "Chiffres prouvant un vrai intérêt pour ce site."], pointsAmelioration: ["Accompagnement technique pas régulier et pas bien fait – gros point noir.", "Il faut absolument que le compostage rentre dans les fonctions d'un agent technique, sinon le site mourra.", "Le site doit être bien entretenu pour encourager les gens à y aller.", "Les codes doivent être bien définis et accessibles pour tous.", "Former au moins un agent technique et l'intégrer dans ses fonctions."], conclusion: "Avec 19 foyers inscrits, Selles-sur-Cher est le site le plus mobilisé du programme. Il a détourné ~647 kg de biodéchets et produit 345 L de compost mûr tamisé. Cette forte participation citoyenne est un atout, mais elle nécessite un relais technique pérenne : l'intégration de la gestion du composteur dans les missions d'un agent communal est indispensable pour garantir la continuité. Le potentiel à 10 ans dépasse 6 tonnes.", lat: 47.2731, lng: 1.5478},
+  {id: "s5", name: "Soings-en-Sologne", address: "Face à la cantine de l'école, 41230 Soings-en-Sologne", code: "SOINGS", foyers: 8, typeSite: "Foyers + Cantine", cantine: "135 repas/jour", periode: "Juillet 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Sylvain FRANKE", tel: "06 99 90 01 61", email: "frankesylvain00@gmail.com"}, {role: "Référent citoyen", nom: "Regine BLONDEL", tel: "07 70 08 57 56", email: "regine.blondel60@gmail.com"}], biodechets_kg: 1126, compost_L: 432, pointsForts: ["Site exemplaire du programme – un modèle reproductible pour d'autres communes.", "Cantinier déjà engagé contre le gaspillage : a compris immédiatement l'intérêt et proposé des biscuits anti-gaspillage.", "Passage de relais réussi entre la référente technique initiale et un nouveau référent bénévole.", "Référent technique (Sylvain Franke) présent de manière hebdomadaire – un engagement rare et exemplaire.", "Implantation stratégique : des dizaines de parents et enfants passent devant chaque jour. L'emplacement, choisi avec insistance par Bio Tri Foule malgré les réticences initiales, s'est révélé être le meilleur choix possible – un véritable site vitrine.", "Compost réutilisé dans le potager pédagogique de l'école – boucle vertueuse complète.", "Broyat toujours bien géré, site bien entretenu.", "Ce site a vocation à inspirer d'autres communes : l'emplacement stratégique, l'implication des référents, la collaboration avec le cantinier et le relais pédagogique avec l'école forment un ensemble cohérent et reproductible."], pointsAmelioration: ["Valoriser le référent technique : son implication hebdomadaire mérite une reconnaissance formelle. Sa fonction de référent compostage devrait être inscrite dans son contrat ou sa fiche de poste afin de valoriser cet engagement, mais aussi de pérenniser le suivi en cas de départ.", "Recruter davantage de foyers : soit 8 foyers supplémentaires pour doubler la participation, soit mettre à disposition de la salle des fêtes des bioseaux avec une explication du tri des biodéchets et de la possibilité de déposer ces biodéchets dans le composteur collectif.", "Maintenir l'attractivité du site : le composteur étant situé sur un lieu de passage, il est essentiel de veiller à l'état du matériel et de procéder aux réparations nécessaires pour préserver l'image du site.", "Les agents communaux doivent continuer un passage régulier : vérifier la température, tenir le carnet de suivi, alimenter en broyat."], conclusion: "Le site de Soings-en-Sologne a détourné ~1 109 kg de biodéchets et produit 432 L de compost mûr, directement intégré au potager pédagogique de l'école. C'est l'un des plus performants du programme en volume et un modèle pour d'autres communes. Le référent technique assure un passage hebdomadaire – un engagement qui mérite d'être formalisé et pérennisé. L'ancrage scolaire du projet en fait un outil éducatif concret sur le cycle de la matière. À 10 ans, le potentiel dépasse 11 tonnes.", lat: 47.3378, lng: 1.5411},
+  {id: "s2", name: "Thenay", address: "Salle des fêtes, 41400 Thenay", code: "THENAY", foyers: 10, typeSite: "Foyers", cantine: "Non concerné", periode: "Septembre 2024 – Avril 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Guilherme GAUTIER", tel: "02 54 32 52 07", email: "mairie.thenay@controis-en-sologne.fr"}, {role: "Référent citoyen", nom: "Danielle PRUD'HOMME", tel: "06 07 62 13 41", email: "gogotnam@wanadoo.fr"}], biodechets_kg: 1402, compost_L: 690, pointsForts: ["Implication extraordinaire de l'agent technique : site techniquement parfait, gestion rigoureuse.", "Quantités de biodéchets générées importantes – le site a tout son sens.", "Référente bénévole greffée au projet pour la communication."], pointsAmelioration: ["Donner un second souffle au site : trouver le levier pour attirer davantage de monde.", "Manque de soutien de la commune – relancer l'implication des élus.", "Surveiller l'état du matériel (bois, charnières) sous les arbres – entretien régulier.", "Formaliser la formation de la référente bénévole (pas de formation formelle reçue)."], conclusion: "Le site de Thenay a détourné environ 994 kg de biodéchets des ordures ménagères et produit ~690 L de compost mûr en deux récoltes. Repris par Bio Tri Foule après un premier accompagnement des Cycloposteurs, le site bénéficie d'un agent technique exemplaire dont la rigueur assure un fonctionnement irréprochable. L'enjeu majeur reste la mobilisation communale : relancer l'animation et impliquer les élus pour donner un second souffle à cette installation qui, à 10 ans, pourrait détourner près de 10 tonnes de biodéchets.", lat: 47.2028, lng: 1.3628},
+  {id: "s21", name: "Thésée", address: "École communale, 41140 Thésée", code: "THESEE", foyers: 10, typeSite: "Foyers + Cantine", cantine: "Non concerné", periode: "2024 – 2025", capacityL: 400, referents: [{role: "Référent bénévole (ancien)", nom: "Daniel CHARLUTEAU", tel: "", email: ""}, {role: "Référent technique (parti)", nom: "Agent technique (parti)", tel: "", email: ""}], biodechets_kg: 287, compost_L: 130, pointsForts: ["Compost mûr d'excellente qualité – mélange homogène prouvant une bonne gestion initiale.", "Bonne compréhension du contexte rural par M. Charluteau (Vice-président SMIGE).", "Apprentissage majeur : un site bien installé mais mal placé ne peut pas fonctionner."], pointsAmelioration: ["Relocaliser le composteur dans l'enceinte de l'école pour faciliter les apports de la cantine.", "Former le nouvel agent technique comme référent de site (formation reconnue par l'État).", "Organiser une campagne de recrutement de foyers si le site est relocalisé.", "Valoriser le compost produit pour un usage pédagogique ou communal."], conclusion: "Le site de Thésée a détourné ~233 kg de biodéchets (342 L transférés) et produit 130 L de compost mûr d'excellente qualité. Le faible volume s'explique par un emplacement excentré, éloigné de l'école et peu visible, ainsi que par le départ du référent technique. Ce bilan constitue un retour d'expérience précieux : un composteur bien installé mais mal positionné ne peut pas fonctionner durablement. La relocalisation dans l'enceinte de l'école est la priorité.", lat: 47.2844, lng: 1.5531},
 ];
 
 const DEMO_ENTRIES = [
-  {
-    "id": "e1",
-    "siteId": "s1",
-    "date": "2023-03-28",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration du site par les Cycloposteurs",
-    "createdAt": "2023-03-28T10:00:00"
-  },
-  {
-    "id": "e2",
-    "siteId": "s1",
-    "date": "2024-03-22",
-    "actionType": "transfert",
-    "volumeL": 700,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert 700 L",
-    "createdAt": "2024-03-22T10:00:00"
-  },
-  {
-    "id": "e3",
-    "siteId": "s1",
-    "date": "2024-03-22",
-    "actionType": "recolte",
-    "volumeL": 581,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 581 L compost mûr",
-    "createdAt": "2024-03-22T10:00:00"
-  },
-  {
-    "id": "e4",
-    "siteId": "s1",
-    "date": "2024-08-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Visite de suivi Véricompost",
-    "createdAt": "2024-08-27T10:00:00"
-  },
-  {
-    "id": "e5",
-    "siteId": "s1",
-    "date": "2024-09-25",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [
-      "manutention"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Composteur percuté par une voiture – signalement SMIEEOM",
-    "createdAt": "2024-09-25T10:00:00"
-  },
-  {
-    "id": "e6",
-    "siteId": "s1",
-    "date": "2024-09-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "trop_sec"
-    ],
-    "temperature": null,
-    "tempsMin": 45,
-    "commentaire": "RDV Patrick Rovira et Jean-Luc Esnault. Réparation bacs (tiges plastique→métal). Dalles béton installées. Compost excellent, biodiversité riche. Compost mature légèrement sec.",
-    "createdAt": "2024-09-27T10:00:00"
-  },
-  {
-    "id": "e7",
-    "siteId": "s1",
-    "date": "2024-11-18",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Aide à remonter le composteur. 23 foyers inscrits.",
-    "createdAt": "2024-11-18T10:00:00"
-  },
-  {
-    "id": "e8",
-    "siteId": "s1",
-    "date": "2025-03-14",
-    "actionType": "transfert",
-    "volumeL": 828,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert 828 L",
-    "createdAt": "2025-03-14T10:00:00"
-  },
-  {
-    "id": "e9",
-    "siteId": "s1",
-    "date": "2025-03-14",
-    "actionType": "recolte",
-    "volumeL": 329,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 329 L compost mûr",
-    "createdAt": "2025-03-14T10:00:00"
-  },
-  {
-    "id": "e10",
-    "siteId": "s1",
-    "date": "2026-04-09",
-    "actionType": "transfert",
-    "volumeL": 664,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Dernier accompagnement SMIEEOM. 4×166 L. Animation 30 min classe CM2. Goûter mairie.",
-    "createdAt": "2026-04-09T10:00:00"
-  },
-  {
-    "id": "e11",
-    "siteId": "s1",
-    "date": "2026-04-09",
-    "actionType": "recolte",
-    "volumeL": 497,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte 497 L compost mûr placé en benne",
-    "createdAt": "2026-04-09T10:00:00"
-  },
-  {
-    "id": "e12",
-    "siteId": "s2",
-    "date": "2023-11-10",
-    "actionType": "transfert",
-    "volumeL": 600,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration + transfert Cycloposteurs – hors période Bio Tri Foule",
-    "createdAt": "2023-11-10T10:00:00"
-  },
-  {
-    "id": "e13",
-    "siteId": "s2",
-    "date": "2024-09-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Prise en main du site par Bio Tri Foule",
-    "createdAt": "2024-09-23T10:00:00"
-  },
-  {
-    "id": "e14",
-    "siteId": "s2",
-    "date": "2024-11-26",
-    "actionType": "transfert",
-    "volumeL": 883,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost + transfert",
-    "createdAt": "2024-11-26T10:00:00"
-  },
-  {
-    "id": "e15",
-    "siteId": "s2",
-    "date": "2024-11-26",
-    "actionType": "recolte",
-    "volumeL": 359,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte 359 L compost mûr",
-    "createdAt": "2024-11-26T10:00:00"
-  },
-  {
-    "id": "e16",
-    "siteId": "s2",
-    "date": "2025-04-05",
-    "actionType": "transfert",
-    "volumeL": 579,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Dernière visite – transfert",
-    "createdAt": "2025-04-05T10:00:00"
-  },
-  {
-    "id": "e17",
-    "siteId": "s2",
-    "date": "2025-04-05",
-    "actionType": "recolte",
-    "volumeL": 331,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte finale 331 L compost mûr",
-    "createdAt": "2025-04-05T10:00:00"
-  },
-  {
-    "id": "e18",
-    "siteId": "s3",
-    "date": "2023-02-06",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle par les Cycloposteurs Orléans",
-    "createdAt": "2023-02-06T10:00:00"
-  },
-  {
-    "id": "e19",
-    "siteId": "s3",
-    "date": "2023-09-21",
-    "actionType": "transfert",
-    "volumeL": 550,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Premier transfert participatif",
-    "createdAt": "2023-09-21T10:00:00"
-  },
-  {
-    "id": "e20",
-    "siteId": "s3",
-    "date": "2023-09-21",
-    "actionType": "recolte",
-    "volumeL": 474,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 474 L compost mûr initial",
-    "createdAt": "2023-09-21T10:00:00"
-  },
-  {
-    "id": "e21",
-    "siteId": "s3",
-    "date": "2024-10-16",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Reprise du relais par Bio Tri Foule – continuité assurée",
-    "createdAt": "2024-10-16T10:00:00"
-  },
-  {
-    "id": "e22",
-    "siteId": "s3",
-    "date": "2025-03-08",
-    "actionType": "transfert",
-    "volumeL": 746,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert weekend – forte participation citoyenne",
-    "createdAt": "2025-03-08T10:00:00"
-  },
-  {
-    "id": "e23",
-    "siteId": "s3",
-    "date": "2025-03-08",
-    "actionType": "recolte",
-    "volumeL": 331,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 331 L compost mûr",
-    "createdAt": "2025-03-08T10:00:00"
-  },
-  {
-    "id": "e24",
-    "siteId": "s3",
-    "date": "2026-04-02",
-    "actionType": "transfert",
-    "volumeL": 747,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Animation pédagogique toutes classes",
-    "createdAt": "2026-04-02T10:00:00"
-  },
-  {
-    "id": "e25",
-    "siteId": "s3",
-    "date": "2026-04-02",
-    "actionType": "recolte",
-    "volumeL": 498,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 498 L compost mûr final",
-    "createdAt": "2026-04-02T10:00:00"
-  },
-  {
-    "id": "e26",
-    "siteId": "s4",
-    "date": "2024-08-28",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": 90,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-08-28T10:00:00"
-  },
-  {
-    "id": "e27",
-    "siteId": "s4",
-    "date": "2025-01-24",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": 15,
-    "commentaire": "Visite de suivi",
-    "createdAt": "2025-01-24T10:00:00"
-  },
-  {
-    "id": "e28",
-    "siteId": "s4",
-    "date": "2025-04-01",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Diagnostic – mail rapport envoyé",
-    "createdAt": "2025-04-01T10:00:00"
-  },
-  {
-    "id": "e29",
-    "siteId": "s4",
-    "date": "2025-04-04",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "RDV avec Théo – discussion sur les difficultés du site",
-    "createdAt": "2025-04-04T10:00:00"
-  },
-  {
-    "id": "e30",
-    "siteId": "s4",
-    "date": "2025-04-07",
-    "actionType": "transfert",
-    "volumeL": 760,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Attention – manque de brassage constaté",
-    "createdAt": "2025-04-07T10:00:00"
-  },
-  {
-    "id": "e31",
-    "siteId": "s4",
-    "date": "2025-04-22",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "moucherons"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Vérification présence moucherons",
-    "createdAt": "2025-04-22T10:00:00"
-  },
-  {
-    "id": "e32",
-    "siteId": "s4",
-    "date": "2025-06-14",
-    "actionType": "transfert",
-    "volumeL": 1000,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert + retrait 432 L compost mûr – excellente qualité",
-    "createdAt": "2025-06-14T10:00:00"
-  },
-  {
-    "id": "e33",
-    "siteId": "s4",
-    "date": "2025-06-14",
-    "actionType": "recolte",
-    "volumeL": 432,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte 432 L compost mûr – excellente qualité",
-    "createdAt": "2025-06-14T10:00:00"
-  },
-  {
-    "id": "e34",
-    "siteId": "s5",
-    "date": "2024-07-06",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-07-06T10:00:00"
-  },
-  {
-    "id": "e35",
-    "siteId": "s5",
-    "date": "2024-09-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Suivi de fonctionnement",
-    "createdAt": "2024-09-23T10:00:00"
-  },
-  {
-    "id": "e36",
-    "siteId": "s5",
-    "date": "2024-12-13",
-    "actionType": "transfert",
-    "volumeL": 940,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost – transfert effectué par Jean-Luc Brinet et Sylvain Franck",
-    "createdAt": "2024-12-13T10:00:00"
-  },
-  {
-    "id": "e37",
-    "siteId": "s5",
-    "date": "2025-04-09",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": 25,
-    "tempsMin": null,
-    "commentaire": "Diagnostic – brassage non fait régulièrement, rappels effectués",
-    "createdAt": "2025-04-09T10:00:00"
-  },
-  {
-    "id": "e38",
-    "siteId": "s5",
-    "date": "2025-06-12",
-    "actionType": "transfert",
-    "volumeL": 691,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Dernière visite – transfert",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e39",
-    "siteId": "s5",
-    "date": "2025-06-12",
-    "actionType": "recolte",
-    "volumeL": 432,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 432 L compost mûr",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e40",
-    "siteId": "s6",
-    "date": "2024-09-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-09-23T10:00:00"
-  },
-  {
-    "id": "e41",
-    "siteId": "s6",
-    "date": "2024-11-18",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Visite avec Thierry",
-    "createdAt": "2024-11-18T10:00:00"
-  },
-  {
-    "id": "e42",
-    "siteId": "s6",
-    "date": "2024-12-11",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [
-      "moucherons"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Problème de moucherons – intervention corrective",
-    "createdAt": "2024-12-11T10:00:00"
-  },
-  {
-    "id": "e43",
-    "siteId": "s6",
-    "date": "2025-01-29",
-    "actionType": "transfert",
-    "volumeL": 940,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost – avec deux agents techniques",
-    "createdAt": "2025-01-29T10:00:00"
-  },
-  {
-    "id": "e44",
-    "siteId": "s6",
-    "date": "2025-06-12",
-    "actionType": "transfert",
-    "volumeL": 650,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert final",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e45",
-    "siteId": "s6",
-    "date": "2025-06-12",
-    "actionType": "recolte",
-    "volumeL": 518,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 518 L compost mûr",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e46",
-    "siteId": "s7",
-    "date": "2024-07-06",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-07-06T10:00:00"
-  },
-  {
-    "id": "e47",
-    "siteId": "s7",
-    "date": "2024-07-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "odeur"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Présence d'odeur due à l'ancien apport",
-    "createdAt": "2024-07-23T10:00:00"
-  },
-  {
-    "id": "e48",
-    "siteId": "s7",
-    "date": "2024-12-17",
-    "actionType": "transfert",
-    "volumeL": 940,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost + animation scolaire intégrée",
-    "createdAt": "2024-12-17T10:00:00"
-  },
-  {
-    "id": "e49",
-    "siteId": "s7",
-    "date": "2025-06-10",
-    "actionType": "transfert",
-    "volumeL": 576,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert final",
-    "createdAt": "2025-06-10T10:00:00"
-  },
-  {
-    "id": "e50",
-    "siteId": "s7",
-    "date": "2025-06-10",
-    "actionType": "recolte",
-    "volumeL": 576,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 576 L compost mûr",
-    "createdAt": "2025-06-10T10:00:00"
-  },
-  {
-    "id": "e51",
-    "siteId": "s7",
-    "date": "2026-03-17",
-    "actionType": "recolte",
-    "volumeL": 334,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 334 L compost mûr post-accompagnement",
-    "createdAt": "2026-03-17T10:00:00"
-  },
-  {
-    "id": "e52",
-    "siteId": "s8",
-    "date": "2024-07-05",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-07-05T10:00:00"
-  },
-  {
-    "id": "e53",
-    "siteId": "s8",
-    "date": "2024-09-13",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Changement de cadenas",
-    "createdAt": "2024-09-13T10:00:00"
-  },
-  {
-    "id": "e54",
-    "siteId": "s8",
-    "date": "2024-09-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Rapport OK",
-    "createdAt": "2024-09-27T10:00:00"
-  },
-  {
-    "id": "e55",
-    "siteId": "s8",
-    "date": "2025-04-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": 24,
-    "tempsMin": null,
-    "commentaire": "Tout se passe bien",
-    "createdAt": "2025-04-23T10:00:00"
-  },
-  {
-    "id": "e56",
-    "siteId": "s8",
-    "date": "2025-06-21",
-    "actionType": "transfert",
-    "volumeL": 695,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1er transfert",
-    "createdAt": "2025-06-21T10:00:00"
-  },
-  {
-    "id": "e57",
-    "siteId": "s8",
-    "date": "2026-03-28",
-    "actionType": "transfert",
-    "volumeL": 665,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème transfert",
-    "createdAt": "2026-03-28T10:00:00"
-  },
-  {
-    "id": "e58",
-    "siteId": "s8",
-    "date": "2026-03-28",
-    "actionType": "recolte",
-    "volumeL": 581,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 581 L compost mûr",
-    "createdAt": "2026-03-28T10:00:00"
-  },
-  {
-    "id": "e59",
-    "siteId": "s9",
-    "date": "2024-06-28",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-06-28T10:00:00"
-  },
-  {
-    "id": "e60",
-    "siteId": "s9",
-    "date": "2025-04-07",
-    "actionType": "transfert",
-    "volumeL": 746,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1er transfert – réalisé seul",
-    "createdAt": "2025-04-07T10:00:00"
-  },
-  {
-    "id": "e61",
-    "siteId": "s9",
-    "date": "2025-06-10",
-    "actionType": "transfert",
-    "volumeL": 403,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème transfert",
-    "createdAt": "2025-06-10T10:00:00"
-  },
-  {
-    "id": "e62",
-    "siteId": "s9",
-    "date": "2025-06-10",
-    "actionType": "recolte",
-    "volumeL": 518,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 518 L compost mûr",
-    "createdAt": "2025-06-10T10:00:00"
-  },
-  {
-    "id": "e63",
-    "siteId": "s10",
-    "date": "2024-09-28",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-09-28T10:00:00"
-  },
-  {
-    "id": "e64",
-    "siteId": "s10",
-    "date": "2024-10-18",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Tout va pour le mieux – 2ème référent absent",
-    "createdAt": "2024-10-18T10:00:00"
-  },
-  {
-    "id": "e65",
-    "siteId": "s10",
-    "date": "2025-04-04",
-    "actionType": "transfert",
-    "volumeL": 581,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost – avec une classe",
-    "createdAt": "2025-04-04T10:00:00"
-  },
-  {
-    "id": "e66",
-    "siteId": "s10",
-    "date": "2025-12-12",
-    "actionType": "transfert",
-    "volumeL": 480,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème transfert",
-    "createdAt": "2025-12-12T10:00:00"
-  },
-  {
-    "id": "e67",
-    "siteId": "s10",
-    "date": "2025-12-12",
-    "actionType": "recolte",
-    "volumeL": 322,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 322 L compost mûr",
-    "createdAt": "2025-12-12T10:00:00"
-  },
-  {
-    "id": "e68",
-    "siteId": "s11",
-    "date": "2025-09-27",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Maintenance matériel",
-    "createdAt": "2025-09-27T10:00:00"
-  },
-  {
-    "id": "e69",
-    "siteId": "s11",
-    "date": "2025-11-06",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "moucherons",
-      "trop_sec"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Problème moucherons – sec – compost jeune",
-    "createdAt": "2025-11-06T10:00:00"
-  },
-  {
-    "id": "e70",
-    "siteId": "s11",
-    "date": "2026-02-17",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [
-      "trop_humide"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réparation système de fixation – vis oxydées par humidité",
-    "createdAt": "2026-02-17T10:00:00"
-  },
-  {
-    "id": "e71",
-    "siteId": "s11",
-    "date": "2026-03-28",
-    "actionType": "transfert",
-    "volumeL": 1000,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost – transfert vers bac de maturation",
-    "createdAt": "2026-03-28T10:00:00"
-  },
-  {
-    "id": "e72",
-    "siteId": "s12",
-    "date": "2024-07-13",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-07-13T10:00:00"
-  },
-  {
-    "id": "e73",
-    "siteId": "s12",
-    "date": "2024-09-23",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Contrôle de fonctionnement",
-    "createdAt": "2024-09-23T10:00:00"
-  },
-  {
-    "id": "e74",
-    "siteId": "s12",
-    "date": "2025-03-29",
-    "actionType": "transfert",
-    "volumeL": 580,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1er transfert participatif",
-    "createdAt": "2025-03-29T10:00:00"
-  },
-  {
-    "id": "e75",
-    "siteId": "s12",
-    "date": "2026-03-07",
-    "actionType": "transfert",
-    "volumeL": 383,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost + transfert",
-    "createdAt": "2026-03-07T10:00:00"
-  },
-  {
-    "id": "e76",
-    "siteId": "s12",
-    "date": "2026-03-07",
-    "actionType": "recolte",
-    "volumeL": 333,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 333 L compost mûr",
-    "createdAt": "2026-03-07T10:00:00"
-  },
-  {
-    "id": "e77",
-    "siteId": "s13",
-    "date": "2024-07-10",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": 150,
-    "commentaire": "Inauguration – une vingtaine de personnes",
-    "createdAt": "2024-07-10T10:00:00"
-  },
-  {
-    "id": "e78",
-    "siteId": "s13",
-    "date": "2024-09-24",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Contrôle de fonctionnement",
-    "createdAt": "2024-09-24T10:00:00"
-  },
-  {
-    "id": "e79",
-    "siteId": "s13",
-    "date": "2025-02-24",
-    "actionType": "transfert",
-    "volumeL": 664,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost – 3 classes primaires présentes",
-    "createdAt": "2025-02-24T10:00:00"
-  },
-  {
-    "id": "e80",
-    "siteId": "s13",
-    "date": "2025-06-11",
-    "actionType": "transfert",
-    "volumeL": 288,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème transfert",
-    "createdAt": "2025-06-11T10:00:00"
-  },
-  {
-    "id": "e81",
-    "siteId": "s13",
-    "date": "2025-06-11",
-    "actionType": "recolte",
-    "volumeL": 345,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 345 L compost mûr",
-    "createdAt": "2025-06-11T10:00:00"
-  },
-  {
-    "id": "e82",
-    "siteId": "s14",
-    "date": "2025-05-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réunion publique de présentation",
-    "createdAt": "2025-05-27T10:00:00"
-  },
-  {
-    "id": "e83",
-    "siteId": "s14",
-    "date": "2025-06-14",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2025-06-14T10:00:00"
-  },
-  {
-    "id": "e84",
-    "siteId": "s14",
-    "date": "2025-12-08",
-    "actionType": "brassage",
-    "volumeL": null,
-    "observations": [],
-    "temperature": 50,
-    "tempsMin": 10,
-    "commentaire": "Température 50°C – bon signe d'activité biologique",
-    "createdAt": "2025-12-08T10:00:00"
-  },
-  {
-    "id": "e85",
-    "siteId": "s14",
-    "date": "2025-12-15",
-    "actionType": "transfert",
-    "volumeL": 940,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost + animation 2 classes maternelle",
-    "createdAt": "2025-12-15T10:00:00"
-  },
-  {
-    "id": "e86",
-    "siteId": "s14",
-    "date": "2026-01-05",
-    "actionType": "brassage",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": 10,
-    "commentaire": "Brassage et recouvrement de biodéchets non-recouverts",
-    "createdAt": "2026-01-05T10:00:00"
-  },
-  {
-    "id": "e87",
-    "siteId": "s16",
-    "date": "2025-06-16",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réunion publique le midi – une vingtaine de personnes",
-    "createdAt": "2025-06-16T10:00:00"
-  },
-  {
-    "id": "e88",
-    "siteId": "s16",
-    "date": "2025-06-26",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration avec une trentaine de personnes",
-    "createdAt": "2025-06-26T10:00:00"
-  },
-  {
-    "id": "e89",
-    "siteId": "s16",
-    "date": "2025-09-08",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "trop_sec"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Visite avec les deux référentes. ~166 L, ~100 kg estimés. Compost trop sec.",
-    "createdAt": "2025-09-08T10:00:00"
-  },
-  {
-    "id": "e90",
-    "siteId": "s16",
-    "date": "2025-09-09",
-    "actionType": "remplissage_broyat",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Livraison de broyat suite à la visite – excès de structurant corrigé",
-    "createdAt": "2025-09-09T10:00:00"
-  },
-  {
-    "id": "e91",
-    "siteId": "s16",
-    "date": "2025-10-28",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "trop_sec"
-    ],
-    "temperature": 18,
-    "tempsMin": null,
-    "commentaire": "18°C – compost ne chauffe quasiment pas – faible volume et excès de structurant",
-    "createdAt": "2025-10-28T10:00:00"
-  },
-  {
-    "id": "e92",
-    "siteId": "s16",
-    "date": "2025-12-04",
-    "actionType": "transfert",
-    "volumeL": 322,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost participatif sur temps du midi – ~10 participants. Qualité au RDV, volumes modestes.",
-    "createdAt": "2025-12-04T10:00:00"
-  },
-  {
-    "id": "e93",
-    "siteId": "s16",
-    "date": "2026-02-11",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réparation charnières – vis rouillées et lâchées",
-    "createdAt": "2026-02-11T10:00:00"
-  },
-  {
-    "id": "e94",
-    "siteId": "s16",
-    "date": "2026-03-06",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Vol du brasseur de compost. Remplacement via Émeraude Création.",
-    "createdAt": "2026-03-06T10:00:00"
-  },
-  {
-    "id": "e95",
-    "siteId": "s16",
-    "date": "2026-04-09",
-    "actionType": "transfert",
-    "volumeL": 498,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Dernier accompagnement. 3×166=498 L transférés. ~15 personnes, SMIEEOM présent.",
-    "createdAt": "2026-04-09T10:00:00"
-  },
-  {
-    "id": "e96",
-    "siteId": "s16",
-    "date": "2026-04-09",
-    "actionType": "recolte",
-    "volumeL": 249,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "249 L compost mûr tamisé finement en terreau à semis (atelier Laetitia)",
-    "createdAt": "2026-04-09T10:00:00"
-  },
-  {
-    "id": "e97",
-    "siteId": "s17",
-    "date": "2024-10-19",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-10-19T10:00:00"
-  },
-  {
-    "id": "e98",
-    "siteId": "s17",
-    "date": "2025-02-07",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "trop_sec"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Visite avec nouvelle référente – absence de panneaux, cadenas manquant, broyat très bas",
-    "createdAt": "2025-02-07T10:00:00"
-  },
-  {
-    "id": "e99",
-    "siteId": "s17",
-    "date": "2025-04-04",
-    "actionType": "transfert",
-    "volumeL": 497,
-    "observations": [
-      "trop_sec"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1er transfert – mélange constaté trop sec",
-    "createdAt": "2025-04-04T10:00:00"
-  },
-  {
-    "id": "e100",
-    "siteId": "s17",
-    "date": "2025-06-12",
-    "actionType": "transfert",
-    "volumeL": 250,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème transfert",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e101",
-    "siteId": "s17",
-    "date": "2025-06-12",
-    "actionType": "recolte",
-    "volumeL": 340,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte 340 L compost mûr d'excellente qualité",
-    "createdAt": "2025-06-12T10:00:00"
-  },
-  {
-    "id": "e102",
-    "siteId": "s17",
-    "date": "2025-09-04",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Remplacement matériel suite à tempête – arbres écrasés",
-    "createdAt": "2025-09-04T10:00:00"
-  },
-  {
-    "id": "e103",
-    "siteId": "s19",
-    "date": "2025-05-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réunion publique – une trentaine de personnes",
-    "createdAt": "2025-05-27T10:00:00"
-  },
-  {
-    "id": "e104",
-    "siteId": "s19",
-    "date": "2025-06-26",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration avec une dizaine de personnes",
-    "createdAt": "2025-06-26T10:00:00"
-  },
-  {
-    "id": "e105",
-    "siteId": "s19",
-    "date": "2025-12-06",
-    "actionType": "transfert",
-    "volumeL": 581,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Café compost",
-    "createdAt": "2025-12-06T10:00:00"
-  },
-  {
-    "id": "e106",
-    "siteId": "s19",
-    "date": "2026-02-04",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [
-      "moucherons"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Présence de mouches à drain en grande quantité",
-    "createdAt": "2026-02-04T10:00:00"
-  },
-  {
-    "id": "e107",
-    "siteId": "s20",
-    "date": "2025-06-25",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2025-06-25T10:00:00"
-  },
-  {
-    "id": "e108",
-    "siteId": "s20",
-    "date": "2025-09-27",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Remplacement du cadenas disparu du bac de maturation",
-    "createdAt": "2025-09-27T10:00:00"
-  },
-  {
-    "id": "e109",
-    "siteId": "s20",
-    "date": "2025-10-08",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": 30,
-    "commentaire": "Visite avec Willy",
-    "createdAt": "2025-10-08T10:00:00"
-  },
-  {
-    "id": "e110",
-    "siteId": "s20",
-    "date": "2025-12-19",
-    "actionType": "transfert",
-    "volumeL": 554,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert vers bac de maturation",
-    "createdAt": "2025-12-19T10:00:00"
-  },
-  {
-    "id": "e111",
-    "siteId": "s20",
-    "date": "2026-02-17",
-    "actionType": "manutention",
-    "volumeL": null,
-    "observations": [
-      "trop_humide"
-    ],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réparation système de fixation – vis oxydables et humidité",
-    "createdAt": "2026-02-17T10:00:00"
-  },
-  {
-    "id": "e112",
-    "siteId": "s21",
-    "date": "2024-11-07",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-11-07T10:00:00"
-  },
-  {
-    "id": "e113",
-    "siteId": "s21",
-    "date": "2025-05-02",
-    "actionType": "transfert",
-    "volumeL": 342,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1er transfert",
-    "createdAt": "2025-05-02T10:00:00"
-  },
-  {
-    "id": "e114",
-    "siteId": "s21",
-    "date": "2026-04-01",
-    "actionType": "transfert",
-    "volumeL": 80,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert final",
-    "createdAt": "2026-04-01T10:00:00"
-  },
-  {
-    "id": "e115",
-    "siteId": "s21",
-    "date": "2026-04-01",
-    "actionType": "recolte",
-    "volumeL": 130,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Retrait 130 L compost mûr",
-    "createdAt": "2026-04-01T10:00:00"
-  },
-  {
-    "id": "e116",
-    "siteId": "s18",
-    "date": "2024-09-13",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2024-09-13T10:00:00"
-  },
-  {
-    "id": "e117",
-    "siteId": "s18",
-    "date": "2025-04-24",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème visite de suivi",
-    "createdAt": "2025-04-24T10:00:00"
-  },
-  {
-    "id": "e118",
-    "siteId": "s18",
-    "date": "2025-09-27",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Bilan de site",
-    "createdAt": "2025-09-27T10:00:00"
-  },
-  {
-    "id": "e119",
-    "siteId": "s18",
-    "date": "2025-04-24",
-    "actionType": "transfert",
-    "volumeL": 695,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert estimé (452 kg / 0.65)",
-    "createdAt": "2025-04-24T10:00:00"
-  },
-  {
-    "id": "e120",
-    "siteId": "s18",
-    "date": "2025-09-27",
-    "actionType": "recolte",
-    "volumeL": 166,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Récolte 166 L compost mûr",
-    "createdAt": "2025-09-27T10:00:00"
-  },
-  {
-    "id": "e121",
-    "siteId": "s15",
-    "date": "2025-06-18",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réunion publique",
-    "createdAt": "2025-06-18T10:00:00"
-  },
-  {
-    "id": "e122",
-    "siteId": "s15",
-    "date": "2025-09-11",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Mise en place et inauguration officielle",
-    "createdAt": "2025-09-11T10:00:00"
-  },
-  {
-    "id": "e123",
-    "siteId": "s15",
-    "date": "2025-10-16",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1ère visite de suivi",
-    "createdAt": "2025-10-16T10:00:00"
-  },
-  {
-    "id": "e124",
-    "siteId": "s15",
-    "date": "2026-03-31",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème visite de suivi",
-    "createdAt": "2026-03-31T10:00:00"
-  },
-  {
-    "id": "e125",
-    "siteId": "s15",
-    "date": "2026-03-31",
-    "actionType": "transfert",
-    "volumeL": 955,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Transfert estimé (621 kg / 0.65)",
-    "createdAt": "2026-03-31T10:00:00"
-  },
-  {
-    "id": "e126",
-    "siteId": "s22",
-    "date": "2025-06-24",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Réunion publique",
-    "createdAt": "2025-06-24T10:00:00"
-  },
-  {
-    "id": "e127",
-    "siteId": "s22",
-    "date": "2025-09-24",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "Inauguration officielle",
-    "createdAt": "2025-09-24T10:00:00"
-  },
-  {
-    "id": "e128",
-    "siteId": "s22",
-    "date": "2025-10-16",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "1ère visite de suivi",
-    "createdAt": "2025-10-16T10:00:00"
-  },
-  {
-    "id": "e129",
-    "siteId": "s22",
-    "date": "2026-04-01",
-    "actionType": "visite",
-    "volumeL": null,
-    "observations": [],
-    "temperature": null,
-    "tempsMin": null,
-    "commentaire": "2ème visite de suivi",
-    "createdAt": "2026-04-01T10:00:00"
-  }
+  {id: "e_chem_b5", siteId: "s14", date: "2026-05-11", actionType: "brassage", volumeL: null, observations: [], temperature: 30, tempsMin: 10, commentaire: "Bon état (bien structuré, aéré)", createdAt: "2026-05-20T09:18:54"},
+  {id: "e_chem_b4", siteId: "s14", date: "2026-05-05", actionType: "brassage", volumeL: null, observations: [], temperature: 30, tempsMin: 10, commentaire: "Bon état (bien structuré, aéré)", createdAt: "2026-05-20T09:17:58"},
+  {id: "e_chem_b3", siteId: "s14", date: "2026-04-27", actionType: "brassage", volumeL: null, observations: [], temperature: 30, tempsMin: 10, commentaire: "Bon état (bien structuré, aéré)", createdAt: "2026-05-20T09:17:14"},
+  {id: "e_chem_b2", siteId: "s14", date: "2026-04-21", actionType: "brassage", volumeL: null, observations: [], temperature: 26, tempsMin: 10, commentaire: "Bon état (bien structuré, aéré)", createdAt: "2026-05-20T09:16:28"},
+  {id: "e_chem_b1", siteId: "s14", date: "2026-04-15", actionType: "brassage", volumeL: null, observations: [], temperature: 25, tempsMin: 10, commentaire: "Bon état (bien structuré, aéré)", createdAt: "2026-05-20T09:15:39"},
+  {id: "e1", siteId: "s1", date: "2026-04-09", actionType: "transfert", volumeL: 664, observations: [], temperature: null, tempsMin: 30, commentaire: "Dernier accompagnement SMIEEOM. 4×166 L = 664 L. Récolte 497 L compost mûr placé en benne. Animation 30 min classe CM2. Goûter mairie.", createdAt: "2026-04-09T10:00:00"},
+  {id: "e2", siteId: "s1", date: "2026-04-09", actionType: "recolte", volumeL: 497, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 497 L compost mûr", createdAt: "2026-04-09T10:30:00"},
+  {id: "e3", siteId: "s16", date: "2026-04-09", actionType: "transfert", volumeL: 498, observations: [], temperature: null, tempsMin: null, commentaire: "Dernier accompagnement. 3×166=498 L transférés. 1,5×166=249 L compost mûr tamisé finement en terreau à semis (atelier Laetitia). ~15 personnes, SMIEEOM présent.", createdAt: "2026-04-09T10:00:00"},
+  {id: "e4", siteId: "s16", date: "2026-04-09", actionType: "recolte", volumeL: 249, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 249 L compost mûr", createdAt: "2026-04-09T10:30:00"},
+  {id: "e5", siteId: "s3", date: "2026-04-02", actionType: "transfert", volumeL: 747, observations: [], temperature: null, tempsMin: null, commentaire: "Animation pédagogique toutes classes + retrait 498 L compost mûr final", createdAt: "2026-04-02T10:00:00"},
+  {id: "e6", siteId: "s3", date: "2026-04-02", actionType: "recolte", volumeL: 498, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 498 L compost mûr", createdAt: "2026-04-02T10:30:00"},
+  {id: "e7", siteId: "s21", date: "2026-04-01", actionType: "transfert", volumeL: 80, observations: [], temperature: null, tempsMin: null, commentaire: "Retrait 130 L compost mûr + transfert final 80 L", createdAt: "2026-04-01T10:00:00"},
+  {id: "e8", siteId: "s21", date: "2026-04-01", actionType: "recolte", volumeL: 130, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 130 L compost mûr", createdAt: "2026-04-01T10:30:00"},
+  {id: "e_sa_7", siteId: "s22", date: "2026-04-01", actionType: "transfert", volumeL: 830, observations: [], temperature: null, tempsMin: 90, commentaire: "Café compost – Animation pédagogique avec ~20 enfants, transfert, brassage", createdAt: "2026-04-01T10:00:00"},
+  {id: "e_montho_4", siteId: "s15", date: "2026-03-31", actionType: "transfert", volumeL: 955, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert estimé (621 kg / 0.65)", createdAt: "2026-03-31T10:00:00"},
+  {id: "e10", siteId: "s8", date: "2026-03-28", actionType: "transfert", volumeL: 665, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 581 L compost mûr", createdAt: "2026-03-28T10:00:00"},
+  {id: "e11", siteId: "s8", date: "2026-03-28", actionType: "recolte", volumeL: 581, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 581 L compost mûr", createdAt: "2026-03-28T10:30:00"},
+  {id: "e12", siteId: "s8", date: "2026-03-28", actionType: "visite", volumeL: null, observations: [], temperature: 31, tempsMin: null, commentaire: "Bonne activité biologique confirmée", createdAt: "2026-03-28T10:00:00"},
+  {id: "e13", siteId: "s11", date: "2026-03-28", actionType: "transfert", volumeL: 1000, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert vers bac de maturation – café compost", createdAt: "2026-03-28T10:00:00"},
+  {id: "e14", siteId: "s7", date: "2026-03-17", actionType: "recolte", volumeL: 334, observations: [], temperature: null, tempsMin: null, commentaire: "Retrait 334 L compost mûr après fin période", createdAt: "2026-03-17T10:00:00"},
+  {id: "e15", siteId: "s12", date: "2026-03-07", actionType: "transfert", volumeL: 383, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 333 L compost mûr", createdAt: "2026-03-07T10:00:00"},
+  {id: "e16", siteId: "s12", date: "2026-03-07", actionType: "recolte", volumeL: 333, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 333 L compost mûr", createdAt: "2026-03-07T10:30:00"},
+  {id: "e17", siteId: "s16", date: "2026-03-06", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Brasseur de compost volé. Bac de matériel forcé. Remplacement via Émeraude Création (fournisseur collectivités).", createdAt: "2026-03-06T10:00:00"},
+  {id: "e18", siteId: "s11", date: "2026-02-17", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Suite appel de Willy, système de fixation cassé. Réparation faite (cause : vis oxydable et humidité)", createdAt: "2026-02-17T10:00:00"},
+  {id: "e19", siteId: "s16", date: "2026-02-17", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Suite appel Laetitia. Les vis du système de fixation réparées", createdAt: "2026-02-17T10:00:00"},
+  {id: "e20", siteId: "s20", date: "2026-02-17", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Suite appel de Willy, système de fixation cassé. Réparation faite (cause : vis oxydable et humidité)", createdAt: "2026-02-17T10:00:00"},
+  {id: "e21", siteId: "s16", date: "2026-02-11", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Suite appel Laetitia. Réparation + pose de câbles par Thibault", createdAt: "2026-02-11T10:00:00"},
+  {id: "e22", siteId: "s16", date: "2026-02-06", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Constat : vis de 2 des 3 charnières du bac d'apport rouillées et lâchées", createdAt: "2026-02-06T10:00:00"},
+  {id: "e23", siteId: "s19", date: "2026-02-04", actionType: "manutention", volumeL: null, observations: ["moucherons"], temperature: null, tempsMin: null, commentaire: "Sur appel de Christophe – présence de mouches à drain (psychodidae) en grande quantité", createdAt: "2026-02-04T10:00:00"},
+  {id: "e_sa_6", siteId: "s22", date: "2026-01-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 60, commentaire: "Visite intermédiaire – Compost anarchique – formation complémentaire", createdAt: "2026-01-28T10:00:00"},
+  {id: "e24", siteId: "s14", date: "2026-01-05", actionType: "brassage", volumeL: null, observations: [], temperature: null, tempsMin: 10, commentaire: "Brassage et recouvrement de biodéchets non-recouverts. Temps de passage environ 10 minutes", createdAt: "2026-01-05T10:00:00"},
+  {id: "e25", siteId: "s20", date: "2025-12-19", actionType: "transfert", volumeL: 554, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert vers bac de maturation", createdAt: "2025-12-19T10:00:00"},
+  {id: "e26", siteId: "s14", date: "2025-12-15", actionType: "transfert", volumeL: 940, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert et animation 2 classes maternelle", createdAt: "2025-12-15T10:00:00"},
+  {id: "e27", siteId: "s10", date: "2025-12-12", actionType: "transfert", volumeL: 480, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 322 L compost mûr", createdAt: "2025-12-12T10:00:00"},
+  {id: "e28", siteId: "s10", date: "2025-12-12", actionType: "recolte", volumeL: 322, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 322 L compost mûr", createdAt: "2025-12-12T10:30:00"},
+  {id: "e29", siteId: "s14", date: "2025-12-08", actionType: "brassage", volumeL: null, observations: [], temperature: 50, tempsMin: 10, commentaire: "Température de 50°C – temps passé 10 min – Gwen", createdAt: "2025-12-08T10:00:00"},
+  {id: "e30", siteId: "s19", date: "2025-12-06", actionType: "transfert", volumeL: 581, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert café compost", createdAt: "2025-12-06T10:00:00"},
+  {id: "e31", siteId: "s16", date: "2025-12-04", actionType: "transfert", volumeL: 322, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert participatif sur temps du midi (~10 participants actifs). Repas participatif + ateliers Laetitia. Qualité au RDV, volumes modestes. Rappel règles compostage.", createdAt: "2025-12-04T10:00:00"},
+  {id: "e32", siteId: "s11", date: "2025-11-06", actionType: "manutention", volumeL: null, observations: ["moucherons"], temperature: null, tempsMin: null, commentaire: "CP envoyé par mail – Problème moucherons – Sec – Compost jeune", createdAt: "2025-11-06T10:00:00"},
+  {id: "e_sa_5", siteId: "s22", date: "2025-11-05", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 60, commentaire: "Visite intermédiaire – Nouveau fonctionnement – brassage régulier expliqué", createdAt: "2025-11-05T10:00:00"},
+  {id: "e33", siteId: "s16", date: "2025-10-28", actionType: "visite", volumeL: null, observations: [], temperature: 18, tempsMin: null, commentaire: "18 °C – Le compost ne chauffe quasiment pas – faible volume et excès de structurant", createdAt: "2025-10-28T10:00:00"},
+  {id: "e_montho_3", siteId: "s15", date: "2025-10-16", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "1ère visite de suivi", createdAt: "2025-10-16T10:00:00"},
+  {id: "e_sa_4", siteId: "s22", date: "2025-10-16", actionType: "visite", volumeL: null, observations: [], temperature: 21, tempsMin: 60, commentaire: "1ère visite – Relevé température – site en bon fonctionnement", createdAt: "2025-10-16T10:00:00"},
+  {id: "e35", siteId: "s20", date: "2025-10-08", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "En présence de Willy de 13h à 13h30", createdAt: "2025-10-08T10:00:00"},
+  {id: "e36", siteId: "s11", date: "2025-09-27", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Maintenance matériel", createdAt: "2025-09-27T10:00:00"},
+  {id: "e37", siteId: "s20", date: "2025-09-27", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Remplacement du cadenas disparu du bac de maturation", createdAt: "2025-09-27T10:00:00"},
+  {id: "e_sa_3", siteId: "s22", date: "2025-09-24", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 150, commentaire: "Inauguration – Lancement officiel du site", createdAt: "2025-09-24T10:00:00"},
+  {id: "e_montho_2", siteId: "s15", date: "2025-09-11", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Mise en place et inauguration officielle", createdAt: "2025-09-11T10:00:00"},
+  {id: "e39", siteId: "s16", date: "2025-09-09", actionType: "remplissage_broyat", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Livraison de broyat suite à la visite", createdAt: "2025-09-09T10:00:00"},
+  {id: "e40", siteId: "s16", date: "2025-09-08", actionType: "manutention", volumeL: null, observations: ["trop_sec"], temperature: null, tempsMin: null, commentaire: "Visite avec les deux référentes. ~166 L, ~100 kg estimés. Pédofaune active. Excès de broyat, compost trop sec. Bon engagement des référentes.", createdAt: "2025-09-08T10:00:00"},
+  {id: "e41", siteId: "s17", date: "2025-09-04", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Remplacement matériel suite à tempête (arbres écrasés)", createdAt: "2025-09-04T10:00:00"},
+  {id: "e42", siteId: "s16", date: "2025-06-26", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration avec une trentaine de personnes", createdAt: "2025-06-26T10:00:00"},
+  {id: "e43", siteId: "s19", date: "2025-06-26", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration avec une dizaine de personnes", createdAt: "2025-06-26T10:00:00"},
+  {id: "e44", siteId: "s20", date: "2025-06-25", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2025-06-25T10:00:00"},
+  {id: "e_sa_2", siteId: "s22", date: "2025-06-24", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 90, commentaire: "Réunion publique – Présentation du projet – service jeunesse + habitants", createdAt: "2025-06-24T10:00:00"},
+  {id: "e45", siteId: "s8", date: "2025-06-21", actionType: "transfert", volumeL: 695, observations: [], temperature: null, tempsMin: null, commentaire: "1er transfert", createdAt: "2025-06-21T10:00:00"},
+  {id: "e46", siteId: "s16", date: "2025-06-19", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Installation du site", createdAt: "2025-06-19T10:00:00"},
+  {id: "e_montho_1", siteId: "s15", date: "2025-06-18", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Réunion publique", createdAt: "2025-06-18T10:00:00"},
+  {id: "e48", siteId: "s16", date: "2025-06-16", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Réunion publique le midi – une vingtaine de personnes", createdAt: "2025-06-16T10:00:00"},
+  {id: "e49", siteId: "s4", date: "2025-06-14", actionType: "transfert", volumeL: 1000, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 432 L compost mûr – excellente qualité", createdAt: "2025-06-14T10:00:00"},
+  {id: "e50", siteId: "s4", date: "2025-06-14", actionType: "recolte", volumeL: 432, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 432 L compost mûr", createdAt: "2025-06-14T10:30:00"},
+  {id: "e51", siteId: "s5", date: "2025-06-12", actionType: "transfert", volumeL: 691, observations: [], temperature: null, tempsMin: null, commentaire: "Dernière visite – transfert + retrait 432 L compost mûr", createdAt: "2025-06-12T10:00:00"},
+  {id: "e52", siteId: "s5", date: "2025-06-12", actionType: "recolte", volumeL: 432, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 432 L compost mûr", createdAt: "2025-06-12T10:30:00"},
+  {id: "e53", siteId: "s6", date: "2025-06-12", actionType: "transfert", volumeL: 650, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 518 L compost mûr", createdAt: "2025-06-12T10:00:00"},
+  {id: "e54", siteId: "s6", date: "2025-06-12", actionType: "recolte", volumeL: 518, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 518 L compost mûr", createdAt: "2025-06-12T10:30:00"},
+  {id: "e55", siteId: "s17", date: "2025-06-12", actionType: "transfert", volumeL: 250, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + récolte 340 L compost mûr d'excellente qualité", createdAt: "2025-06-12T10:00:00"},
+  {id: "e56", siteId: "s17", date: "2025-06-12", actionType: "recolte", volumeL: 340, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 340 L compost mûr", createdAt: "2025-06-12T10:30:00"},
+  {id: "e57", siteId: "s13", date: "2025-06-11", actionType: "transfert", volumeL: 288, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 345 L compost mûr", createdAt: "2025-06-11T10:00:00"},
+  {id: "e58", siteId: "s13", date: "2025-06-11", actionType: "recolte", volumeL: 345, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 345 L compost mûr", createdAt: "2025-06-11T10:30:00"},
+  {id: "e59", siteId: "s7", date: "2025-06-10", actionType: "transfert", volumeL: 576, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 576 L compost mûr", createdAt: "2025-06-10T10:00:00"},
+  {id: "e60", siteId: "s7", date: "2025-06-10", actionType: "recolte", volumeL: 576, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 576 L compost mûr", createdAt: "2025-06-10T10:30:00"},
+  {id: "e61", siteId: "s9", date: "2025-06-10", actionType: "transfert", volumeL: 403, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + retrait 518 L compost mûr", createdAt: "2025-06-10T10:00:00"},
+  {id: "e62", siteId: "s9", date: "2025-06-10", actionType: "recolte", volumeL: 518, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 518 L compost mûr", createdAt: "2025-06-10T10:30:00"},
+  {id: "e63", siteId: "s14", date: "2025-05-29", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration avec l'association", createdAt: "2025-05-29T10:00:00"},
+  {id: "e64", siteId: "s14", date: "2025-05-27", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Réunion publique de présentation", createdAt: "2025-05-27T10:00:00"},
+  {id: "e65", siteId: "s19", date: "2025-05-27", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Réunion publique – une trentaine de personnes – choix du site", createdAt: "2025-05-27T10:00:00"},
+  {id: "e_sa_1", siteId: "s22", date: "2025-05-24", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 240, commentaire: "Mise en place – Installation 3 bacs 1000 L + 1 bac rangement 400 L + 30 bioseaux", createdAt: "2025-05-24T10:00:00"},
+  {id: "e66", siteId: "s21", date: "2025-05-02", actionType: "transfert", volumeL: 342, observations: [], temperature: null, tempsMin: null, commentaire: "1er transfert", createdAt: "2025-05-02T10:00:00"},
+  {id: "e_ange_2", siteId: "s18", date: "2025-04-24", actionType: "transfert", volumeL: 695, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert estimé (452 kg / 0.65)", createdAt: "2025-04-24T10:00:00"},
+  {id: "e_ange_3", siteId: "s18", date: "2025-04-24", actionType: "recolte", volumeL: 166, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 166 L compost mûr", createdAt: "2025-04-24T10:30:00"},
+  {id: "e69", siteId: "s8", date: "2025-04-23", actionType: "visite", volumeL: null, observations: [], temperature: 24, tempsMin: null, commentaire: "Tout se passe bien", createdAt: "2025-04-23T10:00:00"},
+  {id: "e70", siteId: "s4", date: "2025-04-22", actionType: "visite", volumeL: null, observations: ["moucherons"], temperature: null, tempsMin: null, commentaire: "Vérification présence moucherons", createdAt: "2025-04-22T10:00:00"},
+  {id: "e71", siteId: "s5", date: "2025-04-09", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Attention : le brassage n'est pas fait régulièrement – rappels effectués", createdAt: "2025-04-09T10:00:00"},
+  {id: "e72", siteId: "s5", date: "2025-04-09", actionType: "visite", volumeL: null, observations: [], temperature: 25, tempsMin: null, commentaire: "Relevé température 25°C", createdAt: "2025-04-09T10:00:00"},
+  {id: "e73", siteId: "s4", date: "2025-04-07", actionType: "transfert", volumeL: 760, observations: [], temperature: null, tempsMin: null, commentaire: "Attention ! Manque de brassage constaté", createdAt: "2025-04-07T10:00:00"},
+  {id: "e74", siteId: "s9", date: "2025-04-07", actionType: "transfert", volumeL: 746, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert réalisé seul", createdAt: "2025-04-07T10:00:00"},
+  {id: "e75", siteId: "s2", date: "2025-04-05", actionType: "transfert", volumeL: 579, observations: [], temperature: null, tempsMin: null, commentaire: "Dernière visite – transfert + récolte 331 L compost mûr", createdAt: "2025-04-05T10:00:00"},
+  {id: "e76", siteId: "s2", date: "2025-04-05", actionType: "recolte", volumeL: 331, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 331 L compost mûr", createdAt: "2025-04-05T10:30:00"},
+  {id: "e77", siteId: "s4", date: "2025-04-04", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Rdv avec Théo – discussion sur les difficultés du site", createdAt: "2025-04-04T10:00:00"},
+  {id: "e78", siteId: "s10", date: "2025-04-04", actionType: "transfert", volumeL: 581, observations: [], temperature: null, tempsMin: null, commentaire: "À 15h45 avec la présence d'une classe", createdAt: "2025-04-04T10:00:00"},
+  {id: "e79", siteId: "s17", date: "2025-04-04", actionType: "transfert", volumeL: 497, observations: ["trop_sec"], temperature: null, tempsMin: null, commentaire: "1er transfert – mélange constaté trop sec", createdAt: "2025-04-04T10:00:00"},
+  {id: "e80", siteId: "s4", date: "2025-04-01", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Mail rapport envoyé", createdAt: "2025-04-01T10:00:00"},
+  {id: "e81", siteId: "s12", date: "2025-03-29", actionType: "transfert", volumeL: 580, observations: [], temperature: null, tempsMin: null, commentaire: "1er transfert participatif", createdAt: "2025-03-29T10:00:00"},
+  {id: "e82", siteId: "s1", date: "2025-03-14", actionType: "transfert", volumeL: 828, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert 828 L + retrait 329 L compost mûr", createdAt: "2025-03-14T10:00:00"},
+  {id: "e83", siteId: "s1", date: "2025-03-14", actionType: "recolte", volumeL: 329, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 329 L compost mûr", createdAt: "2025-03-14T10:30:00"},
+  {id: "e84", siteId: "s3", date: "2025-03-08", actionType: "transfert", volumeL: 746, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert weekend + retrait 331 L compost mûr – forte participation citoyenne", createdAt: "2025-03-08T10:00:00"},
+  {id: "e85", siteId: "s3", date: "2025-03-08", actionType: "recolte", volumeL: 331, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 331 L compost mûr", createdAt: "2025-03-08T10:30:00"},
+  {id: "e86", siteId: "s13", date: "2025-02-24", actionType: "transfert", volumeL: 664, observations: [], temperature: null, tempsMin: null, commentaire: "3 classes primaires présentes – mélange ok", createdAt: "2025-02-24T10:00:00"},
+  {id: "e87", siteId: "s17", date: "2025-02-07", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Visite avec nouvelle référente – absence de panneaux, cadenas manquant, broyat très bas", createdAt: "2025-02-07T10:00:00"},
+  {id: "e88", siteId: "s6", date: "2025-01-29", actionType: "transfert", volumeL: 940, observations: [], temperature: null, tempsMin: null, commentaire: "Avec deux agents techniques", createdAt: "2025-01-29T10:00:00"},
+  {id: "e89", siteId: "s4", date: "2025-01-24", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 15, commentaire: "15 min", createdAt: "2025-01-24T10:00:00"},
+  {id: "e90", siteId: "s7", date: "2024-12-17", actionType: "transfert", volumeL: 940, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + animation scolaire intégrée", createdAt: "2024-12-17T10:00:00"},
+  {id: "e91", siteId: "s5", date: "2024-12-13", actionType: "transfert", volumeL: 940, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert effectué par Jean-Luc Brinet et Sylvain Franck", createdAt: "2024-12-13T10:00:00"},
+  {id: "e92", siteId: "s6", date: "2024-12-11", actionType: "manutention", volumeL: null, observations: ["moucherons"], temperature: null, tempsMin: null, commentaire: "Problème de moucherons – intervention corrective", createdAt: "2024-12-11T10:00:00"},
+  {id: "e93", siteId: "s2", date: "2024-11-26", actionType: "transfert", volumeL: 883, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert + récolte 359 L compost mûr", createdAt: "2024-11-26T10:00:00"},
+  {id: "e94", siteId: "s2", date: "2024-11-26", actionType: "recolte", volumeL: 359, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 359 L compost mûr", createdAt: "2024-11-26T10:30:00"},
+  {id: "e95", siteId: "s1", date: "2024-11-18", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Aide à remonter le composteur. Jean-Luc présent. 23 foyers inscrits.", createdAt: "2024-11-18T10:00:00"},
+  {id: "e96", siteId: "s6", date: "2024-11-18", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "En présence de Thierry", createdAt: "2024-11-18T10:00:00"},
+  {id: "e97", siteId: "s21", date: "2024-11-07", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-11-07T10:00:00"},
+  {id: "e98", siteId: "s17", date: "2024-10-19", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-10-19T10:00:00"},
+  {id: "e99", siteId: "s10", date: "2024-10-18", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Tout va pour le mieux – 2ème référent absent", createdAt: "2024-10-18T10:00:00"},
+  {id: "e100", siteId: "s3", date: "2024-10-16", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Reprise du relais par Bio Tri Foule – continuité assurée", createdAt: "2024-10-16T10:00:00"},
+  {id: "e101", siteId: "s10", date: "2024-09-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-09-28T10:00:00"},
+  {id: "e102", siteId: "s1", date: "2024-09-27", actionType: "manutention", volumeL: null, observations: ["trop_sec"], temperature: null, tempsMin: 45, commentaire: "RDV avec Patrick Rovira et Jean-Luc Esnault. Bacs en cours de réparation (tiges plastique → métal par Patrick). Dalles béton installées. Compostage excellent, biodiversité riche, peu d'indésirables. Compost mature légèrement sec.", createdAt: "2024-09-27T10:00:00"},
+  {id: "e103", siteId: "s8", date: "2024-09-27", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Rapport ok", createdAt: "2024-09-27T10:00:00"},
+  {id: "e104", siteId: "s1", date: "2024-09-25", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Composteur percuté par une voiture – signalement à Nupur (SMIEEOM)", createdAt: "2024-09-25T10:00:00"},
+  {id: "e105", siteId: "s13", date: "2024-09-24", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Contrôle de fonctionnement", createdAt: "2024-09-24T10:00:00"},
+  {id: "e106", siteId: "s2", date: "2024-09-23", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Prise en main du site par Bio Tri Foule", createdAt: "2024-09-23T10:00:00"},
+  {id: "e107", siteId: "s5", date: "2024-09-23", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Suivi de fonctionnement", createdAt: "2024-09-23T10:00:00"},
+  {id: "e108", siteId: "s6", date: "2024-09-23", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-09-23T10:00:00"},
+  {id: "e109", siteId: "s12", date: "2024-09-23", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Contrôle de fonctionnement", createdAt: "2024-09-23T10:00:00"},
+  {id: "e110", siteId: "s8", date: "2024-09-13", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Cadenas", createdAt: "2024-09-13T10:00:00"},
+  {id: "e_ange_1", siteId: "s18", date: "2024-09-13", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-09-13T10:00:00"},
+  {id: "e112", siteId: "s4", date: "2024-08-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "1h30", createdAt: "2024-08-28T10:00:00"},
+  {id: "e113", siteId: "s1", date: "2024-08-27", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Visite de suivi Véricompost", createdAt: "2024-08-27T10:00:00"},
+  {id: "e114", siteId: "s7", date: "2024-07-23", actionType: "manutention", volumeL: null, observations: ["odeur"], temperature: null, tempsMin: null, commentaire: "Présence d'odeur due à l'ancien apport", createdAt: "2024-07-23T10:00:00"},
+  {id: "e115", siteId: "s12", date: "2024-07-13", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-07-13T10:00:00"},
+  {id: "e116", siteId: "s13", date: "2024-07-10", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Une 20aine de personnes – 2h30", createdAt: "2024-07-10T10:00:00"},
+  {id: "e117", siteId: "s5", date: "2024-07-06", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-07-06T10:00:00"},
+  {id: "e118", siteId: "s7", date: "2024-07-06", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-07-06T10:00:00"},
+  {id: "e119", siteId: "s8", date: "2024-07-05", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-07-05T10:00:00"},
+  {id: "e120", siteId: "s9", date: "2024-06-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle", createdAt: "2024-06-28T10:00:00"},
+  {id: "e121", siteId: "s1", date: "2024-03-22", actionType: "transfert", volumeL: 700, observations: [], temperature: null, tempsMin: null, commentaire: "Transfert 700 L + retrait 581 L compost mûr", createdAt: "2024-03-22T10:00:00"},
+  {id: "e122", siteId: "s1", date: "2024-03-22", actionType: "recolte", volumeL: 581, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 581 L compost mûr", createdAt: "2024-03-22T10:30:00"},
+  {id: "e123", siteId: "s2", date: "2023-11-10", actionType: "transfert", volumeL: 600, observations: [], temperature: null, tempsMin: null, commentaire: "Accompagnement initial Cycloposteurs – hors période Bio Tri Foule", createdAt: "2023-11-10T10:00:00"},
+  {id: "e124", siteId: "s3", date: "2023-09-21", actionType: "transfert", volumeL: 550, observations: [], temperature: null, tempsMin: null, commentaire: "Premier transfert participatif + retrait 474 L compost mûr initial", createdAt: "2023-09-21T10:00:00"},
+  {id: "e125", siteId: "s3", date: "2023-09-21", actionType: "recolte", volumeL: 474, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 474 L compost mûr", createdAt: "2023-09-21T10:30:00"},
+  {id: "e126", siteId: "s1", date: "2023-03-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration du site par les Cycloposteurs", createdAt: "2023-03-28T10:00:00"},
+  {id: "e127", siteId: "s3", date: "2023-02-06", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle par les Cycloposteurs Orléans", createdAt: "2023-02-06T10:00:00"},
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -2424,6 +504,31 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
         <code style={{ background: C.greenPale, color: C.green, padding: '3px 10px', borderRadius: 6, fontWeight: 700, fontSize: 15 }}>{site.code}</code>
         <SiteCodeChanger siteId={site.id} currentCode={site.code} onChangeSiteCode={onChangeSiteCode} />
       </div>
+
+      {/* Bilan qualitatif */}
+      {(site.pointsForts?.length > 0 || site.pointsAmelioration?.length > 0 || site.conclusion) && (
+        <div style={{ marginBottom: 24 }}>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 600, color: C.text, marginBottom: 14 }}>📋 Bilan qualitatif</h3>
+          {site.pointsForts?.length > 0 && (
+            <div style={{ background: '#ECF5E8', border: '1px solid #C8E6C0', borderRadius: 12, padding: '14px 18px', marginBottom: 10 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: '#2D5A27', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.05em' }}>✅ Points forts</p>
+              {site.pointsForts.map((p, i) => <p key={i} style={{ fontSize: 13, color: '#1C2B19', lineHeight: 1.6, marginBottom: 4 }}>• {p}</p>)}
+            </div>
+          )}
+          {site.pointsAmelioration?.length > 0 && (
+            <div style={{ background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 12, padding: '14px 18px', marginBottom: 10 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: '#8B5E00', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.05em' }}>⚠️ Points d'amélioration</p>
+              {site.pointsAmelioration.map((p, i) => <p key={i} style={{ fontSize: 13, color: '#1C2B19', lineHeight: 1.6, marginBottom: 4 }}>• {p}</p>)}
+            </div>
+          )}
+          {site.conclusion && (
+            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 18px' }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: C.muted, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.05em' }}>📝 Conclusion</p>
+              <p style={{ fontSize: 13, color: C.text, lineHeight: 1.7 }}>{site.conclusion}</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Referents */}
       {site.referents?.length > 0 && (
@@ -3036,6 +1141,27 @@ export default function App() {
 
   const addTerritory = (t) => setTerritories(prev => [...prev, t]);
 
+  const syncData = async () => {
+    if (!window.confirm('Synchroniser les 21 sites et 132 entrées depuis les données Excel ? Les données existantes en Firestore seront mises à jour (pas supprimées).')) return;
+    try {
+      const batch = writeBatch(db);
+      DEFAULT_SITES.forEach(s => batch.set(doc(db, 'sites', s.id), s));
+      await batch.commit();
+      setSites(DEFAULT_SITES);
+      // Add missing entries (check by id)
+      const existingSnap = await getDocs(collection(db, 'entries'));
+      const existingIds = new Set(existingSnap.docs.map(d => d.id));
+      const newEntries = DEMO_ENTRIES.filter(e => !existingIds.has(e.id));
+      if (newEntries.length > 0) {
+        const batch2 = writeBatch(db);
+        newEntries.forEach(e => batch2.set(doc(db, 'entries', e.id), e));
+        await batch2.commit();
+        setEntries(prev => [...prev, ...newEntries].sort((a, b) => b.date.localeCompare(a.date)));
+      }
+      alert('Synchronisation terminée. ' + DEFAULT_SITES.length + ' sites mis à jour, ' + newEntries.length + ' nouvelles saisies ajoutées. (22 sites, 139 entrées au total)');
+    } catch (e) { alert('Erreur sync: ' + e.message); }
+  };
+
   const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => a.date.localeCompare(b.date)));
 
   const deleteEvent = async (evId) => {
@@ -3093,7 +1219,7 @@ export default function App() {
       <ErrorBoundary>
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
-        {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} />}
+        {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} />}
         {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {showEntry && screen === "site" && <AddEntryModal siteId={currentSite?.id} onSave={addEntry} onClose={() => setShowEntry(false)} />}

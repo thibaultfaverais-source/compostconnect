@@ -97,7 +97,7 @@ function AddTerritoryModal({ onSave, onClose, existingCodes = [] }) {
   )
 }
 
-export default function SuperAdminView({ territories, allSites, allEntries, onEnterTerritory, onAddTerritory, onLogout }) {
+export default function SuperAdminView({ territories, allSites, allEntries, onEnterTerritory, onAddTerritory, onLogout, onSyncData }) {
   const [showAdd, setShowAdd] = useState(false)
   const existingCodes = territories.map(t => t.adminCode)
 
@@ -112,9 +112,10 @@ export default function SuperAdminView({ territories, allSites, allEntries, onEn
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700 }}>🌿 CompostConnect</h1>
           <p style={{ fontSize: 12, opacity: .6, marginTop: 3 }}>Vue super-administrateur</p>
         </div>
-        <button onClick={onLogout} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '8px 16px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif" }}>
-          Déconnexion
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          {onSyncData && <button onClick={onSyncData} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', padding: '8px 16px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif" }}>🔄 Sync données</button>}
+          <button onClick={onLogout} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '8px 16px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif" }}>Déconnexion</button>
+        </div>
       </div>
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '36px 24px' }}>
