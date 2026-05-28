@@ -59,7 +59,7 @@ const TYPE_BADGES = {
 const getBacsOMR = (kgDetournes) => Math.round(kgDetournes / 29.87);
 const DEFAULT_SITES = [
   {id: "s18", name: "Angé", address: "", code: "ANGE", foyers: 0, typeSite: "Foyers", cantine: "Non concerné", periode: "2024 – 2025", capacityL: 400, referents: [], biodechets_kg: 452, compost_L: 166, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3194, lng: 1.2153},
-  {id: "s19", name: "Chissay-en-Touraine", address: "Commune de Chissay-en-Touraine, 41400", code: "CHISSA", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 395, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3428, lng: 1.1878},
+  {id: "s19", name: "Chissay-en-Touraine", address: "Commune de Chissay-en-Touraine, 41400", code: "CHISSA", foyers: 0, typeSite: "En cours", cantine: "Non concerné", periode: "", capacityL: 400, referents: [], biodechets_kg: 395, compost_L: 0, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3381, lng: 1.1339},
   {id: "s10", name: "Choussy", address: "Chemin du Paradis, 41700 Choussy", code: "CHOUSS", foyers: 12, typeSite: "Foyers + Cantine", cantine: "Non concerné", periode: "Septembre 2024 – Juin 2025", capacityL: 400, referents: [{role: "Référent technique", nom: "Philippe MAZEAU", tel: "06 62 32 71 31", email: "mazeau.ph@gmail.com"}, {role: "Référent citoyen", nom: "Denis RIOLAND", tel: "06 70 31 25 01", email: "c.bourdon814@orange.fr"}], biodechets_kg: 721, compost_L: 322, pointsForts: ["Bonne situation géographique, très pertinente.", "Référent bénévole engagé avec une excellente compréhension du processus – a porté le site.", "Cantinière ayant compris exactement ce qu'il fallait faire.", "Site bien placé à côté de l'école – tout s'est très bien passé."], pointsAmelioration: ["Organiser des événements pour continuer l'animation autour du composteur.", "Pousser à convaincre certains habitants qui ne veulent pas composter dans leur jardin.", "Maintenir un carnet de suivi pour être conforme réglementairement.", "Valoriser le travail et l'engagement du référent bénévole.", "Continuer la pédagogie autour du composteur."], conclusion: "Le site de Choussy a détourné ~721 kg de biodéchets et produit 322 L de compost mûr. Le café compost, auquel une classe entière a participé, a constitué un moment fort d'éducation à l'environnement. Cette dimension intergénérationnelle donne au projet une portée qui va au-delà du simple geste de tri. À 10 ans, le potentiel de détournement dépasse 7 tonnes.", lat: 47.2975, lng: 1.4781},
   {id: "s14", name: "Chémery", address: "Commune de Chémery, 41700", code: "CHEMER", foyers: 0, typeSite: "Foyers + École", cantine: "Non concerné", periode: "Mai 2025 – Mai 2026", capacityL: 400, referents: [], biodechets_kg: 1107, compost_L: 640, pointsForts: [], pointsAmelioration: [], conclusion: "", lat: 47.3339, lng: 1.4775},
   {id: "s16", name: "Contres", address: "1 rue de la Fossé Mardeaux, 41700 Le Controis-en-Sologne", code: "CONTRE", foyers: 0, typeSite: "Entreprises", cantine: "Non concerné", periode: "Juin 2025 – Avril 2026", capacityL: 400, referents: [{role: "Référente bénévole (Animatrice Plan Climat – Val2C)", nom: "Laetitia CAUX", tel: "06 07 18 45 48", email: "lcaux@val2c.fr"}, {role: "Référente bénévole", nom: "Marcelline CHARPENTIER", tel: "06 33 54 73 44", email: "mcharpentier@val2c.fr"}], biodechets_kg: 558, compost_L: 249, pointsForts: ["Implication exceptionnelle de Laetitia Caux : contrôle hebdomadaire (T° et brassage), animations créatives, communication active. La référente la plus dynamique du programme en termes d'animation.", "Site unique du programme : village d'entreprises, public professionnel. Vocation pédagogique autant que pratique.", "Atelier tamisage innovant lors du dernier accompagnement : terreau à semis haute qualité, intégralement récupéré par les participants.", "Transfert participatif réussi : repas partagé + ateliers = format convivial adapté au milieu professionnel.", "Excellente qualité de compost malgré les volumes modestes : pédofaune très riche, aucune odeur ni nuisance.", "Installation soignée et accueillante (chemin en calcaire aménagé par les référentes).", "Proximité des bureaux de la communauté de communes : effet vitrine pour les agents et élus."], pointsAmelioration: ["Rafraîchir et réapprovisionner le stock de broyat pour maintenir l'équilibre du compost.", "Remplacer le brasseur de compost volé (commande Émeraude Création ou fourche à manche rétréci).", "Encourager les usagers à venir équipés lors des transferts (gants, chaussures) pour ne pas faire reposer l'effort uniquement sur les deux référentes.", "Envisager l'ouverture du site à d'autres structures locales pour augmenter le gisement – le retrait des cadenas est à la discrétion des référentes.", "Surveiller la qualité du matériel bois (vis, charnières) et anticiper les remplacements.", "Sensibiliser davantage sur le dosage broyat/biodéchets et l'interdiction du pain (rongeurs)."], conclusion: "Le site de Contres a détourné ~557 kg de biodéchets et produit 249 L de compost mûr d'excellente qualité, tamisé en terreau à semis lors du dernier accompagnement. Ce site unique en village d'entreprises prouve que le compostage de proximité fonctionne aussi en milieu professionnel. L'implication de Laetitia Caux est la plus remarquable du programme en termes d'animation. Malgré quelques aléas (vol du brasseur, charnières cassées), le site est sur une belle dynamique et dispose de tous les atouts pour continuer à bien fonctionner en autonomie.", lat: 47.4136, lng: 1.4358},
@@ -301,7 +301,7 @@ const inputStyle = { width: "100%", padding: "12px 14px", border: `1.5px solid $
 
 // ─── Entry Card ───────────────────────────────────────────────────────────────
 
-function EntryCard({ entry }) {
+function EntryCard({ entry, onEdit, onDelete }) {
   const action = getAction(entry.actionType);
   const kg = entry.actionType === "transfert" && entry.volumeL ? (Number(entry.volumeL) * KG_PER_LITRE).toFixed(1) : null;
   const obs = (entry.observations || []).map(id => OBSERVATIONS.find(o => o.id === id)).filter(Boolean);
@@ -346,18 +346,24 @@ function EntryCard({ entry }) {
           "{entry.commentaire}"
         </p>
       )}
+      {(onEdit || onDelete) && (
+        <div style={{ display: "flex", gap: 8, marginTop: 12, paddingTop: 10, borderTop: `1px dashed ${C.border}` }}>
+          {onEdit && <button onClick={() => onEdit(entry)} style={{ fontSize: 12, background: "transparent", border: `1px solid ${C.border}`, borderRadius: 7, padding: "4px 12px", cursor: "pointer", color: C.muted, fontFamily: "'DM Sans', sans-serif" }}>✏️ Modifier</button>}
+          {onDelete && <button onClick={() => onDelete(entry)} style={{ fontSize: 12, background: "transparent", border: "1px solid #FBCACA", borderRadius: 7, padding: "4px 12px", cursor: "pointer", color: "#BE4B48", fontFamily: "'DM Sans', sans-serif" }}>🗑️ Supprimer</button>}
+        </div>
+      )}
     </div>
   );
 }
 
-function EntryList({ entries }) {
+function EntryList({ entries, onEdit, onDelete }) {
   if (!entries.length) return (
     <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 48, textAlign: "center", color: C.muted }}>
       <div style={{ fontSize: 40, marginBottom: 12 }}>🌱</div>
       <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 16 }}>Aucune saisie enregistrée</p>
     </div>
   );
-  return <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>{entries.map(e => <EntryCard key={e.id} entry={e} />)}</div>;
+  return <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>{entries.map(e => <EntryCard key={e.id} entry={e} onEdit={onEdit} onDelete={onDelete} />)}</div>;
 }
 
 // ─── Login ────────────────────────────────────────────────────────────────────
@@ -476,7 +482,7 @@ function StatsParAnnee({ entries }) {
   );
 }
 
-function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onChangeSiteCode, onEditEntry }) {
+function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onChangeSiteCode, onEditEntry, onDeleteEntry }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   return (
@@ -568,9 +574,9 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry }) {
   const [detail, setDetail] = useState(null);
-  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} />;
+  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} onDeleteEntry={onDeleteEntry} />;
 
   const monthE = thisMonth(entries);
   const inactiveSites = sites.filter(s => { const d = daysSince(entries.filter(e => e.siteId === s.id)); return d === null || d > 30; });
@@ -1094,6 +1100,15 @@ export default function App() {
       if (site) { setCurrentSite(site); setScreen("site"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "site", code: c, siteId: site.id })); } catch(e) {} }
       else setLoginError("Code invalide. Vérifiez votre code d'accès.");
     }
+  };
+
+  const deleteEntry = async (entry) => {
+    const d = new Date(entry.date + 'T12:00:00').toLocaleDateString('fr-FR');
+    if (!window.confirm('Supprimer la saisie du ' + d + ' ? Cette action est irréversible.')) return;
+    try {
+      await deleteDoc(doc(db, 'entries', entry.id));
+      setEntries(prev => prev.filter(e => e.id !== entry.id));
+    } catch (e) { alert('Erreur lors de la suppression.'); }
   };
 
   const addEntry = async (entryData) => {
