@@ -567,7 +567,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
       <button className="btn-green" onClick={onAddEntry} style={{ width: "100%", padding: 14, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer", marginBottom: 28 }}>
         ✏️ Ajouter une saisie pour ce site
       </button>
-      <EntryList entries={sorted} />
+      <EntryList entries={sorted} onEdit={onEditEntry} onDelete={onDeleteEntry} />
     </div>
   );
 }
@@ -716,7 +716,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
-function SiteScreen({ site, entries, onAddEntry, onEditEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent }) {
+function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent }) {
   const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
@@ -781,7 +781,7 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onLogout, onOpenPr
       <SiteCharts entries={entries} />
 
       <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: C.text, marginBottom: 16 }}>Historique</h2>
-      <EntryList entries={sorted} />
+      <EntryList entries={sorted} onEdit={onEditEntry} onDelete={onDeleteEntry} />
     </div>
   );
 }
@@ -1263,7 +1263,7 @@ export default function App() {
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} />}
         {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} />}
-        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
+        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
         {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}

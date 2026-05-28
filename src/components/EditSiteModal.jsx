@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { db } from '../firebase.js'
 import { doc, setDoc } from 'firebase/firestore'
 
@@ -19,6 +19,50 @@ function Field({ label, children }) {
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: C.text, marginBottom: 6 }}>{label}</label>
       {children}
     </div>
+  )
+}
+
+
+function MapPicker({ lat, lng, onPick }) {
+  const mapRef = useRef(null)
+  const mapInstance = useRef(null)
+  const markerRef = useRef(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    import('leaflet').then(L => {
+      if (mapInstance.current) return
+      const center = (lat && lng) ? [lat, lng] : [47.33, 1.35]
+      const map = L.map(mapRef.current, { center, zoom: 13 })
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(map)
+
+      const icon = L.divIcon({ className: '', html: '<div style="background:#2D5A27;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>', iconAnchor: [8, 8] })
+
+      if (lat && lng) {
+        markerRef.current = L.marker([lat, lng], { icon }).addTo(map)
+      }
+
+      map.on('click', (e) => {
+        const { lat: newLat, lng: newLng } = e.latlng
+        const roundedLat = Math.round(newLat * 10000) / 10000
+        const roundedLng = Math.round(newLng * 10000) / 10000
+        if (markerRef.current) {
+          markerRef.current.setLatLng([roundedLat, roundedLng])
+        } else {
+          markerRef.current = L.marker([roundedLat, roundedLng], { icon }).addTo(map)
+        }
+        onPick(roundedLat, roundedLng)
+      })
+
+      mapInstance.current = map
+    })
+    return () => { if (mapInstance.current) { mapInstance.current.remove(); mapInstance.current = null } }
+  }, [])
+
+  return (
+    <div ref={mapRef} style={{ height: 220, borderRadius: 12, overflow: 'hidden', border: '1.5px solid #E0D5C5', cursor: 'crosshair' }} />
   )
 }
 
