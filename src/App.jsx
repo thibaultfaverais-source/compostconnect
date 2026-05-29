@@ -788,7 +788,7 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onL
 
 // ─── Add Entry Modal ──────────────────────────────────────────────────────────
 
-function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose, editEntry = null }) {
+function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose, editEntry = null, onDelete }) {
   const [step, setStep] = useState(editEntry && editEntry.actionType ? 2 : 1);
   const [form, setForm] = useState(editEntry ? {
     siteId: editEntry.siteId || siteId,
@@ -827,7 +827,14 @@ function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose, editEntry =
               {siteName && <p style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>📍 {siteName}</p>}
             </div>
           </div>
-          <button onClick={onClose} style={{ background: "transparent", border: "none", fontSize: 22, cursor: "pointer", color: C.muted }}>✕</button>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            {editEntry && onDelete && (
+              <button onClick={() => onDelete(editEntry)} style={{ fontSize: 12, background: "transparent", border: "1px solid #FBCACA", borderRadius: 8, padding: "6px 14px", cursor: "pointer", color: "#BE4B48", fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
+                🗑️ Supprimer
+              </button>
+            )}
+            <button onClick={onClose} style={{ background: "transparent", border: "none", fontSize: 22, cursor: "pointer", color: C.muted }}>✕</button>
+          </div>
         </div>
 
         <div style={{ display: "flex", gap: 6, marginBottom: 28 }}>
@@ -1273,8 +1280,8 @@ export default function App() {
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} />}
         {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
-        {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
-        {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}
+        {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
+        {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}
         {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
         {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} />}
         {showSettings && <AdminSettingsModal onClose={() => setShowSettings(false)} onSettingsLoaded={setAdminSettings} />}

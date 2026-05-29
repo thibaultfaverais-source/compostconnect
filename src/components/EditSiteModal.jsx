@@ -155,17 +155,18 @@ export default function EditSiteModal({ site, onSave, onClose }) {
         </div>
 
         {/* Coordonnées GPS */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <Field label="Latitude (pour la carte)">
+        <p style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 8 }}>
+          📍 Position sur la carte — cliquez pour placer le point
+        </p>
+        <MapPicker lat={form.lat} lng={form.lng} onPick={(lat, lng) => { set('lat', lat); set('lng', lng); }} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 10, marginBottom: 4 }}>
+          <Field label="Latitude">
             <input type="number" step="0.0001" value={form.lat || ''} onChange={e => set('lat', Number(e.target.value))} placeholder="Ex : 47.3089" style={inputStyle} />
           </Field>
-          <Field label="Longitude (pour la carte)">
+          <Field label="Longitude">
             <input type="number" step="0.0001" value={form.lng || ''} onChange={e => set('lng', Number(e.target.value))} placeholder="Ex : 1.4736" style={inputStyle} />
           </Field>
         </div>
-        <p style={{ fontSize: 11, color: C.muted, marginBottom: 16, marginTop: -8 }}>
-          💡 Trouvez les coordonnées sur <strong>maps.google.fr</strong> → clic droit sur le lieu → copier les coordonnées
-        </p>
 
         {/* Référents */}
         <p style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 12 }}>Référents</p>
