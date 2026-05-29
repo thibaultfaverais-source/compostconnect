@@ -788,9 +788,18 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onL
 
 // ─── Add Entry Modal ──────────────────────────────────────────────────────────
 
-function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose }) {
-  const [step, setStep] = useState(1);
-  const [form, setForm] = useState({ siteId, date: todayStr(), actionType: "", volumeL: "", observations: [], temperature: "", tempsMin: "", commentaire: "" });
+function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose, editEntry = null }) {
+  const [step, setStep] = useState(editEntry && editEntry.actionType ? 2 : 1);
+  const [form, setForm] = useState(editEntry ? {
+    siteId: editEntry.siteId || siteId,
+    date: editEntry.date || todayStr(),
+    actionType: editEntry.actionType || "",
+    volumeL: editEntry.volumeL ?? "",
+    observations: editEntry.observations || [],
+    temperature: editEntry.temperature ?? "",
+    tempsMin: editEntry.tempsMin ?? "",
+    commentaire: editEntry.commentaire || "",
+  } : { siteId, date: todayStr(), actionType: "", volumeL: "", observations: [], temperature: "", tempsMin: "", commentaire: "" });
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
   const toggleObs = (id) => setForm(f => ({
@@ -802,7 +811,7 @@ function AddEntryModal({ siteId, siteName, isAdmin, onSave, onClose }) {
   const kgPreview = selectedAction?.showKg && form.volumeL ? (Number(form.volumeL) * KG_PER_LITRE).toFixed(1) : null;
 
   const goNext = () => { if (!form.actionType) { alert("Veuillez choisir un type d'action."); return; } setStep(2); };
-  const save = () => onSave({ ...form, id: editEntry ? editEntry.id : `e${Date.now()}`, siteId: site.id, isEdit: !!editEntry, isNew: !editEntry, volumeL: form.volumeL ? Number(form.volumeL) : null, temperature: form.temperature ? Number(form.temperature) : null, tempsMin: form.tempsMin ? Number(form.tempsMin) : null });
+  const save = () => onSave({ ...form, id: editEntry ? editEntry.id : `e${Date.now()}`, siteId: editEntry ? editEntry.siteId : siteId, isEdit: !!editEntry, isNew: !editEntry, volumeL: form.volumeL !== "" ? Number(form.volumeL) : null, temperature: form.temperature !== "" ? Number(form.temperature) : null, tempsMin: form.tempsMin !== "" ? Number(form.tempsMin) : null });
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(20,30,18,0.55)", display: "flex", alignItems: "flex-end", justifyContent: "center", zIndex: 100 }}>
