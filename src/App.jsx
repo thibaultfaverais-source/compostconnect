@@ -429,7 +429,7 @@ function SiteCodeChanger({ siteId, currentCode, onChangeSiteCode }) {
 
 // ─── Stats par année ──────────────────────────────────────────────────────────
 
-function StatsParAnnee({ entries }) {
+function StatsParAnnee({ entries, site }) {
   const rows = getStatsByYear(entries);
   const totKg = getKgDetournes(entries);
   const totL = getLValorises(entries);
@@ -470,9 +470,9 @@ function StatsParAnnee({ entries }) {
           </tbody>
           <tfoot>
             <tr style={{ background: "#EEF5E8", borderTop: `2px solid ${C.green}30` }}>
-              <td style={{ ...colStyle, textAlign: "left", fontWeight: 700, color: C.green, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em" }}>Total depuis le début</td>
-              <td style={colStyle}><strong style={{ color: C.green, fontSize: 16 }}>{totKg.toFixed(1)} kg</strong></td>
-              <td style={colStyle}><strong style={{ color: "#7A6B2D", fontSize: 16 }}>{totL} L</strong></td>
+              <td style={{ ...colStyle, textAlign: "left", fontWeight: 700, color: C.green, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em" }}>Total officiel Excel</td>
+              <td style={colStyle}><strong style={{ color: C.green, fontSize: 16 }}>{site?.biodechets_kg ? site.biodechets_kg.toLocaleString("fr-FR") + " kg" : totKg.toFixed(1) + " kg"}</strong></td>
+              <td style={colStyle}><strong style={{ color: "#7A6B2D", fontSize: 16 }}>{site?.compost_L ? site.compost_L.toLocaleString("fr-FR") + " L" : totL + " L"}</strong></td>
               <td style={{ ...colStyle, color: C.muted, fontWeight: 700 }}>{entries.length}</td>
             </tr>
           </tfoot>
@@ -556,13 +556,13 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
       )}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 14, marginBottom: 32 }}>
-        <StatBox label="Biodéchets détournés" value={(site.biodechets_kg || 0).toLocaleString("fr-FR")} unit="kg" sub="total officiel" />
-        <StatBox label={"Détournés en " + new Date().getFullYear()} value={getKgDetournes(entries.filter(e => e.date?.startsWith(String(new Date().getFullYear())))).toFixed(0)} unit="kg" color={C.brown} sub={"année " + new Date().getFullYear()} />
-        <StatBox label="Compost valorisé" value={(site.compost_L || 0).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel" />
-        <StatBox label="Bacs OMR évités" value={getBacsOMR(site.biodechets_kg || 0)} unit="bacs" color="#5C2D7A" />
+        <StatBox label="Biodéchets détournés" value={(site.biodechets_kg || 0).toLocaleString("fr-FR")} unit="kg" sub="total officiel Excel" />
+        <StatBox label="Bacs OMR évités" value={getBacsOMR(site.biodechets_kg || 0)} unit="bacs" color="#5C2D7A" sub="bacs 120L évités" />
+        <StatBox label="Compost valorisé" value={(site.compost_L || 0).toLocaleString("fr-FR")} unit="L" color="#7A6B2D" sub="total officiel Excel" />
+        <StatBox label="Interventions" value={entries.length} unit="" color="#2D6B7A" sub="saisies enregistrées" />
       </div>
       <SiteMap sites={[site]} entries={allEntries} highlightSiteId={site.id} height={260} />
-      <StatsParAnnee entries={entries} />
+      <StatsParAnnee entries={entries} site={site} />
       <SiteCharts entries={entries} />
       <button className="btn-green" onClick={onAddEntry} style={{ width: "100%", padding: 14, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer", marginBottom: 28 }}>
         ✏️ Ajouter une saisie pour ce site
@@ -620,7 +620,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
       <div style={{ marginBottom: 8 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text, marginBottom: 4 }}>Bilan global</h2>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Tous sites confondus</p>
-        <StatsParAnnee entries={entries} />
+        <StatsParAnnee entries={entries} site={site} />
       </div>
       <SiteMap sites={sites} entries={entries} height={380} />
       <AdminCharts sites={sites} entries={entries} />
@@ -777,7 +777,7 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onL
       <EventsSection events={events} sites={sites} isAdmin={true} siteId={site.id} onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
 
       <SiteMap sites={[site]} entries={entries} highlightSiteId={site.id} height={240} />
-      <StatsParAnnee entries={entries} />
+      <StatsParAnnee entries={entries} site={site} />
       <SiteCharts entries={entries} />
 
       <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: C.text, marginBottom: 16 }}>Historique</h2>
