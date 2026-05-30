@@ -132,6 +132,16 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
           </div>
         )}
 
+        {/* Restricted admin code (SMIEEOM) */}
+        <div style={{ background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 12, padding: '16px 18px', marginBottom: 20 }}>
+          <p style={{ fontSize: 13, fontWeight: 600, color: '#8B5E00', marginBottom: 8 }}>🔒 Code accès restreint (SMIEEOM)</p>
+          <p style={{ fontSize: 12, color: '#A07020', marginBottom: 10 }}>Ce code donne accès uniquement aux 7 sites contractuels : Contres, Chémery, Ouchamps, Chissay, Monthou, Saint-Aignan, Fougères.</p>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <code style={{ background: 'rgba(0,0,0,0.07)', padding: '4px 10px', borderRadius: 6, fontSize: 14, fontWeight: 700, color: '#8B5E00', letterSpacing: '.08em' }}>SMIEEOM2026</code>
+            <span style={{ fontSize: 12, color: '#A07020' }}>← Code actuel (modifiable dans Firebase si besoin)</span>
+          </div>
+        </div>
+
         {/* Admin code */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showCodeField ? 10 : 0 }}>

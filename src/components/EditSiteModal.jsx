@@ -168,6 +168,26 @@ export default function EditSiteModal({ site, onSave, onClose }) {
           </Field>
         </div>
 
+        {/* Codes cadenas */}
+        <p style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 12 }}>🔐 Codes cadenas</p>
+        <div style={{ background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 12, padding: '16px 16px', marginBottom: 20 }}>
+          <p style={{ fontSize: 12, color: '#8B5E00', marginBottom: 14 }}>Ces codes sont visibles uniquement par les référents et le coordinateur.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <Field label="🗑️ Bac d'apport">
+              <input value={form.cadenas?.apport || ''} onChange={e => set('cadenas', { ...(form.cadenas||{}), apport: e.target.value })} placeholder="Ex : 1234" maxLength={20} style={inputStyle} />
+            </Field>
+            <Field label="🌾 Bac de maturation">
+              <input value={form.cadenas?.maturation || ''} onChange={e => set('cadenas', { ...(form.cadenas||{}), maturation: e.target.value })} placeholder="Ex : 5678" maxLength={20} style={inputStyle} />
+            </Field>
+            <Field label="🪵 Bac de broyat">
+              <input value={form.cadenas?.broyat || ''} onChange={e => set('cadenas', { ...(form.cadenas||{}), broyat: e.target.value })} placeholder="Ex : 9012" maxLength={20} style={inputStyle} />
+            </Field>
+            <Field label="🧰 Bac à outils">
+              <input value={form.cadenas?.outils || ''} onChange={e => set('cadenas', { ...(form.cadenas||{}), outils: e.target.value })} placeholder="Ex : 3456" maxLength={20} style={inputStyle} />
+            </Field>
+          </div>
+        </div>
+
         {/* Référents */}
         <p style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 12 }}>Référents</p>
 

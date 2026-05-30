@@ -425,6 +425,40 @@ function SiteCodeChanger({ siteId, currentCode, onChangeSiteCode }) {
   );
 }
 
+// ─── Cadenas Card ────────────────────────────────────────────────────────────
+
+function CadenasCard({ site }) {
+  const { cadenas } = site;
+  const bacs = [
+    { key: 'apport',    icon: '🗑️', label: "Bac d'apport" },
+    { key: 'maturation', icon: '🌾', label: 'Bac de maturation' },
+    { key: 'broyat',    icon: '🪵', label: 'Bac de broyat' },
+    { key: 'outils',    icon: '🧰', label: 'Bac à outils' },
+  ];
+  const hasCodes = bacs.some(b => cadenas?.[b.key]);
+  if (!hasCodes) return (
+    <div style={{ background: '#F9F5EE', border: `1px dashed #E0D5C5`, borderRadius: 13, padding: '14px 18px', marginBottom: 20 }}>
+      <p style={{ fontSize: 13, color: '#7A8470', margin: 0 }}>🔐 Codes cadenas — non renseignés (modifiables via ✏️ Modifier)</p>
+    </div>
+  );
+  return (
+    <div style={{ background: '#FDFAF6', border: '1px solid #E0D5C5', borderRadius: 13, padding: '18px 20px', marginBottom: 20 }}>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#7A8470', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 14 }}>🔐 Codes cadenas</p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 10 }}>
+        {bacs.map(b => (
+          <div key={b.key} style={{ background: cadenas?.[b.key] ? '#F4EBD9' : '#F0EFEA', borderRadius: 9, padding: '10px 14px' }}>
+            <p style={{ fontSize: 11, color: '#7A8470', marginBottom: 4 }}>{b.icon} {b.label}</p>
+            {cadenas?.[b.key]
+              ? <p style={{ fontSize: 18, fontWeight: 700, color: '#2D5A27', letterSpacing: '.15em', margin: 0 }}>{cadenas[b.key]}</p>
+              : <p style={{ fontSize: 13, color: '#B0A898', fontStyle: 'italic', margin: 0 }}>Non renseigné</p>
+            }
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Admin Site Detail ────────────────────────────────────────────────────────
 
 // ─── Stats par année ──────────────────────────────────────────────────────────
@@ -513,6 +547,8 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
         <SiteCodeChanger siteId={site.id} currentCode={site.code} onChangeSiteCode={onChangeSiteCode} />
       </div>
 
+      <CadenasCard site={site} />
+
       {/* Bilan qualitatif */}
       {(site.pointsForts?.length > 0 || site.pointsAmelioration?.length > 0 || site.conclusion) && (
         <div style={{ marginBottom: 24 }}>
@@ -574,7 +610,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry, isRestrictedAdmin = false }) {
   const [detail, setDetail] = useState(null);
   if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} onDeleteEntry={onDeleteEntry} />;
 
@@ -585,7 +621,14 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
         <div>
+          <div>
           <LogoFull size={44} dark />
+          {isRestrictedAdmin && (
+            <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 6, background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 8, padding: '4px 12px' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#8B5E00' }}>🔒 Mode contractuel — 7 sites actifs</span>
+            </div>
+          )}
+        </div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <NotificationBell notifications={notifications} onMarkRead={onMarkRead} onMarkAllRead={onMarkAllRead} />
@@ -773,6 +816,8 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onL
         </button>
         <ExportButton label="📥 Excel" onClick={() => exportSite(site, entries)} small />
       </div>
+
+      <CadenasCard site={site} />
 
       <EventsSection events={events} sites={sites} isAdmin={true} siteId={site.id} onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
 
@@ -1028,6 +1073,9 @@ export default function App() {
   const [territories, setTerritories] = useState([]);
   const [currentTerritory, setCurrentTerritory] = useState(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isRestrictedAdmin, setIsRestrictedAdmin] = useState(false);
+  const [restrictedCode, setRestrictedCode] = useState('SMIEEOM2026');
+  const [restrictedSiteIds] = useState(['s11', 's14', 's15', 's16', 's19', 's20', 's22']);
 
   const DATA_VERSION = 'v6';
 
@@ -1061,6 +1109,15 @@ export default function App() {
 
         const loadedAdminCode = codesSnap.exists() && codesSnap.data().adminCode ? codesSnap.data().adminCode : 'ADMIN';
         setAdminCode(loadedAdminCode);
+        if (codesSnap.exists() && codesSnap.data().restrictedCode) {
+          setRestrictedCode(codesSnap.data().restrictedCode);
+        } else {
+          // Store default restricted config in Firestore
+          await setDoc(doc(db, 'config', 'codes'), {
+            ...(codesSnap.exists() ? codesSnap.data() : {}),
+            restrictedCode: 'SMIEEOM2026',
+          }, { merge: true });
+        }
         setNotifications(notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
         if (settingsSnap.exists()) setAdminSettings(settingsSnap.data());
         setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
@@ -1091,6 +1148,8 @@ export default function App() {
           const sess = JSON.parse(saved);
           if (sess.type === "superadmin") {
             setIsSuperAdmin(true); setScreen("superadmin");
+          } else if (sess.type === "restricted") {
+            setIsRestrictedAdmin(true); setScreen("admin");
           } else if (sess.type === "admin") {
             setScreen("admin");
           } else if (sess.type === "site" && sess.siteId) {
@@ -1108,6 +1167,8 @@ export default function App() {
     if (!c) return;
     if (c === SUPER_ADMIN_CODE) {
       setIsSuperAdmin(true); setScreen("superadmin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "superadmin", code: c })); } catch(e) {}
+    } else if (c === restrictedCode) {
+      setIsRestrictedAdmin(true); setScreen("admin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "restricted", code: c })); } catch(e) {}
     } else if (c === adminCode) {
       setScreen("admin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "admin", code: c })); } catch(e) {}
     }
@@ -1263,7 +1324,7 @@ export default function App() {
     setShowAddSite(false);
   };
 
-  const logout = () => { setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setCurrentTerritory(null); try { localStorage.removeItem("cc_session"); } catch(e) {} };
+  const logout = () => { setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setIsRestrictedAdmin(false); setCurrentTerritory(null); try { localStorage.removeItem("cc_session"); } catch(e) {} };
 
   if (loading) return (
     <div style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.muted }}>
@@ -1278,7 +1339,7 @@ export default function App() {
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} />}
-        {screen === "admin" && <AdminScreen sites={sites} entries={entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} />}
+        {screen === "admin" && <AdminScreen sites={isRestrictedAdmin ? sites.filter(s => restrictedSiteIds.includes(s.id)) : sites} entries={isRestrictedAdmin ? entries.filter(e => restrictedSiteIds.includes(e.siteId)) : entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
         {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
         {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}
