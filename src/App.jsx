@@ -663,7 +663,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
       <div style={{ marginBottom: 8 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text, marginBottom: 4 }}>Bilan global</h2>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Tous sites confondus</p>
-        <StatsParAnnee entries={entries} site={site} />
+        <StatsParAnnee entries={entries} />
       </div>
       <SiteMap sites={sites} entries={entries} height={380} />
       <AdminCharts sites={sites} entries={entries} />
