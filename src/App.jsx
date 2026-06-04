@@ -234,7 +234,7 @@ const getLValorises = (entries) => entries.filter(e => e.actionType === "recolte
 const getTempsTotal = (entries) => entries.reduce((s, e) => s + (Number(e.tempsMin) || 0), 0);
 const thisMonth = (entries) => { const n = new Date(); return entries.filter(e => { const d = new Date(e.date + "T12:00:00"); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear(); }); };
 const siteColor = (idx) => ["#2D5A27", "#7A4F2D", "#2D4F7A", "#6B3D7A", "#2D7A6B", "#7A5C2D"][idx % 6];
-const daysSince = (entries) => { if (!entries.length) return null; const last = [...entries].sort((a, b) => b.date.localeCompare(a.date))[0]; return Math.floor((new Date() - new Date(last.date + "T12:00:00")) / 86400000); };
+const daysSince = (entries) => { if (!entries.length) return null; const last = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0]; return Math.floor((new Date() - new Date(last.date + "T12:00:00")) / 86400000); };
 
 const getStatsByYear = (entries) => {
   const map = {};
@@ -245,7 +245,7 @@ const getStatsByYear = (entries) => {
     if (e.actionType === "recolte" && e.volumeL) map[y].lVal += Number(e.volumeL);
     map[y].count++;
   });
-  return Object.entries(map).sort((a, b) => b[0].localeCompare(a[0])).map(([year, s]) => ({ year, ...s }));
+  return Object.entries(map).sort((a, b) => (b[0] || "").localeCompare(a[0] || "")).map(([year, s]) => ({ year, ...s }));
 };
 
 // ─── Shared UI ────────────────────────────────────────────────────────────────
@@ -517,7 +517,7 @@ function StatsParAnnee({ entries, site }) {
 }
 
 function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onChangeSiteCode, onEditEntry, onDeleteEntry }) {
-  const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+  const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const monthE = thisMonth(entries);
   return (
     <div style={{ maxWidth: 860, margin: "0 auto", padding: "32px 24px" }}>
@@ -674,7 +674,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 18, marginBottom: 48 }}>
         {sites.map((site, idx) => {
-          const se = entries.filter(e => e.siteId === site.id).sort((a, b) => b.date.localeCompare(a.date));
+          const se = entries.filter(e => e.siteId === site.id).sort((a, b) => (b.date || "").localeCompare(a.date || ""));
           const last = se[0];
           const lastAction = last ? getAction(last.actionType) : null;
           const lastObs = last ? (last.observations || []).map(id => OBSERVATIONS.find(o => o.id === id)).filter(Boolean) : [];
@@ -729,7 +729,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
       <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text, marginBottom: 18 }}>Activité récente</h2>
       <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden" }}>
-        {[...entries].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 12).map((entry, idx, arr) => {
+        {[...entries].sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || "")).slice(0, 12).map((entry, idx, arr) => {
           const site = sites.find(s => s.id === entry.siteId);
           const siteIdx = sites.findIndex(s => s.id === entry.siteId);
           const action = getAction(entry.actionType);
@@ -760,7 +760,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
 function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent }) {
-  const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+  const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
   const kgTotal = getKgDetournes(entries);
@@ -1103,8 +1103,8 @@ export default function App() {
           setSites(DEFAULT_SITES);
           setEntries(DEMO_ENTRIES);
         } else {
-          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => a.name.localeCompare(b.name)));
-          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => b.date.localeCompare(a.date)));
+          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => (a.name || "").localeCompare(b.name || "")));
+          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => (b.date || "").localeCompare(a.date || "")));
         }
 
         const loadedAdminCode = codesSnap.exists() && codesSnap.data().adminCode ? codesSnap.data().adminCode : 'ADMIN';
@@ -1118,9 +1118,9 @@ export default function App() {
             restrictedCode: 'SMIEEOM2026',
           }, { merge: true });
         }
-        setNotifications(notifSnap.docs.map(d => d.data()).sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
+        setNotifications(notifSnap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || "")));
         if (settingsSnap.exists()) setAdminSettings(settingsSnap.data());
-        setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => a.date.localeCompare(b.date)));
+        setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => (a.date || "").localeCompare(b.date || "")));
 
         if (territoriesSnap.docs.length === 0) {
           const defaultTerritory = {
@@ -1197,7 +1197,7 @@ export default function App() {
     try {
       await setDoc(doc(db, 'entries', newEntry.id), newEntry);
       if (isEdit) {
-        setEntries(prev => prev.map(e => e.id === newEntry.id ? newEntry : e).sort((a, b) => b.date.localeCompare(a.date)));
+        setEntries(prev => prev.map(e => e.id === newEntry.id ? newEntry : e).sort((a, b) => (b.date || "").localeCompare(a.date || "")));
         setEditEntry(null);
         return;
       }
@@ -1275,13 +1275,13 @@ export default function App() {
         const batch2 = writeBatch(db);
         newEntries.forEach(e => batch2.set(doc(db, 'entries', e.id), e));
         await batch2.commit();
-        setEntries(prev => [...prev, ...newEntries].sort((a, b) => b.date.localeCompare(a.date)));
+        setEntries(prev => [...prev, ...newEntries].sort((a, b) => (b.date || "").localeCompare(a.date || "")));
       }
       alert('Synchronisation terminée. ' + DEFAULT_SITES.length + ' sites mis à jour, ' + newEntries.length + ' nouvelles saisies ajoutées. (22 sites, 139 entrées au total)');
     } catch (e) { alert('Erreur sync: ' + e.message); }
   };
 
-  const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => a.date.localeCompare(b.date)));
+  const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => (a.date || "").localeCompare(b.date || "")));
 
   const deleteEvent = async (evId) => {
     try {
