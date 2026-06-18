@@ -224,6 +224,60 @@ const DEMO_ENTRIES = [
   {id: "e127", siteId: "s3", date: "2023-02-06", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle par les Cycloposteurs Orléans", createdAt: "2023-02-06T10:00:00"},
 ];
 
+const FICTIONAL_SITES = [
+  {id: "demo1", name: "Vallières-sur-Aume", address: "Place de la Mairie, Vallières-sur-Aume", code: "VALLIE", foyers: 22, typeSite: "Foyers + Cantine", cantine: "École primaire", periode: "Mars 2024 – en cours", capacityL: 500, referents: [{role: "Référent technique", nom: "Marc DUBOIS", tel: "06 12 34 56 78", email: "marc.dubois@exemple.fr"}, {role: "Référent secondaire", nom: "Claire MOREAU", tel: "06 23 45 67 89", email: "claire.moreau@exemple.fr"}], biodechets_kg: 1450, compost_L: 1380, pointsForts: ["Forte implication des référents", "Brassage hebdomadaire régulier", "Peu de plastique dans les dépôts"], pointsAmelioration: ["Améliorer la signalétique du site"], conclusion: "Site exemplaire avec une dynamique citoyenne forte depuis son ouverture.", cadenas: {apport: "1234", maturation: "5678", broyat: "9012", outils: "3456"}, lat: 47.32, lng: 1.35},
+  {id: "demo2", name: "Sainte-Colombe-en-Bois", address: "Rue du Lavoir, Sainte-Colombe-en-Bois", code: "STCOLO", foyers: 14, typeSite: "Foyers", cantine: null, periode: "Juin 2024 – en cours", capacityL: 400, referents: [{role: "Référente technique", nom: "Isabelle PETIT", tel: "06 34 56 78 90", email: "isabelle.petit@exemple.fr"}], biodechets_kg: 1190, compost_L: 680, pointsForts: ["Bonne régularité des apports", "Compost de qualité"], pointsAmelioration: ["Trouver un second référent"], conclusion: "Site stable avec un noyau d'habitants motivés.", cadenas: {apport: "2468", maturation: "1357", broyat: "", outils: ""}, lat: 47.345, lng: 1.385},
+  {id: "demo3", name: "Mongeville", address: "Chemin des Vergers, Mongeville", code: "MONGEV", foyers: 12, typeSite: "Foyers", cantine: null, periode: "Sept. 2024 – en cours", capacityL: 400, referents: [{role: "Référent technique", nom: "Thomas LEFEBVRE", tel: "06 45 67 89 01", email: "thomas.lefebvre@exemple.fr"}, {role: "Référente secondaire", nom: "Anne ROUSSEAU", tel: "06 56 78 90 12", email: "anne.rousseau@exemple.fr"}], biodechets_kg: 980, compost_L: 520, pointsForts: ["Equipe de référents complémentaire", "Site bien entretenu"], pointsAmelioration: ["Excès d'humidité signalé en hiver"], conclusion: "Bon fonctionnement général, vigilance à maintenir sur l'humidité.", cadenas: {apport: "8765", maturation: "4321", broyat: "6543", outils: ""}, lat: 47.305, lng: 1.41},
+  {id: "demo4", name: "Brassignac", address: "Place de l'Église, Brassignac", code: "BRASSI", foyers: 16, typeSite: "Foyers + Cantine", cantine: "Cantine municipale", periode: "Oct. 2024 – en cours", capacityL: 500, referents: [{role: "Référente technique", nom: "Sophie GIRARD", tel: "06 67 89 01 23", email: "sophie.girard@exemple.fr"}], biodechets_kg: 850, compost_L: 410, pointsForts: ["Animation pédagogique avec les enfants", "Bonne couverture médiatique locale"], pointsAmelioration: ["Systématiser le brassage"], conclusion: "Site dynamique avec un fort potentiel pédagogique.", cadenas: {apport: "1122", maturation: "3344", broyat: "5566", outils: "7788"}, lat: 47.37, lng: 1.32},
+  {id: "demo5", name: "Ferrière-Lacroix", address: "Route de la Forêt, Ferrière-Lacroix", code: "FERRIE", foyers: 10, typeSite: "Foyers", cantine: null, periode: "Nov. 2024 – en cours", capacityL: 400, referents: [{role: "Référent technique", nom: "Julien MARTIN", tel: "06 78 90 12 34", email: "julien.martin@exemple.fr"}], biodechets_kg: 720, compost_L: 350, pointsForts: ["Implication constante du référent"], pointsAmelioration: ["Manque de second référent", "Bioseaux à renouveler"], conclusion: "Site fonctionnel, dépend beaucoup d'un référent unique.", cadenas: {apport: "9988", maturation: "", broyat: "", outils: ""}, lat: 47.29, lng: 1.37},
+  {id: "demo6", name: "Coursange", address: "Impasse des Tilleuls, Coursange", code: "COURSA", foyers: 11, typeSite: "Foyers", cantine: null, periode: "Jan. 2025 – en cours", capacityL: 400, referents: [{role: "Référente technique", nom: "Émilie ROUX", tel: "06 89 01 23 45", email: "emilie.roux@exemple.fr"}, {role: "Référent secondaire", nom: "Nicolas FONTAINE", tel: "06 90 12 34 56", email: "nicolas.fontaine@exemple.fr"}], biodechets_kg: 600, compost_L: 290, pointsForts: ["Bon binôme de référents", "Site propre"], pointsAmelioration: [], conclusion: "Site jeune avec une bonne dynamique de démarrage.", cadenas: {apport: "4567", maturation: "8901", broyat: "2345", outils: "6789"}, lat: 47.33, lng: 1.43},
+  {id: "demo7", name: "Vaucelle-en-Berry", address: "Rue Principale, Vaucelle-en-Berry", code: "VAUCEL", foyers: 8, typeSite: "En cours", cantine: null, periode: "Avril 2025 – en cours", capacityL: 400, referents: [{role: "Référent technique", nom: "Pierre LAMBERT", tel: "06 01 23 45 67", email: "pierre.lambert@exemple.fr"}], biodechets_kg: 480, compost_L: 220, pointsForts: ["Bonne adhésion des nouveaux foyers"], pointsAmelioration: ["Trop sec en période estivale"], conclusion: "Site récent en phase de montée en charge.", cadenas: {apport: "3210", maturation: "", broyat: "", outils: ""}, lat: 47.355, lng: 1.46},
+  {id: "demo8", name: "Lormont-sur-Brenne", address: "Place du Marché, Lormont-sur-Brenne", code: "LORMON", foyers: 9, typeSite: "En cours", cantine: null, periode: "Juin 2025 – en cours", capacityL: 400, referents: [{role: "Référente technique", nom: "Camille BERNARD", tel: "06 11 22 33 44", email: "camille.bernard@exemple.fr"}], biodechets_kg: 390, compost_L: 180, pointsForts: ["Site récent déjà bien fréquenté"], pointsAmelioration: ["Première récolte à planifier"], conclusion: "Démarrage prometteur, à suivre sur les prochains mois.", cadenas: {apport: "5544", maturation: "3322", broyat: "", outils: ""}, lat: 47.275, lng: 1.33},
+];
+
+const FICTIONAL_ENTRIES = [
+  {id: "de3", siteId: "demo1", date: "2026-06-05", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 20, commentaire: "Entretien et vérification du matériel", createdAt: "2026-06-05T09:00:00"},
+  {id: "de8", siteId: "demo2", date: "2026-06-05", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 30, commentaire: "Entretien et vérification du matériel", createdAt: "2026-06-05T09:00:00"},
+  {id: "de15", siteId: "demo3", date: "2026-06-05", actionType: "brassage", volumeL: null, observations: [], temperature: 27, tempsMin: 30, commentaire: "Brassage du compost - bon état", createdAt: "2026-06-05T09:00:00"},
+  {id: "de23", siteId: "demo5", date: "2026-05-08", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 30, commentaire: "Entretien et vérification du matériel", createdAt: "2026-05-08T09:00:00"},
+  {id: "de1", siteId: "demo1", date: "2026-04-15", actionType: "transfert", volumeL: 2231, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de2", siteId: "demo1", date: "2026-04-15", actionType: "recolte", volumeL: 1380, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 1380 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de6", siteId: "demo2", date: "2026-04-15", actionType: "transfert", volumeL: 1831, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de7", siteId: "demo2", date: "2026-04-15", actionType: "recolte", volumeL: 680, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 680 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de11", siteId: "demo3", date: "2026-04-15", actionType: "transfert", volumeL: 1508, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de12", siteId: "demo3", date: "2026-04-15", actionType: "recolte", volumeL: 520, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 520 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de16", siteId: "demo4", date: "2026-04-15", actionType: "transfert", volumeL: 1308, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de17", siteId: "demo4", date: "2026-04-15", actionType: "recolte", volumeL: 410, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 410 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de21", siteId: "demo5", date: "2026-04-15", actionType: "transfert", volumeL: 1108, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de22", siteId: "demo5", date: "2026-04-15", actionType: "recolte", volumeL: 350, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 350 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de26", siteId: "demo6", date: "2026-04-15", actionType: "transfert", volumeL: 923, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de27", siteId: "demo6", date: "2026-04-15", actionType: "recolte", volumeL: 290, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 290 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de31", siteId: "demo7", date: "2026-04-15", actionType: "transfert", volumeL: 738, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de32", siteId: "demo7", date: "2026-04-15", actionType: "recolte", volumeL: 220, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 220 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de36", siteId: "demo8", date: "2026-04-15", actionType: "transfert", volumeL: 600, observations: [], temperature: null, tempsMin: 30, commentaire: "Transfert et pesée du bac d'apport", createdAt: "2026-04-15T10:00:00"},
+  {id: "de37", siteId: "demo8", date: "2026-04-15", actionType: "recolte", volumeL: 180, observations: [], temperature: null, tempsMin: 20, commentaire: "Récolte de 180 L de compost mûr", createdAt: "2026-04-15T10:30:00"},
+  {id: "de9", siteId: "demo2", date: "2026-04-10", actionType: "brassage", volumeL: null, observations: [], temperature: 22, tempsMin: 10, commentaire: "Brassage du compost - bon état", createdAt: "2026-04-10T09:00:00"},
+  {id: "de13", siteId: "demo3", date: "2026-04-10", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 15, commentaire: "Visite de suivi du site", createdAt: "2026-04-10T09:00:00"},
+  {id: "de28", siteId: "demo6", date: "2026-04-10", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 15, commentaire: "Entretien et vérification du matériel", createdAt: "2026-04-10T09:00:00"},
+  {id: "de18", siteId: "demo4", date: "2026-01-09", actionType: "brassage", volumeL: null, observations: [], temperature: 32, tempsMin: 10, commentaire: "Brassage du compost - bon état", createdAt: "2026-01-09T09:00:00"},
+  {id: "de30", siteId: "demo6", date: "2026-01-09", actionType: "brassage", volumeL: null, observations: [], temperature: 43, tempsMin: 15, commentaire: "Brassage du compost - bon état", createdAt: "2026-01-09T09:00:00"},
+  {id: "de19", siteId: "demo4", date: "2025-12-05", actionType: "brassage", volumeL: null, observations: [], temperature: 34, tempsMin: 10, commentaire: "Brassage du compost - bon état", createdAt: "2025-12-05T09:00:00"},
+  {id: "de24", siteId: "demo5", date: "2025-12-05", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 10, commentaire: "Entretien et vérification du matériel", createdAt: "2025-12-05T09:00:00"},
+  {id: "de29", siteId: "demo6", date: "2025-12-05", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 10, commentaire: "Entretien et vérification du matériel", createdAt: "2025-12-05T09:00:00"},
+  {id: "de33", siteId: "demo7", date: "2025-12-05", actionType: "brassage", volumeL: null, observations: [], temperature: 34, tempsMin: 20, commentaire: "Brassage du compost - bon état", createdAt: "2025-12-05T09:00:00"},
+  {id: "de39", siteId: "demo8", date: "2025-12-05", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 15, commentaire: "Entretien et vérification du matériel", createdAt: "2025-12-05T09:00:00"},
+  {id: "de14", siteId: "demo3", date: "2025-11-14", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 20, commentaire: "Visite de suivi du site", createdAt: "2025-11-14T09:00:00"},
+  {id: "de35", siteId: "demo7", date: "2025-11-14", actionType: "brassage", volumeL: null, observations: [], temperature: 33, tempsMin: 20, commentaire: "Brassage du compost - bon état", createdAt: "2025-11-14T09:00:00"},
+  {id: "de38", siteId: "demo8", date: "2025-11-14", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 15, commentaire: "Entretien et vérification du matériel", createdAt: "2025-11-14T09:00:00"},
+  {id: "de20", siteId: "demo4", date: "2025-10-24", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 20, commentaire: "Visite de suivi du site", createdAt: "2025-10-24T09:00:00"},
+  {id: "de4", siteId: "demo1", date: "2025-10-03", actionType: "brassage", volumeL: null, observations: [], temperature: 29, tempsMin: 15, commentaire: "Brassage du compost - bon état", createdAt: "2025-10-03T09:00:00"},
+  {id: "de10", siteId: "demo2", date: "2025-10-03", actionType: "brassage", volumeL: null, observations: [], temperature: 29, tempsMin: 10, commentaire: "Brassage du compost - bon état", createdAt: "2025-10-03T09:00:00"},
+  {id: "de34", siteId: "demo7", date: "2025-10-03", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 20, commentaire: "Visite de suivi du site", createdAt: "2025-10-03T09:00:00"},
+  {id: "de40", siteId: "demo8", date: "2025-10-03", actionType: "brassage", volumeL: null, observations: [], temperature: 36, tempsMin: 30, commentaire: "Brassage du compost - bon état", createdAt: "2025-10-03T09:00:00"},
+  {id: "de5", siteId: "demo1", date: "2025-09-12", actionType: "manutention", volumeL: null, observations: [], temperature: null, tempsMin: 10, commentaire: "Entretien et vérification du matériel", createdAt: "2025-09-12T09:00:00"},
+  {id: "de25", siteId: "demo5", date: "2025-09-12", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: 10, commentaire: "Visite de suivi du site", createdAt: "2025-09-12T09:00:00"},
+];
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
@@ -610,7 +664,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry, isRestrictedAdmin = false }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry, isRestrictedAdmin = false, isDemoMode = false }) {
   const [detail, setDetail] = useState(null);
   if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} onDeleteEntry={onDeleteEntry} />;
 
@@ -628,6 +682,11 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
               <span style={{ fontSize: 11, fontWeight: 700, color: '#8B5E00' }}>🔒 Mode contractuel — 7 sites actifs</span>
             </div>
           )}
+          {isDemoMode && (
+            <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EDE3F5', border: '1px solid #D4B8EE', borderRadius: 8, padding: '4px 12px' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#5C2D7A' }}>🎭 Mode démonstration — données fictives</span>
+            </div>
+          )}
         </div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -636,7 +695,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
           <AnnualReportButton territory={territory} sites={sites} entries={entries} />
           <ExportButton label="📥 Excel" onClick={() => exportGlobal(sites, entries)} small />
           <button onClick={onOpenHelp} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>❓</button>
-          <button onClick={onOpenSettings} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>⚙️</button>
+          {!isDemoMode && <button onClick={onOpenSettings} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>⚙️</button>}
           <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 18px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
         </div>
       </div>
@@ -659,7 +718,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
         </div>
       )}
 
-      <EventsSection events={events} sites={sites} isAdmin onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
+      <EventsSection events={events} sites={sites} isAdmin onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} isDemoMode={isDemoMode} />
       <div style={{ marginBottom: 8 }}>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 600, color: C.text, marginBottom: 4 }}>Bilan global</h2>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Tous sites confondus</p>
@@ -759,7 +818,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
 
-function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent }) {
+function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent, isDemoMode = false }) {
   const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const monthE = thisMonth(entries);
   const kgMonth = getKgDetournes(monthE);
@@ -819,7 +878,7 @@ function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onL
 
       <CadenasCard site={site} />
 
-      <EventsSection events={events} sites={sites} isAdmin={true} siteId={site.id} onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} />
+      <EventsSection events={events} sites={sites} isAdmin={true} siteId={site.id} onAddEvent={onAddEvent} onDeleteEvent={onDeleteEvent} isDemoMode={isDemoMode} />
 
       <SiteMap sites={[site]} entries={entries} highlightSiteId={site.id} height={240} />
       <StatsParAnnee entries={entries} site={site} />
@@ -1074,6 +1133,8 @@ export default function App() {
   const [currentTerritory, setCurrentTerritory] = useState(null);
   const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [isRestrictedAdmin, setIsRestrictedAdmin] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
+  const DEMO_CODE = 'DEMO2026';
   const [restrictedCode, setRestrictedCode] = useState('SMIEEOM2026');
   const [restrictedSiteIds] = useState(['s11', 's14', 's15', 's16', 's19', 's20', 's22']);
 
@@ -1146,7 +1207,14 @@ export default function App() {
         const saved = localStorage.getItem("cc_session");
         if (saved) {
           const sess = JSON.parse(saved);
-          if (sess.type === "superadmin") {
+          if (sess.type === "demo") {
+            setIsDemoMode(true);
+            setSites(FICTIONAL_SITES);
+            setEntries(FICTIONAL_ENTRIES);
+            setEvents([]);
+            setNotifications([]);
+            setScreen("admin");
+          } else if (sess.type === "superadmin") {
             setIsSuperAdmin(true); setScreen("superadmin");
           } else if (sess.type === "restricted") {
             setIsRestrictedAdmin(true); setScreen("admin");
@@ -1167,6 +1235,14 @@ export default function App() {
     if (!c) return;
     if (c === SUPER_ADMIN_CODE) {
       setIsSuperAdmin(true); setScreen("superadmin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "superadmin", code: c })); } catch(e) {}
+    } else if (c === DEMO_CODE) {
+      setIsDemoMode(true);
+      setSites(FICTIONAL_SITES);
+      setEntries(FICTIONAL_ENTRIES);
+      setEvents([]);
+      setNotifications([]);
+      setScreen("admin"); setLoginError(""); setLoginCode("");
+      try { localStorage.setItem("cc_session", JSON.stringify({ type: "demo" })); } catch(e) {}
     } else if (c === restrictedCode) {
       setIsRestrictedAdmin(true); setScreen("admin"); setLoginError(""); setLoginCode(""); try { localStorage.setItem("cc_session", JSON.stringify({ type: "restricted", code: c })); } catch(e) {}
     } else if (c === adminCode) {
@@ -1182,6 +1258,7 @@ export default function App() {
   const deleteEntry = async (entry) => {
     const d = new Date(entry.date + 'T12:00:00').toLocaleDateString('fr-FR');
     if (!window.confirm('Supprimer la saisie du ' + d + ' ? Cette action est irréversible.')) return;
+    if (isDemoMode) { setEntries(prev => prev.filter(e => e.id !== entry.id)); return; }
     try {
       await deleteDoc(doc(db, 'entries', entry.id));
       setEntries(prev => prev.filter(e => e.id !== entry.id));
@@ -1194,6 +1271,16 @@ export default function App() {
       ? { ...entryData, updatedAt: new Date().toISOString() }
       : { ...entryData, id: entryData.id || `e${Date.now()}`, createdAt: new Date().toISOString() };
     delete newEntry.isEdit; delete newEntry.isNew;
+    if (isDemoMode) {
+      if (isEdit) {
+        setEntries(prev => prev.map(e => e.id === newEntry.id ? newEntry : e).sort((a, b) => (b.date || "").localeCompare(a.date || "")));
+        setEditEntry(null);
+        return;
+      }
+      setEntries(prev => [newEntry, ...prev]);
+      setShowEntry(false); setAdminEntrySite(null);
+      return;
+    }
     try {
       await setDoc(doc(db, 'entries', newEntry.id), newEntry);
       if (isEdit) {
@@ -1246,6 +1333,7 @@ export default function App() {
   };
 
   const markRead = async (id) => {
+    if (isDemoMode) { setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n)); return; }
     try {
       await setDoc(doc(db, 'notifications', id), { read: true }, { merge: true });
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
@@ -1254,7 +1342,9 @@ export default function App() {
 
   const markAllRead = async () => {
     const unread = notifications.filter(n => !n.read);
-    await Promise.all(unread.map(n => setDoc(doc(db, 'notifications', n.id), { read: true }, { merge: true })));
+    if (!isDemoMode) {
+      await Promise.all(unread.map(n => setDoc(doc(db, 'notifications', n.id), { read: true }, { merge: true })));
+    }
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
@@ -1281,9 +1371,39 @@ export default function App() {
     } catch (e) { alert('Erreur sync: ' + e.message); }
   };
 
+  const resetSiteEntries = async (siteId, siteName) => {
+    if (!window.confirm(
+      'Réinitialiser les saisies de ' + siteName + ' ?\n\n' +
+      'Cela va SUPPRIMER toutes les saisies existantes pour ce site et les remplacer par les données Excel.\n\n' +
+      '⚠️ Les saisies terrain récentes seront perdues pour ce site.'
+    )) return;
+    try {
+      // Delete all existing entries for this site
+      const snap = await getDocs(collection(db, 'entries'));
+      const toDelete = snap.docs.filter(d => d.data().siteId === siteId);
+      const batch1 = writeBatch(db);
+      toDelete.forEach(d => batch1.delete(d.ref));
+      await batch1.commit();
+      // Re-add correct entries from DEMO_ENTRIES
+      const siteEntries = DEMO_ENTRIES.filter(e => e.siteId === siteId);
+      if (siteEntries.length > 0) {
+        const batch2 = writeBatch(db);
+        siteEntries.forEach(e => batch2.set(doc(db, 'entries', e.id), e));
+        await batch2.commit();
+      }
+      // Update state
+      setEntries(prev => [
+        ...prev.filter(e => e.siteId !== siteId),
+        ...siteEntries
+      ].sort((a, b) => (b.date || '').localeCompare(a.date || '')));
+      alert(siteName + ' : ' + toDelete.length + ' anciennes saisies supprimées, ' + siteEntries.length + ' saisies Excel rechargées.');
+    } catch (e) { alert('Erreur : ' + e.message); }
+  };
+
   const addEvent = (ev) => setEvents(prev => [...prev, ev].sort((a, b) => (a.date || "").localeCompare(b.date || "")));
 
   const deleteEvent = async (evId) => {
+    if (isDemoMode) { setEvents(prev => prev.filter(e => e.id !== evId)); return; }
     try {
       await deleteDoc(doc(db, 'events', evId));
       setEvents(prev => prev.filter(e => e.id !== evId));
@@ -1298,6 +1418,7 @@ export default function App() {
     const site = sites.find(s => s.id === siteId);
     if (!site) return;
     const updated = { ...site, code };
+    if (isDemoMode) { setSites(prev => prev.map(s => s.id === siteId ? updated : s)); return; }
     try {
       await setDoc(doc(db, 'sites', siteId), updated);
       setSites(prev => prev.map(s => s.id === siteId ? updated : s));
@@ -1317,6 +1438,7 @@ export default function App() {
 
   const addSite = async (siteData) => {
     const newSite = { ...siteData, id: `s${Date.now()}` };
+    if (isDemoMode) { setSites(prev => [...prev, newSite]); setShowAddSite(false); return; }
     try {
       await setDoc(doc(db, 'sites', newSite.id), newSite);
       setSites(prev => [...prev, newSite]);
@@ -1324,7 +1446,28 @@ export default function App() {
     setShowAddSite(false);
   };
 
-  const logout = () => { setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setIsRestrictedAdmin(false); setCurrentTerritory(null); try { localStorage.removeItem("cc_session"); } catch(e) {} };
+  const logout = () => {
+    setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setIsRestrictedAdmin(false); setCurrentTerritory(null);
+    try { localStorage.removeItem("cc_session"); } catch(e) {}
+    if (isDemoMode) {
+      setIsDemoMode(false);
+      // Reload real data from Firestore
+      (async () => {
+        try {
+          const [sitesSnap, entriesSnap, notifSnap, eventsSnap] = await Promise.all([
+            getDocs(collection(db, 'sites')),
+            getDocs(collection(db, 'entries')),
+            getDocs(collection(db, 'notifications')),
+            getDocs(collection(db, 'events')),
+          ]);
+          setSites(sitesSnap.docs.map(d => d.data()).sort((a, b) => (a.name || "").localeCompare(b.name || "")));
+          setEntries(entriesSnap.docs.map(d => d.data()).sort((a, b) => (b.date || "").localeCompare(a.date || "")));
+          setNotifications(notifSnap.docs.map(d => d.data()).sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || "")));
+          setEvents(eventsSnap.docs.map(d => d.data()).sort((a, b) => (a.date || "").localeCompare(b.date || "")));
+        } catch (e) {}
+      })();
+    }
+  };
 
   if (loading) return (
     <div style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.muted }}>
@@ -1338,15 +1481,15 @@ export default function App() {
       <ErrorBoundary>
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
-        {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} />}
-        {screen === "admin" && <AdminScreen sites={isRestrictedAdmin ? sites.filter(s => restrictedSiteIds.includes(s.id)) : sites} entries={isRestrictedAdmin ? entries.filter(e => restrictedSiteIds.includes(e.siteId)) : entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} />}
-        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} />}
+        {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} onResetSiteEntries={resetSiteEntries} />}
+        {screen === "admin" && <AdminScreen sites={isRestrictedAdmin ? sites.filter(s => restrictedSiteIds.includes(s.id)) : sites} entries={isRestrictedAdmin ? entries.filter(e => restrictedSiteIds.includes(e.siteId)) : entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} isDemoMode={isDemoMode} />}
+        {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} isDemoMode={isDemoMode} />}
         {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
         {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}
-        {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} />}
-        {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} />}
+        {showAddSite && <AddSiteModal sites={sites} onSave={addSite} onClose={() => setShowAddSite(false)} isDemoMode={isDemoMode} />}
+        {editSite && <EditSiteModal site={editSite} onSave={handleEditSite} onClose={() => setEditSite(null)} isDemoMode={isDemoMode} />}
         {showSettings && <AdminSettingsModal onClose={() => setShowSettings(false)} onSettingsLoaded={setAdminSettings} />}
-        {showProfile && currentSite && <ReferentProfile site={currentSite} onSave={handleSiteUpdate} onClose={() => setShowProfile(false)} />}
+        {showProfile && currentSite && <ReferentProfile site={currentSite} onSave={handleSiteUpdate} onClose={() => setShowProfile(false)} isDemoMode={isDemoMode} />}
         {showHelp && <HelpGuide isAdmin={screen === 'admin'} onClose={() => setShowHelp(false)} />}
         {showPublic && <PublicDashboard onClose={() => setShowPublic(false)} />}
         {showLegal && <LegalPage onClose={() => setShowLegal(false)} />}

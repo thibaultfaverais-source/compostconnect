@@ -22,7 +22,7 @@ function Field({ label, children }) {
   )
 }
 
-export default function ReferentProfile({ site, onSave, onClose }) {
+export default function ReferentProfile({ site, onSave, onClose, isDemoMode = false }) {
   // Ensure 2 referent slots
   const initRefs = () => {
     const refs = [...(site.referents || [])]
@@ -41,10 +41,10 @@ export default function ReferentProfile({ site, onSave, onClose }) {
 
   const save = async () => {
     setSaving(true)
+    const cleanRefs = refs.filter(r => r.nom.trim())
+    const updatedSite = { ...site, referents: cleanRefs }
+    if (isDemoMode) { onSave(updatedSite); setSaving(false); return }
     try {
-      // Filter out empty referents
-      const cleanRefs = refs.filter(r => r.nom.trim())
-      const updatedSite = { ...site, referents: cleanRefs }
       await setDoc(doc(db, 'sites', site.id), updatedSite)
       onSave(updatedSite)
     } catch (e) {

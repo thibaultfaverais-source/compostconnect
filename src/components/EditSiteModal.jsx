@@ -66,7 +66,7 @@ function MapPicker({ lat, lng, onPick }) {
   )
 }
 
-export default function EditSiteModal({ site, onSave, onClose }) {
+export default function EditSiteModal({ site, onSave, onClose, isDemoMode = false }) {
   const [form, setForm] = useState({ ...site })
   const [saving, setSaving] = useState(false)
 
@@ -91,6 +91,7 @@ export default function EditSiteModal({ site, onSave, onClose }) {
   const handleSave = async () => {
     if (!form.name || !form.code) { alert('Nom et code obligatoires.'); return }
     setSaving(true)
+    if (isDemoMode) { onSave(form); setSaving(false); return }
     try {
       await setDoc(doc(db, 'sites', form.id), form)
       onSave(form)

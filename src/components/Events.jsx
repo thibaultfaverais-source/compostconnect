@@ -37,7 +37,7 @@ function Field({ label, children }) {
   )
 }
 
-function AddEventModal({ sites, onSave, onClose, defaultSiteId = null }) {
+function AddEventModal({ sites, onSave, onClose, defaultSiteId = null, isDemoMode = false }) {
   const [form, setForm] = useState({
     siteId: defaultSiteId || '',
     date: '',
@@ -52,6 +52,7 @@ function AddEventModal({ sites, onSave, onClose, defaultSiteId = null }) {
     if (!form.date || !form.title) { alert('Date et titre obligatoires.'); return }
     setSaving(true)
     const ev = { ...form, id: `ev${Date.now()}`, createdAt: new Date().toISOString() }
+    if (isDemoMode) { onSave(ev); setSaving(false); return }
     try {
       await setDoc(doc(db, 'events', ev.id), ev)
       onSave(ev)
@@ -153,7 +154,7 @@ export function EventsList({ events, sites, isAdmin, siteId = null, onDelete }) 
   )
 }
 
-export default function EventsSection({ events, sites, isAdmin, siteId, onAddEvent, onDeleteEvent }) {
+export default function EventsSection({ events, sites, isAdmin, siteId, onAddEvent, onDeleteEvent, isDemoMode = false }) {
   const [showAdd, setShowAdd] = useState(false)
 
   return (
@@ -165,7 +166,7 @@ export default function EventsSection({ events, sites, isAdmin, siteId, onAddEve
         </button>
       </div>
       <EventsList events={events} sites={sites} isAdmin={isAdmin} siteId={siteId} onDelete={onDeleteEvent} />
-      {showAdd && <AddEventModal sites={sites} defaultSiteId={siteId} onSave={ev => { onAddEvent(ev); setShowAdd(false) }} onClose={() => setShowAdd(false)} />}
+      {showAdd && <AddEventModal sites={sites} defaultSiteId={siteId} onSave={ev => { onAddEvent(ev); setShowAdd(false) }} onClose={() => setShowAdd(false)} isDemoMode={isDemoMode} />}
     </div>
   )
 }

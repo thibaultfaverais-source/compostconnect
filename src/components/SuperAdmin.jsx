@@ -97,7 +97,7 @@ function AddTerritoryModal({ onSave, onClose, existingCodes = [] }) {
   )
 }
 
-export default function SuperAdminView({ territories, allSites, allEntries, onEnterTerritory, onAddTerritory, onLogout, onSyncData }) {
+export default function SuperAdminView({ territories, allSites, allEntries, onEnterTerritory, onAddTerritory, onLogout, onSyncData, onResetSiteEntries }) {
   const [showAdd, setShowAdd] = useState(false)
   const existingCodes = territories.map(t => t.adminCode)
 
@@ -179,7 +179,24 @@ export default function SuperAdminView({ territories, allSites, allEntries, onEn
         </div>
       </div>
 
-      {showAdd && (
+      {/* Reset entries per site */}
+  {onResetSiteEntries && (
+    <div style={{ marginTop: 40 }}>
+      <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 600, color: C.text, marginBottom: 8 }}>🔧 Réinitialiser les saisies d'un site</h2>
+      <p style={{ fontSize: 13, color: C.muted, marginBottom: 16 }}>Supprime les anciennes saisies de démo et recharge les données Excel pour un site spécifique. ⚠️ Les saisies terrain récentes pour ce site seront perdues.</p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
+        {allSites.sort((a, b) => (a.name || '').localeCompare(b.name || '')).map(site => (
+          <button key={site.id} onClick={() => onResetSiteEntries(site.id, site.name)}
+            style={{ padding: '10px 14px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, cursor: 'pointer', textAlign: 'left', fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: C.text, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 16 }}>🔄</span>
+            <span>{site.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {showAdd && (
         <AddTerritoryModal
           existingCodes={existingCodes}
           onSave={t => { onAddTerritory(t); setShowAdd(false) }}
