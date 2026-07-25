@@ -76,7 +76,7 @@ export default function PublicDashboard({ onClose }) {
         <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ color: '#fff' }}>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, margin: 0 }}>🌿 CompostConnect</h1>
-            <p style={{ opacity: .75, fontSize: 13, marginTop: 4 }}>Tableau de bord public — SMIEEOM Val de Cher</p>
+            <p style={{ opacity: .75, fontSize: 13, marginTop: 4 }}>Tableau de bord public — Programme de compostage partagé</p>
           </div>
           <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', padding: '9px 18px', borderRadius: 9, cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif" }}>
             ← Retour
@@ -133,7 +133,7 @@ export default function PublicDashboard({ onClose }) {
 
         {/* Footer */}
         <div style={{ textAlign: 'center', color: C.muted, fontSize: 12, paddingTop: 24, borderTop: `1px solid ${C.border}` }}>
-          <p>Données issues de la plateforme CompostConnect — SMIEEOM Val de Cher</p>
+          <p>Données issues de la plateforme CompostConnect</p>
           <p style={{ marginTop: 4 }}>Mis à jour le {new Date().toLocaleDateString('fr-FR')} · <a href="https://biotrifoule.fr" style={{ color: C.green }}>biotrifoule.fr</a></p>
         </div>
       </div>

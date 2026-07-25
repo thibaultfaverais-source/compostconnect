@@ -112,7 +112,7 @@ export default function HelpGuide({ isAdmin, onClose }) {
         {sections.map((s, i) => <Section key={i} section={s} />)}
         <div style={{ background: C.bg, borderRadius: 12, padding: '14px 18px', marginTop: 8 }}>
           <p style={{ fontSize: 13, color: C.muted, margin: 0 }}>
-            Pour toute question non couverte ici, contactez le SMIEEOM Val de Cher.
+            Pour toute question non couverte ici, contactez votre coordinateur de programme.
           </p>
         </div>
       </div>

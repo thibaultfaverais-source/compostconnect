@@ -29,7 +29,7 @@ export function LogoIcon({ size = 64 }) {
   )
 }
 
-export function LogoFull({ size = 48, dark = false }) {
+export function LogoFull({ size = 48, dark = false, subtitle = 'SMIEEOM Val de Cher' }) {
   const textColor = dark ? '#2D5A27' : '#ffffff'
   const subColor = dark ? '#7A8470' : 'rgba(255,255,255,0.75)'
   return (
@@ -47,7 +47,7 @@ export function LogoFull({ size = 48, dark = false }) {
           Compost<span style={{ fontStyle: 'italic' }}>Connect</span>
         </div>
         <div style={{ fontSize: size * 0.25, color: subColor, marginTop: 2 }}>
-          SMIEEOM Val de Cher
+          {subtitle}
         </div>
       </div>
     </div>

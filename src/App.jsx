@@ -676,7 +676,7 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
         <div>
           <div>
-          <LogoFull size={44} dark />
+          <LogoFull size={44} dark subtitle={isDemoMode ? "Mode démonstration" : "SMIEEOM Val de Cher"} />
           {isRestrictedAdmin && (
             <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 6, background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 8, padding: '4px 12px' }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: '#8B5E00' }}>🔒 Mode contractuel — 7 sites actifs</span>
@@ -1051,9 +1051,9 @@ function AddSiteModal({ sites, onSave, onClose }) {
   const [form, setForm] = useState({ name: "", address: "", referentNom: "", code: "", capacityL: 300, typeSite: "Foyers", foyers: 0 });
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
   const save = () => {
-    if (!form.name || !form.code || !form.referent) { alert("Veuillez remplir les champs obligatoires (*)."); return; }
+    if (!form.name || !form.code.trim()) { alert("Veuillez remplir les champs obligatoires (nom et code)."); return; }
     const code = form.code.trim().toUpperCase();
-    if (code === ADMIN_CODE || sites.some(s => s.code === code)) { alert("Ce code est déjà utilisé."); return; }
+    if (sites.some(s => s.code === code)) { alert("Ce code est déjà utilisé par un autre site."); return; }
     onSave({ ...form, code, referents: form.referentNom ? [{ role: 'Référent principal', nom: form.referentNom, tel: '', email: '' }] : [] });
   };
   return (

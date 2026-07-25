@@ -109,7 +109,7 @@ export function generateAnnualReport(territory, sites, entries, year) {
   <div class="header">
     <div class="logo-area">
       <h1>🌿 CompostConnect</h1>
-      <p>${territory?.name || 'SMIEEOM Val de Cher'}</p>
+      <p>${territory?.name || 'CompostConnect'}</p>
       <p style="margin-top:8px;font-size:13px;color:#4A5A48;">Rapport annuel de suivi du compostage partagé</p>
     </div>
     <div class="year-badge">
@@ -198,7 +198,7 @@ export function generateAnnualReport(territory, sites, entries, year) {
 
   <!-- Footer -->
   <div class="footer">
-    <span>CompostConnect — ${territory?.name || 'SMIEEOM Val de Cher'}</span>
+    <span>CompostConnect — ${territory?.name || 'CompostConnect'}</span>
     <span>Rapport généré le ${new Date().toLocaleDateString('fr-FR')}</span>
     <span>Données ${yearStr} — Usage interne</span>
   </div>
