@@ -1,3 +1,4 @@
+import { SMIEEOM_LOGO } from '../smieeomLogo.js';
 import { useState } from 'react'
 
 const KG_PER_LITRE = 0.65
@@ -107,10 +108,13 @@ export function generateAnnualReport(territory, sites, entries, year) {
 
   <!-- Header -->
   <div class="header">
-    <div class="logo-area">
-      <h1>🌿 CompostConnect</h1>
-      <p>${territory?.name || 'CompostConnect'}</p>
-      <p style="margin-top:8px;font-size:13px;color:#4A5A48;">Rapport annuel de suivi du compostage partagé</p>
+    <div class="logo-area" style="display:flex;align-items:center;gap:20px;">
+      <img src="${SMIEEOM_LOGO}" alt="SMIEEOM Val de Cher" style="height:70px;object-fit:contain;" />
+      <div>
+        <h1>🌿 CompostConnect</h1>
+        <p>${territory?.name || 'CompostConnect'}</p>
+        <p style="margin-top:8px;font-size:13px;color:#4A5A48;">Rapport annuel de suivi du compostage partagé</p>
+      </div>
     </div>
     <div class="year-badge">
       <div class="year">${yearStr}</div>

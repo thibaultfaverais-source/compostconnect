@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"; // build:20260527061724
+import React, { useState, useEffect } from "react";
+import { SMIEEOM_LOGO } from './smieeomLogo.js'; // build:20260527061724
 import { db } from './firebase.js';
 import {
   collection, doc, getDocs, setDoc, writeBatch, getDoc, deleteDoc
@@ -436,6 +437,13 @@ function LoginScreen({ code, setCode, onLogin, error, onLegal, onPublic }) {
             Compost<em>Connect</em>
           </h1>
           <p style={{ color: C.muted, fontSize: 14 }}>Suivi des composteurs partagés</p>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, marginTop: 16, padding: "12px 20px", background: "rgba(255,255,255,0.6)", borderRadius: 12, border: `1px solid ${C.border}` }}>
+            <img src={SMIEEOM_LOGO} alt="SMIEEOM Val de Cher" style={{ height: 48, objectFit: "contain" }} />
+            <div style={{ textAlign: "left" }}>
+              <p style={{ fontSize: 11, fontWeight: 700, color: C.text, margin: 0 }}>SMIEEOM Val de Cher</p>
+              <p style={{ fontSize: 10, color: C.muted, margin: 0 }}>Programme Bio Tri Foule</p>
+            </div>
+          </div>
         </div>
         <Field label="Code d'accès">
           <input type="password" name="password" autoComplete="current-password" value={code} onChange={e => setCode(e.target.value.toUpperCase())} onKeyDown={e => e.key === "Enter" && onLogin()} placeholder="Code d'accès" style={{ ...inputStyle, letterSpacing: "0.12em", fontWeight: 600, fontSize: 16, border: `2px solid ${error ? C.danger : C.border}` }} />
@@ -570,7 +578,7 @@ function StatsParAnnee({ entries, site }) {
   );
 }
 
-function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onChangeSiteCode, onEditEntry, onDeleteEntry }) {
+function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onAddEntry, onEditSite, onDeleteSite, onChangeSiteCode, onEditEntry, onDeleteEntry }) {
   const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   const monthE = thisMonth(entries);
   return (
@@ -583,6 +591,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => onEditSite(site)} style={{ background: "transparent", border: `1px solid ${C.green}`, color: C.green, padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontWeight: 600 }}>✏️ Modifier</button>
+          {onDeleteSite && <button onClick={() => { onDeleteSite(site); onBack(); }} style={{ background: "transparent", border: "1px solid #FBCACA", color: "#BE4B48", padding: "9px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>🗑️ Supprimer le site</button>}
           <button onClick={onLogout} style={{ background: "transparent", border: `1px solid ${C.border}`, color: C.muted, padding: "9px 16px", borderRadius: 8, cursor: "pointer", fontSize: 13 }}>Déconnexion</button>
         </div>
       </div>
@@ -664,9 +673,9 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 
-function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry, isRestrictedAdmin = false, isDemoMode = false }) {
+function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, onEditSite, onDeleteSite, notifications = [], onMarkRead, onMarkAllRead, onOpenSettings, onChangeSiteCode, events = [], onAddEvent, onDeleteEvent, onOpenHelp, territory = null, onEditEntry, onDeleteEntry, isRestrictedAdmin = false, isDemoMode = false }) {
   const [detail, setDetail] = useState(null);
-  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} onDeleteEntry={onDeleteEntry} />;
+  if (detail) return <AdminSiteDetail site={detail} entries={entries.filter(e => e.siteId === detail.id)} allEntries={entries} onBack={() => setDetail(null)} onLogout={onLogout} onAddEntry={() => onAddEntryForSite(detail)} onEditSite={onEditSite} onDeleteSite={onDeleteSite} onChangeSiteCode={onChangeSiteCode} onEditEntry={onEditEntry} onDeleteEntry={onDeleteEntry} />;
 
   const monthE = thisMonth(entries);
   const inactiveSites = sites.filter(s => { const d = daysSince(entries.filter(e => e.siteId === s.id)); return d === null || d > 30; });
@@ -675,8 +684,9 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
         <div>
-          <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <LogoFull size={44} dark subtitle={isDemoMode ? "Mode démonstration" : "SMIEEOM Val de Cher"} />
+          {!isDemoMode && <img src={SMIEEOM_LOGO} alt="SMIEEOM" style={{ height: 44, objectFit: "contain", opacity: 0.9 }} />}
           {isRestrictedAdmin && (
             <div style={{ marginTop: 6, display: 'inline-flex', alignItems: 'center', gap: 6, background: '#FEF3E2', border: '1px solid #F5D5A0', borderRadius: 8, padding: '4px 12px' }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: '#8B5E00' }}>🔒 Mode contractuel — 7 sites actifs</span>
@@ -1446,6 +1456,28 @@ export default function App() {
     setShowAddSite(false);
   };
 
+  const deleteSite = async (site) => {
+    const confirm1 = window.confirm(
+      'Supprimer le site "' + site.name + '" ?\n\nCette action supprimera également TOUTES les saisies associées à ce site.\nElle est irréversible.'
+    );
+    if (!confirm1) return;
+    const confirm2 = window.confirm('Confirmation finale — supprimer définitivement "' + site.name + '" et toutes ses saisies ?');
+    if (!confirm2) return;
+    try {
+      if (!isDemoMode) {
+        // Delete site document
+        await deleteDoc(doc(db, 'sites', site.id));
+        // Delete all entries for this site
+        const snap = await getDocs(collection(db, 'entries'));
+        const batch = writeBatch(db);
+        snap.docs.filter(d => d.data().siteId === site.id).forEach(d => batch.delete(d.ref));
+        await batch.commit();
+      }
+      setSites(prev => prev.filter(s => s.id !== site.id));
+      setEntries(prev => prev.filter(e => e.siteId !== site.id));
+    } catch (e) { alert('Erreur lors de la suppression : ' + e.message); }
+  };
+
   const logout = () => {
     setScreen("login"); setCurrentSite(null); setIsSuperAdmin(false); setIsRestrictedAdmin(false); setCurrentTerritory(null);
     try { localStorage.removeItem("cc_session"); } catch(e) {}
@@ -1482,7 +1514,7 @@ export default function App() {
       <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif", color: C.text }}>
         {screen === "login" && <LoginScreen code={loginCode} setCode={setLoginCode} onLogin={handleLogin} error={loginError} onLegal={() => setShowLegal(true)} onPublic={() => setShowPublic(true)} />}
         {screen === "superadmin" && <SuperAdminView territories={territories} allSites={sites} allEntries={entries} onEnterTerritory={t => { setCurrentTerritory(t); setScreen('admin'); }} onAddTerritory={addTerritory} onLogout={logout} onSyncData={syncData} onResetSiteEntries={resetSiteEntries} />}
-        {screen === "admin" && <AdminScreen sites={isRestrictedAdmin ? sites.filter(s => restrictedSiteIds.includes(s.id)) : sites} entries={isRestrictedAdmin ? entries.filter(e => restrictedSiteIds.includes(e.siteId)) : entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} isDemoMode={isDemoMode} />}
+        {screen === "admin" && <AdminScreen sites={isRestrictedAdmin ? sites.filter(s => restrictedSiteIds.includes(s.id)) : sites} entries={isRestrictedAdmin ? entries.filter(e => restrictedSiteIds.includes(e.siteId)) : entries} onAddSite={() => setShowAddSite(true)} onLogout={logout} onAddEntryForSite={site => setAdminEntrySite(site)} onEditSite={setEditSite} notifications={notifications} onMarkRead={markRead} onMarkAllRead={markAllRead} onOpenSettings={() => setShowSettings(true)} onChangeSiteCode={changeSiteCode} events={events} onAddEvent={addEvent} onDeleteEvent={deleteEvent} onOpenHelp={() => setShowHelp(true)} territory={currentTerritory} onEditEntry={e => setEditEntry(e)} onDeleteSite={deleteSite} isDemoMode={isDemoMode} />}
         {screen === "site" && <SiteScreen site={currentSite} entries={entries.filter(e => e.siteId === currentSite.id)} onAddEntry={() => setShowEntry(true)} onEditEntry={e => setEditEntry(e)} onDeleteEntry={deleteEntry} onLogout={logout} onOpenProfile={() => setShowProfile(true)} events={events} sites={sites} onOpenHelp={() => setShowHelp(true)} onAddEvent={addEvent} onDeleteEvent={deleteEvent} isDemoMode={isDemoMode} />}
         {(showEntry || editEntry) && screen === "site" && <AddEntryModal editEntry={editEntry} siteId={editEntry?.siteId || currentSite?.id} onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setShowEntry(false); setEditEntry(null); }} />}
         {(adminEntrySite || (editEntry && screen === "admin")) && <AddEntryModal editEntry={editEntry && screen === "admin" ? editEntry : null} siteId={editEntry && screen === "admin" ? editEntry.siteId : adminEntrySite?.id} siteName={editEntry && screen === "admin" ? (sites.find(s=>s.id===editEntry.siteId)?.name || "") : adminEntrySite?.name} isAdmin onSave={addEntry} onDelete={e => { deleteEntry(e); setEditEntry(null); }} onClose={() => { setAdminEntrySite(null); setEditEntry(null); }} />}

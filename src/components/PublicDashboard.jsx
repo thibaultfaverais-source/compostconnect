@@ -1,3 +1,4 @@
+import { SMIEEOM_LOGO } from '../smieeomLogo.js';
 import { useState, useEffect } from 'react'
 import { db } from '../firebase.js'
 import { collection, getDocs } from 'firebase/firestore'
@@ -74,9 +75,12 @@ export default function PublicDashboard({ onClose }) {
       {/* Header */}
       <div style={{ background: C.green, padding: '28px 32px', position: 'sticky', top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ color: '#fff' }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, margin: 0 }}>🌿 CompostConnect</h1>
-            <p style={{ opacity: .75, fontSize: 13, marginTop: 4 }}>Tableau de bord public — Programme de compostage partagé</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div style={{ color: '#fff' }}>
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, margin: 0 }}>🌿 CompostConnect</h1>
+              <p style={{ opacity: .75, fontSize: 13, marginTop: 4 }}>Tableau de bord public — Programme de compostage partagé</p>
+            </div>
+            <img src={SMIEEOM_LOGO} alt="SMIEEOM Val de Cher" style={{ height: 48, objectFit: 'contain', background: 'white', borderRadius: 8, padding: '4px 8px' }} />
           </div>
           <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', padding: '9px 18px', borderRadius: 9, cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif" }}>
             ← Retour

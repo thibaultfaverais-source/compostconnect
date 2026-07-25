@@ -57,7 +57,7 @@ export function SiteCharts({ entries }) {
             <XAxis dataKey="year" tick={{ fontSize: 12, fill: C.muted }} />
             <YAxis tick={{ fontSize: 11, fill: C.muted }} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Legend verticalAlign="top" align="center" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
             <Bar dataKey="kg" name="Biodéchets détournés (kg)" fill={C.green} radius={[4, 4, 0, 0]} />
             <Bar dataKey="lVal" name="Compost valorisé (L)" fill={C.brown} radius={[4, 4, 0, 0]} />
           </BarChart>
@@ -116,7 +116,7 @@ export function AdminCharts({ sites, entries }) {
             <XAxis dataKey="name" tick={{ fontSize: 10, fill: C.muted }} angle={-35} textAnchor="end" interval={0} />
             <YAxis tick={{ fontSize: 11, fill: C.muted }} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Legend verticalAlign="top" align="center" wrapperStyle={{ fontSize: 12, paddingBottom: 12 }} />
             <Bar dataKey="kg" name="Biodéchets détournés (kg)" fill={C.green} radius={[4, 4, 0, 0]} />
             <Bar dataKey="lVal" name="Compost valorisé (L)" fill={C.brown} radius={[4, 4, 0, 0]} />
           </BarChart>
