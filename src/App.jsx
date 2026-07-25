@@ -223,6 +223,15 @@ const DEMO_ENTRIES = [
   {id: "e125", siteId: "s3", date: "2023-09-21", actionType: "recolte", volumeL: 474, observations: [], temperature: null, tempsMin: null, commentaire: "Récolte 474 L compost mûr", createdAt: "2023-09-21T10:30:00"},
   {id: "e126", siteId: "s1", date: "2023-03-28", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration du site par les Cycloposteurs", createdAt: "2023-03-28T10:00:00"},
   {id: "e127", siteId: "s3", date: "2023-02-06", actionType: "visite", volumeL: null, observations: [], temperature: null, tempsMin: null, commentaire: "Inauguration officielle par les Cycloposteurs Orléans", createdAt: "2023-02-06T10:00:00"},
+  {id: "e_f0605", siteId: "s6", date: "2026-06-05", actionType: "visite", volumeL: null, observations: [], temperature: 25, tempsMin: null, commentaire: "Excellent compost, humidite correcte, abondance de vie. Verification substrat.", createdAt: "2026-06-05T10:00:00"},
+  {id: "e_f0612", siteId: "s6", date: "2026-06-12", actionType: "visite", volumeL: null, observations: [], temperature: 24, tempsMin: null, commentaire: "Bonne humidite et abondance de vie. Verification substrat.", createdAt: "2026-06-12T10:00:00"},
+  {id: "e_f0626", siteId: "s6", date: "2026-06-26", actionType: "brassage", volumeL: null, observations: ["trop_sec"], temperature: 34, tempsMin: null, commentaire: "Bonne composition, un peu sec, abondance de vie. Humidification.", createdAt: "2026-06-26T10:00:00"},
+  {id: "e_o0605", siteId: "s20", date: "2026-06-05", actionType: "visite", volumeL: null, observations: [], temperature: 20, tempsMin: null, commentaire: "Peu d'apport, bonne humidite, composition correcte. Verification substrat.", createdAt: "2026-06-05T10:00:00"},
+  {id: "e_o0612", siteId: "s20", date: "2026-06-12", actionType: "remplissage_broyat", volumeL: null, observations: ["trop_sec"], temperature: 22, tempsMin: null, commentaire: "Un peu sec. Humidification, remise de broyat.", createdAt: "2026-06-12T10:00:00"},
+  {id: "e_o0626", siteId: "s20", date: "2026-06-26", actionType: "brassage", volumeL: null, observations: ["trop_sec"], temperature: 35, tempsMin: null, commentaire: "Bonne composition, un peu sec, peu de vie. Humidification.", createdAt: "2026-06-26T10:00:00"},
+  {id: "e_fb0605", siteId: "s11", date: "2026-06-05", actionType: "remplissage_broyat", volumeL: null, observations: [], temperature: 24, tempsMin: null, commentaire: "Legerement humide, bonne composition. Remise de broyat.", createdAt: "2026-06-05T10:00:00"},
+  {id: "e_fb0612", siteId: "s11", date: "2026-06-12", actionType: "remplissage_broyat", volumeL: null, observations: ["moucherons"], temperature: 28, tempsMin: null, commentaire: "Legerement humide, presence de moucherons. Remise de broyat.", createdAt: "2026-06-12T10:00:00"},
+  {id: "e_fb0626", siteId: "s11", date: "2026-06-26", actionType: "brassage", volumeL: null, observations: ["trop_sec"], temperature: 36, tempsMin: null, commentaire: "Un peu sec, moins de vie. Humidification.", createdAt: "2026-06-26T10:00:00"},
 ];
 
 const FICTIONAL_SITES = [
