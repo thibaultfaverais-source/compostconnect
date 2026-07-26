@@ -164,6 +164,41 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
           )}
         </div>
 
+        {/* Test email button */}
+        <div style={{ background: '#E3EEFA', borderRadius: 10, padding: '12px 16px', marginBottom: 16 }}>
+          <p style={{ fontSize: 13, fontWeight: 600, color: '#2D4F7A', marginBottom: 8 }}>🧪 Tester l'envoi d'email</p>
+          <p style={{ fontSize: 12, color: '#4A6A9A', marginBottom: 10 }}>Envoie un email de test à l'adresse configurée ci-dessus.</p>
+          <button onClick={async () => {
+            const email = settings.adminEmail;
+            if (!email) { alert('Renseignez d'abord une adresse email.'); return; }
+            try {
+              const res = await fetch('/api/send-alert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  siteName: 'Site de test',
+                  siteAddress: 'Adresse de test',
+                  referentName: 'Référent de test',
+                  observations: ['odeur'],
+                  date: new Date().toISOString().split('T')[0],
+                  commentaire: 'Ceci est un email de test depuis CompostConnect.',
+                  adminEmail: email,
+                })
+              });
+              const data = await res.json();
+              if (res.ok) {
+                alert('✅ Email de test envoyé à ' + email + ' !\nVérifiez votre boîte mail (et les spams).');
+              } else {
+                alert('❌ Erreur d'envoi : ' + JSON.stringify(data));
+              }
+            } catch (e) {
+              alert('❌ Erreur réseau : ' + e.message);
+            }
+          }} style={{ background: '#2D4F7A', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
+            📧 Envoyer un email de test
+          </button>
+        </div>
+
         <div style={{ display: 'flex', gap: 12 }}>
           <button onClick={onClose} style={{ flex: 1, padding: 13, background: 'transparent', border: `1.5px solid ${C.border}`, borderRadius: 12, cursor: 'pointer', fontSize: 14, color: C.muted, fontFamily: "'DM Sans', sans-serif" }}>Annuler</button>
           <button onClick={save} disabled={saving} style={{ flex: 2, padding: 13, background: C.green, color: '#fff', border: 'none', borderRadius: 12, cursor: 'pointer', fontSize: 14, fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: saving ? .7 : 1 }}>

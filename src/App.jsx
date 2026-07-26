@@ -1329,9 +1329,14 @@ export default function App() {
         // Send email alert
         const alertTypes = adminSettings.alertTypes || [];
         const shouldEmail = adminSettings.emailAlerts && problemObs.some(o => alertTypes.includes(o));
+        console.log('[CompostConnect] Email alert:', {
+          emailAlerts: adminSettings.emailAlerts,
+          adminEmail: adminSettings.adminEmail,
+          problemObs, alertTypes, shouldEmail
+        });
         if (shouldEmail) {
           try {
-            await fetch('/api/send-alert', {
+            const res = await fetch('/api/send-alert', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -1344,7 +1349,12 @@ export default function App() {
                 adminEmail: adminSettings.adminEmail,
               }),
             });
-          } catch (e) { console.error('Email error:', e); }
+            const data = await res.json();
+            console.log('[CompostConnect] Email result:', res.status, data);
+            if (!res.ok) console.error('[CompostConnect] Email failed:', data);
+          } catch (e) { console.error('[CompostConnect] Email fetch error:', e); }
+        } else {
+          console.warn('[CompostConnect] Email NON envoyé — emailAlerts:', adminSettings.emailAlerts, '| adminEmail:', adminSettings.adminEmail, '| obs match:', problemObs.some(o => alertTypes.includes(o)));
         }
       }
     } catch (err) { console.error('Save entry error:', err); }
