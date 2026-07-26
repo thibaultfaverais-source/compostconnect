@@ -170,7 +170,7 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
           <p style={{ fontSize: 12, color: '#4A6A9A', marginBottom: 10 }}>Envoie un email de test à l'adresse configurée ci-dessus.</p>
           <button onClick={async () => {
             const email = settings.adminEmail;
-            if (!email) { alert('Renseignez d'abord une adresse email.'); return; }
+            if (!email) { alert("Renseignez d'abord une adresse email."); return; }
             try {
               const res = await fetch('/api/send-alert', {
                 method: 'POST',
@@ -189,10 +189,10 @@ export default function AdminSettingsModal({ onClose, onSettingsLoaded }) {
               if (res.ok) {
                 alert('✅ Email de test envoyé à ' + email + ' !\nVérifiez votre boîte mail (et les spams).');
               } else {
-                alert('❌ Erreur d'envoi : ' + JSON.stringify(data));
+                alert("❌ Erreur envoi : " + JSON.stringify(data));
               }
             } catch (e) {
-              alert('❌ Erreur réseau : ' + e.message);
+              alert("❌ Erreur réseau : " + e.message);
             }
           }} style={{ background: '#2D4F7A', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', cursor: 'pointer', fontSize: 13, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
             📧 Envoyer un email de test
