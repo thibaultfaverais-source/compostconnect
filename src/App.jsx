@@ -296,6 +296,24 @@ const getAction = (id) => ACTION_TYPES.find(a => a.id === id) || ACTION_TYPES[0]
 const getKgDetournes = (entries) => entries.filter(e => e.actionType === "transfert").reduce((s, e) => s + (Number(e.volumeL) || 0) * KG_PER_LITRE, 0);
 const getLValorises = (entries) => entries.filter(e => e.actionType === "recolte").reduce((s, e) => s + (Number(e.volumeL) || 0), 0);
 const getTempsTotal = (entries) => entries.reduce((s, e) => s + (Number(e.tempsMin) || 0), 0);
+const fmtTemps = (mins) => {
+  if (!mins || mins === 0) return '0 min';
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  if (h === 0) return `${m} min`;
+  if (m === 0) return `${h} h`;
+  return `${h} h ${m} min`;
+};
+const getTempsByYear = (entries) => {
+  const byYear = {};
+  entries.forEach(e => { if (!e.date || !e.tempsMin) return; const y = e.date.slice(0,4); byYear[y] = (byYear[y]||0) + Number(e.tempsMin); });
+  return byYear;
+};
+const getTempsByMonth = (entries, year) => {
+  const byMonth = {}; const MONTHS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+  entries.forEach(e => { if (!e.date||!e.tempsMin||!e.date.startsWith(year)) return; const m = parseInt(e.date.slice(5,7))-1; byMonth[m]=(byMonth[m]||0)+Number(e.tempsMin); });
+  return { byMonth, MONTHS };
+};
 const thisMonth = (entries) => { const n = new Date(); return entries.filter(e => { const d = new Date(e.date + "T12:00:00"); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear(); }); };
 const siteColor = (idx) => ["#2D5A27", "#7A4F2D", "#2D4F7A", "#6B3D7A", "#2D7A6B", "#7A5C2D"][idx % 6];
 const daysSince = (entries) => { if (!entries.length) return null; const last = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0]; return Math.floor((new Date() - new Date(last.date + "T12:00:00")) / 86400000); };
@@ -671,6 +689,7 @@ function AdminSiteDetail({ site, entries, allEntries = [], onBack, onLogout, onA
       </div>
       <SiteMap sites={[site]} entries={allEntries} highlightSiteId={site.id} height={260} />
       <StatsParAnnee entries={entries} site={site} />
+      <TempsSection entries={entries} />
       <SiteCharts entries={entries} />
       <button className="btn-green" onClick={onAddEntry} style={{ width: "100%", padding: 14, background: C.green, color: "#fff", border: "none", borderRadius: 14, fontSize: 15, fontWeight: 600, cursor: "pointer", marginBottom: 28 }}>
         ✏️ Ajouter une saisie pour ce site
@@ -836,6 +855,50 @@ function AdminScreen({ sites, entries, onAddSite, onLogout, onAddEntryForSite, o
 }
 
 // ─── Site Screen (Referent) ───────────────────────────────────────────────────
+
+
+function TempsSection({ entries }) {
+  const [selectedYear, setSelectedYear] = React.useState(String(new Date().getFullYear()));
+  const byYear = getTempsByYear(entries);
+  const years = Object.keys(byYear).sort((a,b) => b.localeCompare(a));
+  const thisYearMins = byYear[selectedYear] || 0;
+  const curMonth = new Date().toISOString().slice(0,7);
+  const thisMonthMins = entries.filter(e => e.date && e.date.startsWith(curMonth) && e.tempsMin).reduce((s,e) => s+Number(e.tempsMin), 0);
+  const totalMins = Object.values(byYear).reduce((s,v) => s+v, 0);
+  const { byMonth, MONTHS } = getTempsByMonth(entries, selectedYear);
+  const maxMonth = Math.max(...Object.values(byMonth), 1);
+  if (totalMins === 0) return null;
+  const C = { green: '#2D5A27', text: '#1C2B19', muted: '#7A8470', border: '#E0D5C5', bg: '#F4EBD9', card: '#FDFAF6' };
+  return (
+    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: '20px 24px', marginBottom: 28 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 8 }}>
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 600, color: C.text, margin: 0 }}>⏱️ Temps d'intervention</h3>
+        {years.length > 1 && <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)} style={{ padding: '5px 10px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, fontFamily: "'DM Sans', sans-serif", background: '#fff', cursor: 'pointer' }}>{years.map(y => <option key={y} value={y}>{y}</option>)}</select>}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 20 }}>
+        {[{label: 'Ce mois', value: fmtTemps(thisMonthMins), color: '#2D4F7A'}, {label: `En ${selectedYear}`, value: fmtTemps(thisYearMins), color: C.green}, {label: 'Total cumulé', value: fmtTemps(totalMins), color: '#7A4F2D'}].map((s,i) => (
+          <div key={i} style={{ background: C.bg, borderRadius: 10, padding: '12px 14px', textAlign: 'center' }}>
+            <p style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, fontWeight: 700, color: s.color, margin: 0 }}>{s.value}</p>
+            <p style={{ fontSize: 11, color: C.muted, margin: '4px 0 0' }}>{s.label}</p>
+          </div>
+        ))}
+      </div>
+      {Object.keys(byMonth).length > 0 && (
+        <div>
+          <p style={{ fontSize: 11, fontWeight: 600, color: C.muted, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 10 }}>Par mois — {selectedYear}</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, alignItems: 'end', height: 56 }}>
+            {Array.from({length:12},(_,i) => { const mins=byMonth[i]||0; const pct=mins>0?Math.max((mins/maxMonth)*100,10):0;
+              return (<div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:2 }}>
+                <div title={mins>0?fmtTemps(mins):''} style={{ width:'100%', height:`${pct}%`, minHeight:mins>0?4:0, background:mins>0?C.green:'#E0D5C5', borderRadius:'3px 3px 0 0', cursor:mins>0?'help':'default' }} />
+                <span style={{ fontSize:8, color:C.muted }}>{MONTHS[i].slice(0,1)}</span>
+              </div>);
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function SiteScreen({ site, entries, onAddEntry, onEditEntry, onDeleteEntry, onLogout, onOpenProfile, events = [], sites = [], onOpenHelp, onAddEvent, onDeleteEvent, isDemoMode = false }) {
   const sorted = [...entries].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
